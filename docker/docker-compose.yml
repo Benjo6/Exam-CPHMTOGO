@@ -1,75 +1,75 @@
 version: "3"
 services:
   loginInfo-db:
-    image: mysql
+    image: postgres
     ports:
       - 3308:3306
     #volumes:
     #  - ./start-script:/docker-entrypoint-initdb.d
     environment:
-      MYSQL_ROOT_PASSWORD: test123
+      POSTGRES_PASSWORD: test123
   payment-db:
-    image: mysql
+    image: postgres
     ports:
       - 3309:3306
     #volumes:
     #  - ./start-script:/docker-entrypoint-initdb.d
     environment:
-      MYSQL_ROOT_PASSWORD: test123
+      POSTGRES_PASSWORD: test123
   address-db:
-    image: mysql
+    image: postgres
     ports:
       - 33010:3306
     #volumes:
     #  - ./start-script:/docker-entrypoint-initdb.d
     environment:
-      MYSQL_ROOT_PASSWORD: test123
+      POSTGRES_PASSWORD: test123
   restaurant-db:
-    image: mysql
+    image: postgres
     ports:
       - 3311:3306
     #volumes:
     #  - ./start-script:/docker-entrypoint-initdb.d
     environment:
-      MYSQL_ROOT_PASSWORD: test123
+      POSTGRES_PASSWORD: test123
   customer-db:
-    image: mysql
+    image: postgres
     ports:
       - 3312:3306
     #volumes:
     #  - ./start-script:/docker-entrypoint-initdb.d
     environment:
-      MYSQL_ROOT_PASSWORD: test123
+      POSTGRES_PASSWORD: test123
   order-db:
-    image: mysql
+    image: postgres
     ports:
       - 3313:3306
     #volumes:
     #  - ./start-script:/docker-entrypoint-initdb.d
     environment:
-      MYSQL_ROOT_PASSWORD: test123
+      POSTGRES_PASSWORD: test123
   employee-db:
-    image: mysql
+    image: postgres
     ports:
       - 3314:3306
     #volumes:
     #  - ./start-script:/docker-entrypoint-initdb.d
     environment:
-      MYSQL_ROOT_PASSWORD: test123
+      POSTGRES_PASSWORD: test123
   company-db:
-    image: mysql
+    image: postgres
     ports:
       - 3315:3306
     #volumes:
     #  - ./start-script:/docker-entrypoint-initdb.d
     environment:
-      MYSQL_ROOT_PASSWORD: test123
+      POSTGRES_PASSWORD: test123
   bonus-db:
-    image: mysql
+    image: postgres
     ports:
       - 3316:3306
     #volumes:
     #  - ./start-script:/docker-entrypoint-initdb.d
     environment:
-      MYSQL_ROOT_PASSWORD: test123
+      POSTGRES_PASSWORD: test123
   
