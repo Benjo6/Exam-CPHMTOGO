@@ -1,0 +1,66 @@
+version: "3"
+services:
+  login-db:
+    image: mysql
+    ports:
+      - 3308:3306
+    #volumes:
+    #  - ./start-script:/docker-entrypoint-initdb.d
+    environment:
+      MYSQL_ROOT_PASSWORD: test123
+  payment-db:
+    image: mysql
+    ports:
+      - 3309:3306
+    #volumes:
+    #  - ./start-script:/docker-entrypoint-initdb.d
+    environment:
+      MYSQL_ROOT_PASSWORD: test123
+  Address-db:
+    image: mysql
+    ports:
+      - 33010:3306
+    #volumes:
+    #  - ./start-script:/docker-entrypoint-initdb.d
+    environment:
+      MYSQL_ROOT_PASSWORD: test123
+  restaurant-db:
+    image: mysql
+    ports:
+      - 3311:3306
+    #volumes:
+    #  - ./start-script:/docker-entrypoint-initdb.d
+    environment:
+      MYSQL_ROOT_PASSWORD: test123
+  customer-db:
+    image: mysql
+    ports:
+      - 3312:3306
+    #volumes:
+    #  - ./start-script:/docker-entrypoint-initdb.d
+    environment:
+      MYSQL_ROOT_PASSWORD: test123
+  order-db:
+    image: mysql
+    ports:
+      - 3313:3306
+    #volumes:
+    #  - ./start-script:/docker-entrypoint-initdb.d
+    environment:
+      MYSQL_ROOT_PASSWORD: test123
+  employee-db:
+    image: mysql
+    ports:
+      - 3314:3306
+    #volumes:
+    #  - ./start-script:/docker-entrypoint-initdb.d
+    environment:
+      MYSQL_ROOT_PASSWORD: test123
+  company-db:
+    image: mysql
+    ports:
+      - 3315:3306
+    #volumes:
+    #  - ./start-script:/docker-entrypoint-initdb.d
+    environment:
+      MYSQL_ROOT_PASSWORD: test123
