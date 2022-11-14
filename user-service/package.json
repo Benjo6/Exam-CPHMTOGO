@@ -10,6 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "prisma": "^4.6.1"
+    "@prisma/client": "^4.6.1",
+    "prisma": "^4.6.1",
+    "prisma-erd-generator": "^1.2.3"
   }
 }
