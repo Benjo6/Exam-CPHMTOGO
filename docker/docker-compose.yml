@@ -1,6 +1,6 @@
 version: "3"
 services:
-  login-db:
+  loginInfo-db:
     image: mysql
     ports:
       - 3308:3306
@@ -16,7 +16,7 @@ services:
     #  - ./start-script:/docker-entrypoint-initdb.d
     environment:
       MYSQL_ROOT_PASSWORD: test123
-  Address-db:
+  address-db:
     image: mysql
     ports:
       - 33010:3306
