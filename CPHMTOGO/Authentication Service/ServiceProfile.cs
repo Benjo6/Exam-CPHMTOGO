@@ -1,6 +1,7 @@
 using AuthenticationService.Application.Contracts.Commands;
 using AutoMapper;
 using Google.Protobuf.WellKnownTypes;
+using service;
 
 namespace AuthenticationService;
 

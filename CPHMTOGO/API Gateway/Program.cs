@@ -1,4 +1,5 @@
 using AuthenticationService;
+using service;
 
 var builder = WebApplication.CreateBuilder(args);
 

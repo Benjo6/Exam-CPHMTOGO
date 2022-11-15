@@ -8,6 +8,7 @@ using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
 using Grpc.Core.Testing;
 using Moq;
+using service;
 
 namespace AuthenticationServiceUnitTest
 {

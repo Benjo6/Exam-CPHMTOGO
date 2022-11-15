@@ -1,5 +1,6 @@
 using AuthenticationService;
 using Microsoft.AspNetCore.Mvc;
+using service;
 
 namespace APIGateway.Controllers;
 
@@ -9,7 +10,7 @@ public class AuthenticationController :GrpcControllerBase<AuthenticationActivity
     [Route("SignIn/Attempt")]
     public async Task<IActionResult> SignIn(string username, string password)
     {
-        var response = await Service.SignInAsync(new SignInRequest{Password = password,Username = username});
+        var response = await Service.SignInAsync(request: new SignInRequest{Password = password,Username = username});
         return Ok(response);
     }
 
@@ -17,7 +18,7 @@ public class AuthenticationController :GrpcControllerBase<AuthenticationActivity
     [Route("SignUp/Create")]
     public async Task<IActionResult> SignUp(string username, string password, string email)
     {
-        var response = await Service.SignUpAsync(new SignUpRequest{Email = email,Password = password,Username = username });
+        var response = await Service.SignUpAsync(new SignUpRequest { Email = email, Password = password, Username = username });
         return Ok(response);
     }
 

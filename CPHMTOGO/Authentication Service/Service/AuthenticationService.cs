@@ -1,9 +1,9 @@
-using AuthenticationService;
 using AuthenticationService.Application;
 using AuthenticationService.Application.Contracts.Commands;
 using AutoMapper;
 using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
+using service;
 
 namespace AuthenticationService.Service;
 
