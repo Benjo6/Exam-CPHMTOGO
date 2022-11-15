@@ -10,7 +10,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Build compose infrastructure
+    - name: Build compose Docker
       run: docker-compose -f infrastructure/docker/docker-compose.yml build
 ##    - name: Build compose applications
 ##     run: docker-compose -f infrastructure/docker-compose.applications.dev.yml build
