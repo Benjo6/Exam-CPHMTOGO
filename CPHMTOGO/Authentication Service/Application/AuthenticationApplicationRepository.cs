@@ -15,7 +15,7 @@ public class AuthenticationApplicationRepository : IAuthenticationApplicationRep
     {
         _dbContext = dbContext;
     }
-
+    
     public async Task<bool> SignIn(SignInCommand request)
     {
         var login = await _dbContext.Infos.FirstOrDefaultAsync(x => x.Username == request.Username);
