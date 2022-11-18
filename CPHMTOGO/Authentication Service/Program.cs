@@ -14,7 +14,7 @@ class Program
         builder.Services.AddScoped<IAuthenticationApplicationRepository, AuthenticationApplicationRepository>();
         builder.Services.AddDbContext<AuthenticationDbContext>(option =>
         {
-            option.UseSqlServer(builder.Configuration["DbConnection"] ?? throw new InvalidOperationException());
+            option.UseNpgsql(builder.Configuration["DbConnection"] ?? throw new InvalidOperationException());
         });
 
         var app = builder.Build();

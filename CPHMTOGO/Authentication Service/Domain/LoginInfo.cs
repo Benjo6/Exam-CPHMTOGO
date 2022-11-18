@@ -2,18 +2,17 @@ using System.ComponentModel.DataAnnotations.Schema;
 using MessagePack;
 
 namespace AuthenticationService.Domain;
-[Table("Authentication"),MessagePackObject(keyAsPropertyName:true)]
+
+[Table("LoginInfo",Schema = "public"), MessagePackObject(keyAsPropertyName: true)]
 public class LoginInfo
 {
-    [Column("Id"),System.ComponentModel.DataAnnotations.Key]
-    public int Id { get; set; }
-    [Column("Username")]
-    public string Username { get; set; }
-    [Column("PasswordSalt")]
-    public byte[] PasswordSalt { get; set; }
-    [Column("PasswordHash")]
+    [Column("id"), DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public Guid Id { get; set; }
 
-    public byte[] PasswordHash { get; set; }  
-    [Column("Email")]
-    public string Email { get; set; }
+    [Column("username")] public string Username { get; init; } = default!;
+    [Column("salt")] public byte[] PasswordSalt { get; set; } = default!;
+
+    [Column("passwordHash")] public byte[] PasswordHash { get; set; } = default!;
+    [Column("email")] public string Email { get; init; } = default!;
+    
 }
