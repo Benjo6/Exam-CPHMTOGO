@@ -4,14 +4,20 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npx jest -i"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@prisma/client": "^4.6.1",
+    "@types/jest": "^29.2.3",
+    "@types/uuid": "^8.3.4",
+    "jest-mock-extended": "2.0.4",
     "prisma": "^4.6.1",
-    "prisma-erd-generator": "^1.2.3"
+    "prisma-erd-generator": "^1.2.3",
+    "ts-jest": "^29.0.3",
+    "typescript": "^4.9.3",
+    "uuid": "^9.0.0"
   }
 }
