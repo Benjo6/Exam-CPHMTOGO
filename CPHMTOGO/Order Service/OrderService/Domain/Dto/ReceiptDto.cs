@@ -1,0 +1,9 @@
+namespace OrderService.Domain.Dto;
+
+public class ReceiptDto
+{
+    public Guid Id { get; set; }
+    public float Amount { get; set; }
+    public DateTime Time { get; set; }
+    public Order Order { get; set; }
+}

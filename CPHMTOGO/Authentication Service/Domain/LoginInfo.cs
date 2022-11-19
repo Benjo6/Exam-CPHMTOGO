@@ -6,7 +6,7 @@ namespace AuthenticationService.Domain;
 public class LoginInfo
 {
     [Column("Id"),System.ComponentModel.DataAnnotations.Key]
-    public int Id { get; set; }
+    public string Id { get; set; }
     [Column("Username")]
     public string Username { get; set; }
     [Column("PasswordSalt")]
