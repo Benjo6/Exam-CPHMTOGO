@@ -1,10 +1,5 @@
 import { Company } from "@prisma/client";
-import {
-	createCompany,
-	deleteCompany,
-	getCompanyById,
-	updateCompany,
-} from "../../src/models/company.model";
+import model from "../../src/models/company.model";
 import { prismaMock } from "../../src/singleton";
 import { v4 as uuid } from "uuid";
 
@@ -22,7 +17,7 @@ test("Should create new company", async () => {
 
 	prismaMock.company.create.mockResolvedValue(company);
 
-	await expect(createCompany(company)).resolves.toEqual({
+	await expect(model.createCompany(company)).resolves.toEqual({
 		id: companyId,
 		name: "just-eat",
 		role: "Admin",
@@ -36,12 +31,15 @@ test("Should fail if id is not uuid on create", async () => {
 	const company: Company = {
 		id: "sushi",
 		name: "just-eat",
-		role: "",
+		role: "Admin",
 		loginInfoId: "indian food",
 		kontoNr: 123123123,
 		regNr: 12312,
 	};
-	await expect(createCompany(company)).rejects.toEqual(
+
+	prismaMock.company.create.mockResolvedValue(company);
+
+	await expect(model.createCompany(company)).rejects.toEqual(
 		new Error("Company.id or Company.loginInfoId is not a valid uuid")
 	);
 });
@@ -58,7 +56,9 @@ test("Throw if company.name is empty on create", async () => {
 		regNr: 12312,
 	};
 
-	expect(createCompany(company)).rejects.toEqual(
+	prismaMock.company.create.mockResolvedValue(company);
+
+	await expect(model.createCompany(company)).rejects.toEqual(
 		new Error("Company.name is empty")
 	);
 });
@@ -75,7 +75,7 @@ test("Throw if company.role is empty on create", async () => {
 		regNr: 12312,
 	};
 
-	expect(createCompany(company)).rejects.toEqual(
+	await expect(model.createCompany(company)).rejects.toEqual(
 		new Error("Company.role is empty")
 	);
 });
@@ -92,7 +92,7 @@ test("Throw if company.kontoNr is empty on create", async () => {
 		regNr: 12312,
 	};
 
-	expect(createCompany(company)).rejects.toEqual(
+	await expect(model.createCompany(company)).rejects.toEqual(
 		new Error("Company.kontoNr is zero or less")
 	);
 });
@@ -109,7 +109,7 @@ test("Throw if company.regNr is empty on create", async () => {
 		regNr: 0,
 	};
 
-	expect(createCompany(company)).rejects.toEqual(
+	await expect(model.createCompany(company)).rejects.toEqual(
 		new Error("Company.regNr is zero or less")
 	);
 });
@@ -128,7 +128,7 @@ test("Should update company", async () => {
 
 	prismaMock.company.create.mockResolvedValue(company);
 
-	await expect(createCompany(company)).resolves.toEqual({
+	await expect(model.createCompany(company)).resolves.toEqual({
 		id: companyId,
 		name: "just-eat",
 		role: "Admin",
@@ -147,7 +147,7 @@ test("Should fail if id is not uuid on update", async () => {
 		kontoNr: 123123123,
 		regNr: 12312,
 	};
-	await expect(updateCompany(company)).rejects.toEqual(
+	await expect(model.updateCompany(company)).rejects.toEqual(
 		new Error("Company.id or Company.loginInfoId is not a valid uuid")
 	);
 });
@@ -164,7 +164,7 @@ test("Throw if company.name is empty on update", async () => {
 		regNr: 12312,
 	};
 
-	expect(updateCompany(company)).rejects.toEqual(
+	await expect(model.updateCompany(company)).rejects.toEqual(
 		new Error("Company.name is empty")
 	);
 });
@@ -181,7 +181,7 @@ test("Throw if company.role is empty on update", async () => {
 		regNr: 12312,
 	};
 
-	expect(updateCompany(company)).rejects.toEqual(
+	await expect(model.updateCompany(company)).rejects.toEqual(
 		new Error("Company.role is empty")
 	);
 });
@@ -198,7 +198,7 @@ test("Throw if company.kontoNr is empty on update", async () => {
 		regNr: 12312,
 	};
 
-	expect(updateCompany(company)).rejects.toEqual(
+	await expect(model.updateCompany(company)).rejects.toEqual(
 		new Error("Company.kontoNr is zero or less")
 	);
 });
@@ -215,7 +215,7 @@ test("Throw if company.regNr is empty on update", async () => {
 		regNr: 0,
 	};
 
-	expect(updateCompany(company)).rejects.toEqual(
+	await expect(model.updateCompany(company)).rejects.toEqual(
 		new Error("Company.regNr is zero or less")
 	);
 });
@@ -234,7 +234,7 @@ test("Should get company by id", async () => {
 
 	prismaMock.company.findUnique.mockResolvedValue(company);
 
-	await expect(getCompanyById(company.id)).resolves.toEqual({
+	await expect(model.getCompanyById(company.id)).resolves.toEqual({
 		id: companyId,
 		name: "just-eat",
 		role: "Admin",
@@ -255,7 +255,7 @@ test("Should fail when getting company with an invalid id", async () => {
 		regNr: 12312,
 	};
 
-	await expect(getCompanyById(company.id)).rejects.toEqual(
+	await expect(model.getCompanyById(company.id)).rejects.toEqual(
 		new Error("Id is not a valid uuid")
 	);
 });
@@ -274,7 +274,7 @@ test("should delete company by id", async () => {
 
 	prismaMock.company.findUnique.mockResolvedValue(company);
 
-	await expect(deleteCompany(company.id)).resolves.toEqual(null);
+	await expect(model.deleteCompany(company.id)).resolves.toEqual(null);
 });
 
 test("should fail when deleting a company with an invalid id", async () => {
@@ -288,7 +288,7 @@ test("should fail when deleting a company with an invalid id", async () => {
 		regNr: 12312,
 	};
 
-	await expect(deleteCompany(company.id)).rejects.toEqual(
+	await expect(model.deleteCompany(company.id)).rejects.toEqual(
 		new Error("Id is not a valid uuid")
 	);
 });

@@ -2,7 +2,7 @@ import { Company } from "@prisma/client";
 import prisma from "../../prisma/client";
 import isValidUuid from "../utils/checkUuid";
 
-function createCompany(company: Company) {
+async function createCompany(company: Company) {
 	try {
 		if (isValidCompany(company))
 			return prisma.company.create({
@@ -13,7 +13,7 @@ function createCompany(company: Company) {
 	}
 }
 
-function updateCompany(company: Company) {
+async function updateCompany(company: Company) {
 	try {
 		if (isValidCompany(company))
 			return prisma.company.update({
@@ -27,7 +27,7 @@ function updateCompany(company: Company) {
 	}
 }
 
-function getCompanyById(id: string) {
+async function getCompanyById(id: string) {
 	try {
 		if (!isValidUuid(id)) throw new Error("Id is not a valid uuid");
 		return prisma.company.findUnique({
@@ -40,7 +40,7 @@ function getCompanyById(id: string) {
 	}
 }
 
-function deleteCompany(id: string) {
+async function deleteCompany(id: string) {
 	try {
 		if (!isValidUuid(id)) throw new Error("Id is not a valid uuid");
 		prisma.company.delete({
