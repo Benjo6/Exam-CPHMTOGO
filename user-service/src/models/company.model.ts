@@ -2,10 +2,10 @@ import { Company } from "@prisma/client";
 import prisma from "../../prisma/client";
 import isValidUuid from "../utils/checkUuid";
 
-export async function createCompany(company: Company) {
+function createCompany(company: Company) {
 	try {
 		if (isValidCompany(company))
-			return await prisma.company.create({
+			return prisma.company.create({
 				data: company,
 			});
 	} catch (e: any) {
@@ -13,10 +13,10 @@ export async function createCompany(company: Company) {
 	}
 }
 
-export async function updateCompany(company: Company) {
+function updateCompany(company: Company) {
 	try {
 		if (isValidCompany(company))
-			return await prisma.company.update({
+			return prisma.company.update({
 				where: {
 					id: company.id,
 				},
@@ -27,10 +27,10 @@ export async function updateCompany(company: Company) {
 	}
 }
 
-export async function getCompanyById(id: string) {
+function getCompanyById(id: string) {
 	try {
 		if (!isValidUuid(id)) throw new Error("Id is not a valid uuid");
-		return await prisma.company.findUnique({
+		return prisma.company.findUnique({
 			where: {
 				id,
 			},
@@ -40,10 +40,10 @@ export async function getCompanyById(id: string) {
 	}
 }
 
-export async function deleteCompany(id: string) {
+function deleteCompany(id: string) {
 	try {
 		if (!isValidUuid(id)) throw new Error("Id is not a valid uuid");
-		await prisma.company.delete({
+		prisma.company.delete({
 			where: {
 				id,
 			},
@@ -63,3 +63,10 @@ function isValidCompany(company: Company) {
 	if (company.regNr <= 0) throw new Error("Company.regNr is zero or less");
 	return true;
 }
+
+export default {
+	createCompany,
+	getCompanyById,
+	updateCompany,
+	deleteCompany,
+};

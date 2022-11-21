@@ -4,7 +4,7 @@ import {
 	deleteCompany,
 	getCompanyById,
 	updateCompany,
-} from "../../src/mappers/company";
+} from "../../src/models/company.model";
 import { prismaMock } from "../../src/singleton";
 import { v4 as uuid } from "uuid";
 

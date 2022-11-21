@@ -1,7 +1,7 @@
 import { prismaMock } from "../../src/singleton";
 import { v4 as uuid } from "uuid";
 import { Customer } from "@prisma/client";
-import { createCustomer } from "../../src/mappers/customer";
+import { createCustomer } from "../../src/models/customer.model";
 
 test("Should create new customer", async () => {
 	const customerId = uuid();
