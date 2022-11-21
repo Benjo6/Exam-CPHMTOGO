@@ -126,9 +126,9 @@ test("Should update company", async () => {
 		regNr: 12312,
 	};
 
-	prismaMock.company.create.mockResolvedValue(company);
+	prismaMock.company.update.mockResolvedValue(company);
 
-	await expect(model.createCompany(company)).resolves.toEqual({
+	await expect(model.updateCompany(company)).resolves.toEqual({
 		id: companyId,
 		name: "just-eat",
 		role: "Admin",
@@ -147,6 +147,8 @@ test("Should fail if id is not uuid on update", async () => {
 		kontoNr: 123123123,
 		regNr: 12312,
 	};
+	prismaMock.company.update.mockResolvedValue(company);
+
 	await expect(model.updateCompany(company)).rejects.toEqual(
 		new Error("Company.id or Company.loginInfoId is not a valid uuid")
 	);

@@ -366,6 +366,27 @@ test("Throw if employee.address is empty on update", async () => {
 	);
 });
 
+test("Throw if employee.active is empty on update", async () => {
+	const employeeId = uuid();
+	const loginInfoId = uuid();
+	const employee = {
+		id: employeeId,
+		firstname: "Abed",
+		lastname: "Hariri",
+		loginInfoId,
+		address: "",
+		role: "Employee",
+		kontoNr: 123123123,
+		regNr: 1233,
+	};
+
+	prismaMock.employee.update.mockRejectedValue(employee);
+
+	await expect(model.updateEmployee(employee as any)).rejects.toThrow(
+		new Error("Employee.active is empty")
+	);
+});
+
 test("Throw if employee.kontoNr is empty on update", async () => {
 	const employeeId = uuid();
 	const loginInfoId = uuid();
