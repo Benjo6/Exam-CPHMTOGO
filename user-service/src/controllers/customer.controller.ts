@@ -1,4 +1,3 @@
-import { ICompany } from "../interfaces/company.interface";
 import { v4 as uuid } from "uuid";
 import { ICustomer } from "../interfaces/customer.interface";
 import mapper from "../models/customer.model";
