@@ -1,7 +1,6 @@
 import { ICompany } from "../interfaces/company.interface";
 import { v4 as uuid } from "uuid";
 import mapper from "../models/company.model";
-import { Company } from "@prisma/client";
 
 function createCompany(company: ICompany) {
 	return mapper.createCompany({
@@ -14,10 +13,6 @@ function createCompany(company: ICompany) {
 	});
 }
 
-function getCompanyById(id: string) {
-	return mapper.getCompanyById(id);
-}
-
 function updateCompany(company: ICompany, id: string) {
 	return mapper.updateCompany({
 		id,
@@ -27,6 +22,10 @@ function updateCompany(company: ICompany, id: string) {
 		kontoNr: company.kontoNr,
 		regNr: company.regNr,
 	});
+}
+
+function getCompanyById(id: string) {
+	return mapper.getCompanyById(id);
 }
 
 function deleteCompany(id: string) {

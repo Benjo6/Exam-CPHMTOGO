@@ -2,13 +2,54 @@ import { Customer } from "@prisma/client";
 import prisma from "../../prisma/client";
 import isValidUuid from "../utils/checkUuid";
 
-export async function createCustomer(customer: Customer) {
+async function createCustomer(customer: Customer) {
 	try {
 		if (isValidCustomer(customer))
-			return await prisma.customer.create({
+			return prisma.customer.create({
 				data: customer,
 			});
-	} catch (e: unknown) {
+	} catch (e: any) {
+		throw e;
+	}
+}
+
+async function updateCustomer(customer: Customer) {
+	try {
+		if (isValidCustomer(customer))
+			return prisma.customer.update({
+				where: {
+					id: customer.id,
+				},
+				data: customer,
+			});
+	} catch (e: any) {
+		throw e;
+	}
+}
+
+async function getCustomerById(id: string) {
+	try {
+		if (!isValidUuid(id)) throw new Error("Id is not a valid uuid");
+		return prisma.customer.findUnique({
+			where: {
+				id,
+			},
+		});
+	} catch (e: any) {
+		throw e;
+	}
+}
+
+async function deletCustomer(id: string) {
+	try {
+		if (!isValidUuid(id)) throw new Error("Id is not a valid uuid");
+		prisma.customer.delete({
+			where: {
+				id,
+			},
+		});
+		return null;
+	} catch (e: any) {
 		throw e;
 	}
 }
@@ -29,3 +70,10 @@ function isValidCustomer(customer: Customer) {
 	// 	throw new Error("Cusotmer.birtday is empty or invalid");
 	return true;
 }
+
+export default {
+	createCustomer,
+	updateCustomer,
+	getCustomerById,
+	deletCustomer,
+};

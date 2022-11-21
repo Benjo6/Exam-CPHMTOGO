@@ -12,7 +12,7 @@ router.get("/:companyId", async (req: ICompanyReq, res) => {
 	}
 });
 
-router.post("/create", async (req: ICompanyReq, res) => {
+router.post("/", async (req: ICompanyReq, res) => {
 	try {
 		res.json(await controller.createCompany(req.body));
 	} catch (e: any) {
