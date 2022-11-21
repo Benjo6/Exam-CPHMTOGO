@@ -1,7 +1,7 @@
-import { prismaMock } from "./../singleton";
+import { prismaMock } from "../../src/singleton";
 import { v4 as uuid } from "uuid";
 import { Customer } from "@prisma/client";
-import { createCustomer } from "../mappers/customer";
+import { createCustomer } from "../../src/mappers/customer";
 
 test("Should create new customer", async () => {
 	const customerId = uuid();
@@ -125,25 +125,6 @@ test("Throw if customer.phone is more than 8 digit on create", () => {
 	);
 });
 
-// test("Throw if customer.birthdate is empty on create", () => {
-// 	const customerId = uuid();
-// 	const loginInfoId = uuid();
-// 	const customer: Customer = {
-// 		id: customerId,
-// 		firstname: "Abed",
-// 		lastname: "Hariri",
-// 		phone: 12345678,
-// 		birtdate: new Date(),
-// 		address: "Fakestreet 23 3000 Helsingør",
-// 		loginInfoId: loginInfoId,
-// 		role: "Customer",
-// 	};
-
-// 	expect(createCustomer(customer)).resolves.toEqual(
-// 		new Error("Cusotmer.birtday is empty or invalid")
-// 	);
-// });
-
 test("Throw if customer.address is empty on create", () => {
 	const customerId = uuid();
 	const loginInfoId = uuid();
@@ -200,6 +181,25 @@ test("Throw if customer.role is empty on create", () => {
 		new Error("Customer.role is empty")
 	);
 });
+
+// test("Throw if customer.birthdate is empty on create", () => {
+// 	const customerId = uuid();
+// 	const loginInfoId = uuid();
+// 	const customer: Customer = {
+// 		id: customerId,
+// 		firstname: "Abed",
+// 		lastname: "Hariri",
+// 		phone: 12345678,
+// 		birtdate: new Date(""),
+// 		address: "Fakestreet 23 3000 Helsingør",
+// 		loginInfoId: loginInfoId,
+// 		role: "Customer",
+// 	};
+
+// 	expect(createCustomer(customer)).resolves.toEqual(
+// 		new Error("Cusotmer.birtday is empty or invalid")
+// 	);
+// });
 
 // test("Should update customer", () => {});
 // test("Should fail if id is not uuid on update", () => {});

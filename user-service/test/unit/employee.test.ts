@@ -1,4 +1,4 @@
-import { prismaMock } from "./../singleton";
+import { prismaMock } from "../../src/singleton";
 import { v4 as uuid } from "uuid";
 
 test("Should create new employee", () => {});

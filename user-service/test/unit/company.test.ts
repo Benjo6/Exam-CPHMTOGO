@@ -4,8 +4,8 @@ import {
 	deleteCompany,
 	getCompanyById,
 	updateCompany,
-} from "../mappers/company";
-import { prismaMock } from "./../singleton";
+} from "../../src/mappers/company";
+import { prismaMock } from "../../src/singleton";
 import { v4 as uuid } from "uuid";
 
 test("Should create new company", async () => {

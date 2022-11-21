@@ -1,5 +1,5 @@
 import { Company } from "@prisma/client";
-import prisma from "../prisma/client";
+import prisma from "../../prisma/client";
 import isValidUuid from "../utils/checkUuid";
 
 export async function createCompany(company: Company) {
