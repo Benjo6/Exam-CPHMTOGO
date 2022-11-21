@@ -1,33 +1,45 @@
-datasource db {
-    provider = "postgresql"
-    url      = env("DATABASE_URL")
-}
-
 generator client {
     provider = "prisma-client-js"
 }
 
 generator erd {
-    provider = "prisma-erd-generator"
+    provider                  = "prisma-erd-generator"
+    includeRelationFromFields = "true"
 }
 
-model Employee {
-    id          String  @id @unique @db.Uuid
-    firstname   String
-    lastname    String
-    active      Boolean
-    loginInfoId String  @db.Uuid
-    address     String
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URI")
+}
+
+model Company {
+    id          String @id @db.Uuid
+    name        String
+    role        String @default("Admin")
+    loginInfoId String
     kontoNr     Int
     regNr       Int
 }
 
 model Customer {
-    id          String   @id @unique @db.Uuid
+    id          String   @id @db.Uuid
     firstname   String
     lastname    String
     phone       Int
     birtdate    DateTime
     address     String
     loginInfoId String
+    role        String   @default("Customer")
+}
+
+model Employee {
+    id          String  @id @db.Uuid
+    firstname   String
+    lastname    String
+    active      Boolean
+    loginInfoId String  @db.Uuid
+    address     String
+    role        String  @default("Employee")
+    kontoNr     Int
+    regNr       Int
 }
