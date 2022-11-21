@@ -25,7 +25,7 @@ function isValidCustomer(customer: Customer) {
 	if (customer.role.length === 0) throw new Error("Customer.role is empty");
 	if (customer.address.length === 0)
 		throw new Error("Customer.address is empty");
-	if (customer.birtdate.toLocaleString() === "")
-		throw new Error("Cusotmer.birtday is empty or invalid");
+	// if (customer.birtdate.toLocaleString() === "")
+	// 	throw new Error("Cusotmer.birtday is empty or invalid");
 	return true;
 }
