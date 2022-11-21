@@ -41,7 +41,7 @@ test("Should fail if id is not uuid on create", async () => {
 		kontoNr: 123123123,
 		regNr: 12312,
 	};
-	await expect(createCompany(company)).resolves.toEqual(
+	await expect(createCompany(company)).rejects.toEqual(
 		new Error("Company.id or Company.loginInfoId is not a valid uuid")
 	);
 });
@@ -58,7 +58,7 @@ test("Throw if company.name is empty on create", async () => {
 		regNr: 12312,
 	};
 
-	expect(createCompany(company)).resolves.toEqual(
+	expect(createCompany(company)).rejects.toEqual(
 		new Error("Company.name is empty")
 	);
 });
@@ -75,7 +75,7 @@ test("Throw if company.role is empty on create", async () => {
 		regNr: 12312,
 	};
 
-	expect(createCompany(company)).resolves.toEqual(
+	expect(createCompany(company)).rejects.toEqual(
 		new Error("Company.role is empty")
 	);
 });
@@ -92,7 +92,7 @@ test("Throw if company.kontoNr is empty on create", async () => {
 		regNr: 12312,
 	};
 
-	expect(createCompany(company)).resolves.toEqual(
+	expect(createCompany(company)).rejects.toEqual(
 		new Error("Company.kontoNr is zero or less")
 	);
 });
@@ -109,7 +109,7 @@ test("Throw if company.regNr is empty on create", async () => {
 		regNr: 0,
 	};
 
-	expect(createCompany(company)).resolves.toEqual(
+	expect(createCompany(company)).rejects.toEqual(
 		new Error("Company.regNr is zero or less")
 	);
 });
@@ -147,7 +147,7 @@ test("Should fail if id is not uuid on update", async () => {
 		kontoNr: 123123123,
 		regNr: 12312,
 	};
-	await expect(updateCompany(company)).resolves.toEqual(
+	await expect(updateCompany(company)).rejects.toEqual(
 		new Error("Company.id or Company.loginInfoId is not a valid uuid")
 	);
 });
@@ -164,7 +164,7 @@ test("Throw if company.name is empty on update", async () => {
 		regNr: 12312,
 	};
 
-	expect(updateCompany(company)).resolves.toEqual(
+	expect(updateCompany(company)).rejects.toEqual(
 		new Error("Company.name is empty")
 	);
 });
@@ -181,7 +181,7 @@ test("Throw if company.role is empty on update", async () => {
 		regNr: 12312,
 	};
 
-	expect(updateCompany(company)).resolves.toEqual(
+	expect(updateCompany(company)).rejects.toEqual(
 		new Error("Company.role is empty")
 	);
 });
@@ -198,7 +198,7 @@ test("Throw if company.kontoNr is empty on update", async () => {
 		regNr: 12312,
 	};
 
-	expect(updateCompany(company)).resolves.toEqual(
+	expect(updateCompany(company)).rejects.toEqual(
 		new Error("Company.kontoNr is zero or less")
 	);
 });
@@ -215,7 +215,7 @@ test("Throw if company.regNr is empty on update", async () => {
 		regNr: 0,
 	};
 
-	expect(updateCompany(company)).resolves.toEqual(
+	expect(updateCompany(company)).rejects.toEqual(
 		new Error("Company.regNr is zero or less")
 	);
 });
@@ -255,7 +255,7 @@ test("Should fail when getting company with an invalid id", async () => {
 		regNr: 12312,
 	};
 
-	await expect(getCompanyById(company.id)).resolves.toEqual(
+	await expect(getCompanyById(company.id)).rejects.toEqual(
 		new Error("Id is not a valid uuid")
 	);
 });
@@ -288,7 +288,7 @@ test("should fail when deleting a company with an invalid id", async () => {
 		regNr: 12312,
 	};
 
-	await expect(deleteCompany(company.id)).resolves.toEqual(
+	await expect(deleteCompany(company.id)).rejects.toEqual(
 		new Error("Id is not a valid uuid")
 	);
 });

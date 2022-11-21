@@ -23,7 +23,7 @@ export async function updateCompany(company: Company) {
 				data: company,
 			});
 	} catch (e: unknown) {
-		return e;
+		throw e;
 	}
 }
 
@@ -36,7 +36,7 @@ export async function getCompanyById(id: string) {
 			},
 		});
 	} catch (e: unknown) {
-		return e;
+		throw e;
 	}
 }
 
@@ -50,7 +50,7 @@ export async function deleteCompany(id: string) {
 		});
 		return null;
 	} catch (e: unknown) {
-		return e;
+		throw e;
 	}
 }
 

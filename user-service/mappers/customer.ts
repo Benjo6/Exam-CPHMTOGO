@@ -9,7 +9,7 @@ export async function createCustomer(customer: Customer) {
 				data: customer,
 			});
 	} catch (e: unknown) {
-		return e;
+		throw e;
 	}
 }
 

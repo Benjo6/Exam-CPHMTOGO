@@ -44,7 +44,7 @@ test("Should fail if id is not a valid uuid on create", () => {
 		role: "Customer",
 	};
 
-	expect(createCustomer(customer)).resolves.toEqual(
+	expect(createCustomer(customer)).rejects.toEqual(
 		new Error("Customer.id or customer.loginInfoId is not a valid uuid")
 	);
 });
@@ -63,7 +63,7 @@ test("Throw if customer.fistname is empty on create", () => {
 		role: "Customer",
 	};
 
-	expect(createCustomer(customer)).resolves.toEqual(
+	expect(createCustomer(customer)).rejects.toEqual(
 		new Error("Customer.firstname is empty")
 	);
 });
@@ -82,7 +82,7 @@ test("Throw if customer.lastname is empty on create", () => {
 		role: "Customer",
 	};
 
-	expect(createCustomer(customer)).resolves.toEqual(
+	expect(createCustomer(customer)).rejects.toEqual(
 		new Error("Customer.lastname is empty")
 	);
 });
@@ -101,7 +101,7 @@ test("Throw if customer.phone is less than 8 digit on create", () => {
 		role: "Customer",
 	};
 
-	expect(createCustomer(customer)).resolves.toEqual(
+	expect(createCustomer(customer)).rejects.toEqual(
 		new Error("Customer.phone is not 8 digits")
 	);
 });
@@ -120,7 +120,7 @@ test("Throw if customer.phone is more than 8 digit on create", () => {
 		role: "Customer",
 	};
 
-	expect(createCustomer(customer)).resolves.toEqual(
+	expect(createCustomer(customer)).rejects.toEqual(
 		new Error("Customer.phone is not 8 digits")
 	);
 });
@@ -158,7 +158,7 @@ test("Throw if customer.address is empty on create", () => {
 		role: "Customer",
 	};
 
-	expect(createCustomer(customer)).resolves.toEqual(
+	expect(createCustomer(customer)).rejects.toEqual(
 		new Error("Customer.address is empty")
 	);
 });
@@ -177,7 +177,7 @@ test("Throw if customer.phone is more than 8 digit on create", () => {
 		role: "Customer",
 	};
 
-	expect(createCustomer(customer)).resolves.toEqual(
+	expect(createCustomer(customer)).rejects.toEqual(
 		new Error("Customer.phone is not 8 digits")
 	);
 });
@@ -196,7 +196,7 @@ test("Throw if customer.role is empty on create", () => {
 		role: "",
 	};
 
-	expect(createCustomer(customer)).resolves.toEqual(
+	expect(createCustomer(customer)).rejects.toEqual(
 		new Error("Customer.role is empty")
 	);
 });
