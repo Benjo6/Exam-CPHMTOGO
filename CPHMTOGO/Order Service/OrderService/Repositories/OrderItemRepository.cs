@@ -1,20 +1,17 @@
 using Core.Repository;
 using Microsoft.EntityFrameworkCore;
 using OrderService.Domain;
+using OrderService.Infrastructure;
 using OrderService.Repositories.Interfaces;
 
 namespace OrderService.Repositories;
 
-public class OrderItemRepository : BaseAsyncRepository<OrderItem>,IOrderItemRepository
-
+public class OrderItemRepository : RepositoryBase<OrderItem>,IOrderItemRepository
 {
-    public OrderItemRepository(DbContext dbContext, DbSet<OrderItem> contextCollection) : base(dbContext, contextCollection)
+    public OrderItemRepository(RepositoryContext dbContext ) : base(dbContext)
     {
     }
     
-    protected override IQueryable<OrderItem> DefaultInclude()
-        => base.DefaultInclude().Include(x => x.Order);
-
 }
 
 

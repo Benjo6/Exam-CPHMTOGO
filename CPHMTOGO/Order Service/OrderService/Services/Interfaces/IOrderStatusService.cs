@@ -4,7 +4,7 @@ using OrderService.Domain.Dto;
 
 namespace OrderService.Services.Interfaces;
 
-public interface IOrderStatusService : IBaseService<OrderStatus,OrderStatusDto>
+public interface IOrderStatusService : IBaseService<OrderStatus, OrderStatusDto>
 {
     
 }

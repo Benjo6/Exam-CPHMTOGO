@@ -1,35 +1,34 @@
 using Microsoft.EntityFrameworkCore;
 using OrderService.Infrastructure;
-using OrderService.Repositories;
-using OrderService.Repositories.Interfaces;
-using OrderService.Services;
-using OrderService.Services.Interfaces;
+using OrderService.IoC;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    options.EnableEndpointRouting = false;
+});
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<IOrderService, OrderService.Services.OrderService>();
-builder.Services.AddScoped<IOrderStatusService, OrderStatusService>();
-builder.Services.AddScoped<IOrderItemService, OrderItemService>();
-builder.Services.AddScoped<IReceiptService, ReceiptService>();
-
-builder.Services.AddScoped<IOrderRepository, OrderRepository>();
-builder.Services.AddScoped<IOrderStatusRepository, OrderStatusRepository>();
-builder.Services.AddScoped<IOrderItemRepository, OrderItemRepository>();
-builder.Services.AddScoped<IReceiptRepository, ReceiptRepository>();
-
-
-builder.Services.AddDbContext<PostgresContext>(option =>
+builder.Services.AddDbContext<RepositoryContext>(option =>
 {
     option.UseNpgsql(builder.Configuration["DbConnection"]);
 });
 
+builder.Services.AddModelRegistry();
+builder.Services.AddServicesRegistry();
+
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+// Cors Register
+builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
+{
+    builder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
+}));
 
 
 
@@ -41,6 +40,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors("corsapp");
 
 app.UseHttpsRedirection();
 

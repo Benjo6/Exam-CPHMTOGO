@@ -1,50 +1,59 @@
-
+using AutoMapper;
+using Core.Entity;
+using Core.Entity.Dtos;
 using Core.Service;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Core.Controller;
 
-[ApiController]
-public class BaseController<TEntity,TDto> : ControllerBase
+[Route("api/[Controller]")]
+public class BaseController<TEntity,TEntityDto> : ControllerBase
+    where TEntity:class, IBaseEntity
+    where TEntityDto:class,IBaseEntityDto
 {
-    protected readonly IBaseService<TEntity,TDto> _baseService;
+    protected readonly IBaseService<TEntity, TEntityDto> BaseService;
 
-    public BaseController(IBaseService<TEntity,TDto> baseService)
+    public BaseController(IBaseService<TEntity, TEntityDto> baseService)
     {
-        _baseService = baseService;
+        BaseService = baseService;
+
     }
-    
+
     [NonAction]
-    public async Task<IActionResult> AddAsync(TDto dto)
+    public virtual async Task<IActionResult> GetListAsync()
     {
-        var result = await _baseService.AddAsync(dto);
-        return Ok(result);
-    }    
-    [NonAction]
-    public async Task<IActionResult> UpdateAsync(Guid id, TDto dto)
-    {
-        var result = await _baseService.UpdateAsync(id, dto);
+        var result = await BaseService.GetAll();
         return Ok(result);
     }
     
     [NonAction]
-    public async Task<IActionResult> DeleteAsync(Guid id)
+    public virtual async Task<IActionResult> GetByIdAsync(Guid id)
     {
-        var result = await _baseService.DeleteAsync(id);
+        var result = await BaseService.GetById(id);
         return Ok(result);
     }
     
     [NonAction]
-    public async Task<IActionResult> GetByIdAsync(Guid id)
+    public virtual async Task<IActionResult> AddAsync(TEntityDto entity)
     {
-        var result = await _baseService.GetByIdAsync(id);
+        var result = await BaseService.Create(entity);
         return Ok(result);
     }
     
     [NonAction]
-    public async Task<IActionResult> GetListAsync()
+    public virtual async Task<IActionResult> UpdateAsync(Guid id,TEntityDto entity)
     {
-        var result = await _baseService.GetListAsync();
+        var result = await BaseService.Update(id,entity);
         return Ok(result);
     }
+
+    [NonAction]
+    public virtual Task<IActionResult> DeleteAsync(Guid id)
+    {
+        BaseService.Delete(id);
+        var result = BaseService.GetById(id);
+        return Task.FromResult<IActionResult>(Ok(result.IsFaulted));
+    }
+    
 }

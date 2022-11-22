@@ -3,6 +3,6 @@ using OrderService.Domain;
 
 namespace OrderService.Repositories.Interfaces;
 
-public interface IReceiptRepository : IAsyncRepository<Receipt>
+public interface IReceiptRepository : IRepositoryBase<Receipt>
 {
 }

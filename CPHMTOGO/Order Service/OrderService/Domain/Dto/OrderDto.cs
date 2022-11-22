@@ -1,11 +1,13 @@
+using Core.Entity.Dtos;
+
 namespace OrderService.Domain.Dto;
 
-public class OrderDto
+public class OrderDto : BaseEntityDto
 {
-    public Guid Id { get; set; }
-    public string Address { get; set; } = default!;
-    public string CustomerId { get; set; } = default!;
-    public string EmployeeId { get; set; } = default!;
-    public string RestaurantId { get; set; } = default!;
-    public OrderStatus OrderStatus { get; set; } = default!;
+    public string Address { get; set; }
+    public string CustomerId { get; set; }
+    public string EmployeeId { get; set; }
+    public string RestaurantId { get; set; }
+    public OrderStatus OrderStatus { get; set; }
+
 }

@@ -1,15 +1,12 @@
 using System.ComponentModel.DataAnnotations.Schema;
+using Core.Entity;
 using MessagePack;
-using OrderService.Domain.EntityHelper;
 
 namespace OrderService.Domain;
 [Table("Receipt"),MessagePackObject(keyAsPropertyName:true)]
-public class Receipt : EntityWithId<Guid>
+public class Receipt : BaseEntity
 {
-    [Column("id"),DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public Guid Id { get; set; } 
-    
-    
+
     [Column("amount")] 
     public float Amount { get; set; }
     

@@ -1,14 +1,16 @@
+using Core.Entity;
+using Core.Entity.Dtos;
+
 namespace Core.Service;
 
-
-
-public interface IBaseService<TEntity,TDto>
+public interface IBaseService<TEntity,TEntityDto> 
+    where TEntity:class,IBaseEntity
+    where TEntityDto:class,IBaseEntityDto
 {
-    Task<TDto> AddAsync(TDto writeDto);
-    Task<TDto> UpdateAsync(Guid id, TDto writeDto);
-    Task<bool> DeleteAsync(Guid id);
-
-    Task<TDto> GetByIdAsync(Guid id);
-    Task<List<TDto>> GetListAsync();
+    Task<TEntityDto> GetById(Guid id);
+    Task<IEnumerable<TEntityDto>> GetAll();
+    Task<TEntityDto> Create(TEntityDto entity);
+    Task<TEntityDto> Update(Guid guid, TEntityDto entity);
+    void Delete(Guid id);
 
 }

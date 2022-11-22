@@ -3,7 +3,7 @@ using OrderService.Domain;
 
 namespace OrderService.Repositories.Interfaces;
 
-public interface IOrderItemRepository : IAsyncRepository<OrderItem>
+public interface IOrderItemRepository : IRepositoryBase<OrderItem>
 {
     
 }

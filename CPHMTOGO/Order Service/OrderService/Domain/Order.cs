@@ -1,17 +1,14 @@
 using System.ComponentModel.DataAnnotations.Schema;
+using Core.Entity;
 using MessagePack;
-using OrderService.Domain.EntityHelper;
 
 namespace OrderService.Domain;
 [Table("Order"),MessagePackObject(keyAsPropertyName:true)]
 
-public class Order : EntityWithId<Guid>
+public class Order : BaseEntity
 {
-    [Column("id"), DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public Guid Id { get; set; }
-    
-    
-    [Column("address")] 
+
+    [Column("addressAddress")] 
     public string Address { get; set; } = default!;
 
     [Column("customerId")] public string CustomerId { get; set; } = default!;

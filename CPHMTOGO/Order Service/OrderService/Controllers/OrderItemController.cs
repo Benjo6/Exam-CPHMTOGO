@@ -1,5 +1,7 @@
+using AutoMapper;
 using Core.Controller;
 using Core.Service;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using OrderService.Domain;
 using OrderService.Domain.Dto;
@@ -17,31 +19,30 @@ public class OrderItemController: BaseController<OrderItem,OrderItemDto>
     [HttpGet]
     public async Task<IActionResult> Get()
     {
-        return await base.GetListAsync();
+        return await GetListAsync();
     }
 
     [HttpGet("{id}")]
     public async Task<IActionResult> Get([FromRoute] Guid id)
     {
-        return await base.GetByIdAsync(id);
+        return await GetByIdAsync(id);
     }
 
     [HttpPost]
-    public async Task<IActionResult> Post([FromBody] OrderItemDto orderItemDto)
+    public async Task<IActionResult> Post([FromBody] OrderItemDto dto)
     {
-        return await base.AddAsync(orderItemDto);
+        return await AddAsync(dto);
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> Put([FromRoute] Guid id, [FromBody] OrderItemDto orderItemDto)
+    public async Task<IActionResult> Put([FromRoute] Guid id, [FromBody] OrderItemDto dto)
     {
-        return await base.UpdateAsync(id, orderItemDto);
+        return await UpdateAsync(id,dto);
     }
 
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete([FromRoute] Guid id)
+    [HttpDelete]
+    public Task<IActionResult> Delete([FromRoute] Guid id)
     {
-        return await base.DeleteAsync(id);
+        return DeleteAsync(id);
     }
-    
 }

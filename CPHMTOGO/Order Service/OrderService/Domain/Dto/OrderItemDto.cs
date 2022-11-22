@@ -1,11 +1,12 @@
+using Core.Entity.Dtos;
+
 namespace OrderService.Domain.Dto;
 
-public class OrderItemDto
+public class OrderItemDto : BaseEntityDto
 {
-    public Guid Id { get; set; }
-    public string Preference { get; set; } = default!;
+    public string Preference { get; set; }
     public float Price { get; set; }
     public int Quantity { get; set; }
-    public Order Order { get; set; } = default!;
+    public Order Order { get; set; }
 
 }

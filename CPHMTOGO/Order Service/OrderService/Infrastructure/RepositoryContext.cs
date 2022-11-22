@@ -3,15 +3,16 @@ using OrderService.Domain;
 
 namespace OrderService.Infrastructure;
 
-public class PostgresContext:DbContext
+public class RepositoryContext:DbContext
 {
-    public DbSet<Receipt> Receipts => Set<Receipt>();
-    public DbSet<OrderItem> OrderItems => Set<OrderItem>();
-    public DbSet<Order> Orders => Set<Order>();
-    public DbSet<OrderStatus> OrderStatuses => Set<OrderStatus>();
+   
 
-    public PostgresContext(DbContextOptions<PostgresContext> options):base(options){}
+    public RepositoryContext(DbContextOptions<RepositoryContext> options):base(options){}
 
+    public DbSet<Receipt> Receipts { get; set; }
+    public DbSet<OrderItem> OrderItems { get; set; }
+    public DbSet<Order> Orders { get; set; }
+    public DbSet<OrderStatus> OrderStatuses { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         //Receipt

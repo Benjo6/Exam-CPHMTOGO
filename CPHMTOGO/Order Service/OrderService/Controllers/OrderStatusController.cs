@@ -1,5 +1,4 @@
 using Core.Controller;
-using Core.Service;
 using Microsoft.AspNetCore.Mvc;
 using OrderService.Domain;
 using OrderService.Domain.Dto;
@@ -10,36 +9,42 @@ namespace OrderService.Controllers;
 [Route("api/[controller]")]
 public class OrderStatusController : BaseController<OrderStatus, OrderStatusDto>
 {
+    private readonly IOrderStatusService _baseService;
+
     public OrderStatusController(IOrderStatusService baseService) : base(baseService)
     {
+        _baseService = baseService;
     }
+
     [HttpGet]
     public async Task<IActionResult> Get()
     {
-        return await base.GetListAsync();
+        return await GetListAsync();
     }
 
     [HttpGet("{id}")]
     public async Task<IActionResult> Get([FromRoute] Guid id)
     {
-        return await base.GetByIdAsync(id);
+        return await GetByIdAsync(id);
     }
 
     [HttpPost]
-    public async Task<IActionResult> Post([FromBody] OrderStatusDto orderStatusDto)
+    public async Task<IActionResult> Post()
     {
-        return await base.AddAsync(orderStatusDto);
+        return await AddAsync(new OrderStatusDto());
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> Put([FromRoute] Guid id, [FromBody] OrderStatusDto orderStatusDto)
+    public async Task<IActionResult> Put([FromRoute] Guid id, [FromBody] OrderStatusDto dto)
     {
-        return await base.UpdateAsync(id, orderStatusDto);
+        return await UpdateAsync(id,dto);
     }
 
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete([FromRoute] Guid id)
+    [HttpDelete]
+    public Task<IActionResult> Delete([FromRoute] Guid id)
     {
-        return await base.DeleteAsync(id);
+        return DeleteAsync(id);
     }
+
+
 }

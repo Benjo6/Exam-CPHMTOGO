@@ -1,3 +1,4 @@
+using AutoMapper;
 using Core.Controller;
 using Core.Service;
 using Microsoft.AspNetCore.Mvc;
@@ -9,7 +10,7 @@ namespace OrderService.Controllers;
 
 [Route("api/[controller]")]
 public class ReceiptController : BaseController<Receipt,ReceiptDto>
-{
+{ 
     public ReceiptController(IReceiptService baseService) : base(baseService)
     {
     }
@@ -27,21 +28,20 @@ public class ReceiptController : BaseController<Receipt,ReceiptDto>
     }
 
     [HttpPost]
-    public async Task<IActionResult> Post([FromBody] ReceiptDto receiptDto)
+    public async Task<IActionResult> Post([FromBody] ReceiptDto dto)
     {
-        return await AddAsync(receiptDto);
+        return await AddAsync(dto);
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> Put([FromRoute] Guid id, [FromBody] ReceiptDto receiptDto)
+    public async Task<IActionResult> Put([FromRoute] Guid id, [FromBody] ReceiptDto dto)
     {
-        return await UpdateAsync(id, receiptDto);
+        return await UpdateAsync(id,dto);
     }
 
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete([FromRoute] Guid id)
+    [HttpDelete]
+    public Task<IActionResult> Delete([FromRoute] Guid id)
     {
-        return await DeleteAsync(id);
+        return DeleteAsync(id);
     }
-    
 }

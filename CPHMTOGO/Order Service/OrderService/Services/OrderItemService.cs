@@ -1,4 +1,5 @@
 using AutoMapper;
+using Core.Repository;
 using Core.Service;
 using OrderService.Domain;
 using OrderService.Domain.Dto;
@@ -12,6 +13,4 @@ public class OrderItemService : BaseService<OrderItem,OrderItemDto>,IOrderItemSe
     public OrderItemService(IOrderItemRepository repository, IMapper mapper) : base(repository, mapper)
     {
     }
-    
-    
 }
