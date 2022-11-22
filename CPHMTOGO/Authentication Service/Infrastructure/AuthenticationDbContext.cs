@@ -9,6 +9,11 @@ public class AuthenticationDbContext : DbContext
     {
     }
 
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<LoginInfo>().Property(e => e.Id).ValueGeneratedOnAdd();
+    }
+
     public DbSet<LoginInfo> Infos { get; set; }
     
 }
