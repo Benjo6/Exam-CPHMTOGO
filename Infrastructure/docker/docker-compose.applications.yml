@@ -1,0 +1,33 @@
+version: "3"
+services:
+   ##Api Gateway##
+ api-gateway:
+  container_name: 'cphmtogo-api-gateway'
+  build:
+   context: ../Exam-CPHMTOGO/CPHMTOGO
+   dockerfile: API Gateway/Dockerfile
+  deploy: 
+   resources:
+    limits:
+     memory: 2048M
+  ports: 
+      - 5000:80
+  restart: always
+
+##Autentication Service##
+ authentication-service:
+  container_name: 'cphmtogo-authentication-service'
+  build:
+   context: ../Exam-CPHMTOGO/CPHMTOGO
+   dockerfile: Authentication Service/Dockerfile
+  deploy: 
+   resources:
+    limits:
+     memory: 2048M
+  ports:
+      - 5001:80
+  restart: always
+
+networks:
+ default:
+  name: cphmtogo

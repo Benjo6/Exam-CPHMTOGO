@@ -1,0 +1,61 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33103.184
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Authentication Service", "Authentication Service", "{93EE7248-E6B4-4111-9266-BAECE541DD87}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Order Service", "Order Service", "{6759D274-808D-4C78-AB59-94B23A4D4CDC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "User Service", "User Service", "{FAA8E0DA-49CD-4E36-BF47-9B7D1656CD87}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Payment Logging Service", "Payment Logging Service", "{ED2A7C3C-1392-4EE8-B63C-3664D19C90D6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Restaurant Service", "Restaurant Service", "{228C484A-FA07-457D-B6FB-FA740DDC3AA6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Address Service", "Address Service", "{C5C8A067-D350-47F2-AC26-DA51964C56BF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Email Service", "Email Service", "{2A67897C-190C-4F38-BE03-D76E63F439D0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Payment Service", "Payment Service", "{FD728E52-3EDF-41B7-95B7-C2F09C01BE9F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SignalR", "SignalR", "{4DDA9358-4140-4C0B-9010-DDFB4BCE89A0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestZone", "TestZone", "{0EA4D420-F25B-4FFF-966F-E4934FF89271}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "APIGateway", "API Gateway\APIGateway.csproj", "{D1789BB4-972D-4BB2-8D2B-62DEE4E3003B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthenticationService", "Authentication Service\AuthenticationService.csproj", "{7A70D858-69D2-4ED7-B9C5-4CEE8C85BBC7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthenticationServiceTests", "TestZone\AuthenticationServiceTests\AuthenticationServiceTests.csproj", "{D7759BF7-A204-4AFA-8F6F-9E3D1C91F4E5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D1789BB4-972D-4BB2-8D2B-62DEE4E3003B}.Debug|Any CPU.ActiveCfg = Release|Any CPU
+		{D1789BB4-972D-4BB2-8D2B-62DEE4E3003B}.Debug|Any CPU.Build.0 = Release|Any CPU
+		{D1789BB4-972D-4BB2-8D2B-62DEE4E3003B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1789BB4-972D-4BB2-8D2B-62DEE4E3003B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A70D858-69D2-4ED7-B9C5-4CEE8C85BBC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A70D858-69D2-4ED7-B9C5-4CEE8C85BBC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A70D858-69D2-4ED7-B9C5-4CEE8C85BBC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A70D858-69D2-4ED7-B9C5-4CEE8C85BBC7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7759BF7-A204-4AFA-8F6F-9E3D1C91F4E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7759BF7-A204-4AFA-8F6F-9E3D1C91F4E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7759BF7-A204-4AFA-8F6F-9E3D1C91F4E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7759BF7-A204-4AFA-8F6F-9E3D1C91F4E5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7A70D858-69D2-4ED7-B9C5-4CEE8C85BBC7} = {93EE7248-E6B4-4111-9266-BAECE541DD87}
+		{D7759BF7-A204-4AFA-8F6F-9E3D1C91F4E5} = {0EA4D420-F25B-4FFF-966F-E4934FF89271}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B6BC9169-44F9-4FEC-B050-16763FD8D3A5}
+	EndGlobalSection
+EndGlobal

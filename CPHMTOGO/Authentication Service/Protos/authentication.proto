@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+option csharp_namespace = "service";
+
+package authentication;
+
+import "google/protobuf/wrappers.proto";
+
+
+// The authentication service definition.
+service AuthenticationActivity {
+  rpc SignUp(SignUpRequest) returns(google.protobuf.BoolValue);
+  rpc SignIn(SignInRequest) returns(google.protobuf.BoolValue);
+  rpc ChangePassword(ChangePasswordRequest) returns(google.protobuf.BoolValue);
+}
+
+// Sign in request message 
+message SignInRequest {
+  string username = 1;
+  string password = 2;
+}
+//Request to sign up
+message SignUpRequest{
+  string email = 1;
+  string username =2;
+  string password = 3;
+}
+
+//Change password request
+message ChangePasswordRequest{
+  string username = 1;
+  string newPassword = 2;
+}
