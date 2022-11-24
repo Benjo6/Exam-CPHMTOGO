@@ -2,7 +2,7 @@ version: "2.1"
 orbs:
   node: circleci/node@5.0.2
 jobs:
-  test:
+  user-service:
     executor:
       name: node/default
     steps:
@@ -16,4 +16,4 @@ jobs:
 workflows:
   test_my_app:
     jobs:
-      - test
+      - user-service
