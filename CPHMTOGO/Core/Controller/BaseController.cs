@@ -42,18 +42,28 @@ public class BaseController<TEntity,TEntityDto> : ControllerBase
     }
     
     [NonAction]
-    public virtual async Task<IActionResult> UpdateAsync(Guid id,TEntityDto entity)
+    public virtual async Task<IActionResult> UpdateAsync(TEntityDto entity)
     {
-        var result = await BaseService.Update(id,entity);
+        var result =  BaseService.Update(entity);
+        if (!result.IsCompletedSuccessfully)
+        {
+            return BadRequest(result);
+        }
+
+        if (result.Result is null)
+        {
+            return NoContent();
+        }
+
         return Ok(result);
+
     }
 
     [NonAction]
-    public virtual Task<IActionResult> DeleteAsync(Guid id)
+    public virtual Task<bool> DeleteAsync(Guid id)
     {
-        BaseService.Delete(id);
-        var result = BaseService.GetById(id);
-        return Task.FromResult<IActionResult>(Ok(result.IsFaulted));
+        var result = BaseService.Delete(id);
+        return result;
     }
     
 }

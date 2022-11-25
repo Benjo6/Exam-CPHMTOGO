@@ -34,13 +34,13 @@ public class ReceiptController : BaseController<Receipt,ReceiptDto>
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> Put([FromRoute] Guid id, [FromBody] ReceiptDto dto)
+    public async Task<IActionResult> Put( ReceiptDto dto)
     {
-        return await UpdateAsync(id,dto);
+        return await UpdateAsync(dto);
     }
 
     [HttpDelete]
-    public Task<IActionResult> Delete([FromRoute] Guid id)
+    public Task<bool> Delete( Guid id)
     {
         return DeleteAsync(id);
     }

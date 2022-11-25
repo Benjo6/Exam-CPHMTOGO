@@ -9,18 +9,20 @@ public class Order : BaseEntity
 {
 
     [Column("addressAddress")] 
-    public string Address { get; set; } = default!;
+    public Guid Address { get; set; } 
 
-    [Column("customerId")] public string CustomerId { get; set; } = default!;
+    [Column("customerId")] public Guid CustomerId { get; set; } 
 
-    [Column("employeeId")] public string EmployeeId { get; set; } = default!;
+    [Column("employeeId")] public Guid EmployeeId { get; set; } 
     
-    [Column("restaurantId")] public string RestaurantId { get; set; }
+    [Column("restaurantId")] public Guid RestaurantId { get; set; }
     
-    [Column("orderStatusId")] 
-    public string OrderStatusId { get; set; }= default!;
+    [Column("ordreStatusId")] 
+    public Guid OrderStatusId { get; set; }
     
-    public OrderStatus OrderStatus { get; set; } = default!;
+    public OrderStatus OrderStatus { get; set; } 
+
+
     
 
 }

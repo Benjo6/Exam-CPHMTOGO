@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices;
 using AutoMapper;
 using Core.Controller;
 using Core.Service;
@@ -12,8 +13,11 @@ namespace OrderService.Controllers;
 [Route("api/[controller]")]
 public class OrderController : BaseController<Order,OrderDto>
 {
+    private readonly IOrderService _baseService;
+
     public OrderController(IOrderService baseService) : base(baseService)
     {
+        _baseService = baseService;
     }
     
     [HttpGet]
@@ -29,19 +33,19 @@ public class OrderController : BaseController<Order,OrderDto>
     }
 
     [HttpPost]
-    public async Task<IActionResult> Post([FromBody] OrderDto dto)
+    public async Task<OrderDto> CreateOrder(Guid address, Guid customerId, Guid employeeId, Guid restaurantId, [FromBody] List<CreateOrderItemDto> orderDtos)
     {
-        return await AddAsync(dto);
+       return await _baseService.CreateOrderTask(new OrderDto{Address = address,RestaurantId = restaurantId,CustomerId = customerId,EmployeeId = employeeId},orderDtos);
     }
 
-    [HttpPut("{id}")]
-    public async Task<IActionResult> Put([FromRoute] Guid id, [FromBody] OrderDto dto)
+    [HttpPut]
+    public async Task<IActionResult> Put( OrderDto dto)
     {
-        return await UpdateAsync(id,dto);
+        return await UpdateAsync(dto);
     }
 
     [HttpDelete]
-    public Task<IActionResult> Delete([FromRoute] Guid id)
+    public Task<bool> Delete( Guid id)
     {
         return DeleteAsync(id);
     }

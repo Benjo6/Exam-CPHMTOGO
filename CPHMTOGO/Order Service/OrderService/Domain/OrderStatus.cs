@@ -3,7 +3,7 @@ using Core.Entity;
 using MessagePack;
 
 namespace OrderService.Domain;
-[Table("OrderStatus"),MessagePackObject(keyAsPropertyName:true)]
+[Table("OrdreStatus"),MessagePackObject(keyAsPropertyName:true)]
 public class OrderStatus : BaseEntity
 {
 
@@ -12,6 +12,7 @@ public class OrderStatus : BaseEntity
     public DateTime TimeStamp { get; set; }
     
     [Column("status")] 
-    public Status Status { get; set; }
+    public string Status { get; set; }
+    
     
 }

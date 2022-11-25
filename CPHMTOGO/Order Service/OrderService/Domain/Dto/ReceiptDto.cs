@@ -4,8 +4,9 @@ namespace OrderService.Domain.Dto;
 
 public class ReceiptDto : BaseEntityDto
 {
-    public float Amount { get; set; }
+    public double Amount { get; set; }
     public DateTime Time { get; set; }
-    public Order Order { get; set; }
+    public Guid OrderId { get; set; }    
+    
 
 }

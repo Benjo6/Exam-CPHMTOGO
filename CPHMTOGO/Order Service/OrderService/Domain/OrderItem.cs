@@ -13,12 +13,12 @@ public class OrderItem : BaseEntity
     public string Preference { get; set; } = default!;
     
     [Column("price")] 
-    public float Price { get; set; }
+    public double Price { get; set; }
     
     [Column("quantity")] 
     public int Quantity { get; set; }
 
-    [Column("orderId")] public string OrderId { get; set; } = default!;
+    [Column("orderId")] public Guid OrderId { get; set; } = default!;
 
     public Order Order { get; set; } = default!;
 

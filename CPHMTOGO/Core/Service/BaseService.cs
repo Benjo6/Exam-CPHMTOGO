@@ -1,7 +1,9 @@
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Core.Entity;
 using Core.Entity.Dtos;
 using Core.Repository;
+using Microsoft.EntityFrameworkCore;
 
 namespace Core.Service;
 
@@ -18,7 +20,7 @@ public class BaseService<TEntity, TEntityDto> : IBaseService<TEntity, TEntityDto
 
     public virtual async Task<TEntityDto> GetById(Guid id)
     {
-        TEntity entity =  _repository.GetById(id);
+        TEntity entity = await _repository.GetById(id);
 
         if (entity ==null)
             return null;
@@ -31,8 +33,8 @@ public class BaseService<TEntity, TEntityDto> : IBaseService<TEntity, TEntityDto
 
     public virtual async Task<IEnumerable<TEntityDto>> GetAll()
     {
-        IEnumerable<TEntity> list =  _repository.GetAll();
-        return _mapper.Map<IEnumerable<TEntityDto>>(list);
+        return _repository.GetAll().ProjectTo<TEntityDto>(_mapper.ConfigurationProvider).AsQueryable();
+
     }
 
     public virtual async Task<TEntityDto> Create(TEntityDto entityDto)
@@ -41,23 +43,19 @@ public class BaseService<TEntity, TEntityDto> : IBaseService<TEntity, TEntityDto
 
          _repository.Create(entity);
 
-        entityDto = _mapper.Map<TEntityDto>(entity);
-
-        return entityDto;
+         return _mapper.Map<TEntityDto>(entity);
     }
 
-    public virtual async Task<TEntityDto> Update(Guid id, TEntityDto entityDto)
-    {
-        TEntity entity =  _repository.GetById(id);
-   
-        _mapper.Map(entityDto, entity);
-        _repository.Update(entity);
-        entityDto = _mapper.Map(entity, entityDto);
-        return entityDto;
+    public virtual async Task<TEntityDto> Update( TEntityDto entityDto)
+    { 
+        _repository.Update(_mapper.Map<TEntity>(entityDto));
+
+        return _mapper.Map<TEntityDto>(entityDto);
     }
 
-    public void Delete(Guid id)
+    public async Task<bool> Delete(Guid id)
     {
         _repository.Delete(id);
+        return true;
     }
 }

@@ -1,9 +1,10 @@
 using System.Linq.Expressions;
+using Core.Entity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Core.Repository;
 
-public class RepositoryBase<T> :IRepositoryBase<T> where T:class
+public class RepositoryBase<T> :IRepositoryBase<T> where T:BaseEntity
 {
    private readonly DbContext _context;
    private readonly DbSet<T> _dbSet;
@@ -15,21 +16,21 @@ public class RepositoryBase<T> :IRepositoryBase<T> where T:class
    }
 
 
-   public virtual IEnumerable<T> GetAll()
+   public virtual IQueryable<T> GetAll()
    {
-      return  _dbSet.AsNoTracking().AsEnumerable();
+      return  _dbSet.AsNoTracking();
    }
 
-   public virtual IEnumerable<T> GetByCondition(Expression<Func<T, bool>> expression)
+   public virtual IQueryable<T> GetByCondition(Expression<Func<T, bool>> expression)
    {
-      return _dbSet.Where(expression).AsNoTracking().AsEnumerable();
+      return _dbSet.Where(expression).AsNoTracking();
       
    }
 
-   public virtual T GetById(Guid id)
+   public virtual async Task<T> GetById(Guid id)
    {
-      return _dbSet.Find(id);
-      
+      return await _dbSet.AsNoTracking().Where(t => t.Id == id).FirstOrDefaultAsync();
+
    }
 
    public virtual T Create(T entity)
@@ -48,7 +49,7 @@ public class RepositoryBase<T> :IRepositoryBase<T> where T:class
 
    public virtual void Delete(Guid id)
    {
-      var exist = _dbSet.Find(id);
+      T exist = _dbSet.Find(id) ?? throw new InvalidOperationException();
       _dbSet.Remove(exist);
       SaveChanges();
    }

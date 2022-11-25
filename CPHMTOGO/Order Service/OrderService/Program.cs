@@ -21,6 +21,12 @@ builder.Services.AddDbContext<RepositoryContext>(option =>
 
 builder.Services.AddModelRegistry();
 builder.Services.AddServicesRegistry();
+builder.Services.AddHttpClient("order", client =>
+{
+    client.BaseAddress = new Uri("api/");
+
+});
+
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

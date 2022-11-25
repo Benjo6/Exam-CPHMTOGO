@@ -1,13 +1,15 @@
 using Core.Entity.Dtos;
+using Microsoft.AspNetCore.Mvc;
 
 namespace OrderService.Domain.Dto;
 
 public class OrderDto : BaseEntityDto
 {
-    public string Address { get; set; }
-    public string CustomerId { get; set; }
-    public string EmployeeId { get; set; }
-    public string RestaurantId { get; set; }
-    public OrderStatus OrderStatus { get; set; }
+    public Guid Address { get; set; }
+    public Guid CustomerId { get; set; }
+    public Guid EmployeeId { get; set; }
+    public Guid RestaurantId { get; set; }
+    public Guid OrderStatusId { get; set; }
+    
 
 }

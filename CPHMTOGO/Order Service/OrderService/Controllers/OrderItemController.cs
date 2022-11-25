@@ -34,14 +34,14 @@ public class OrderItemController: BaseController<OrderItem,OrderItemDto>
         return await AddAsync(dto);
     }
 
-    [HttpPut("{id}")]
-    public async Task<IActionResult> Put([FromRoute] Guid id, [FromBody] OrderItemDto dto)
+    [HttpPut]
+    public async Task<IActionResult> Put(OrderItemDto dto)
     {
-        return await UpdateAsync(id,dto);
+        return await UpdateAsync(dto);
     }
 
     [HttpDelete]
-    public Task<IActionResult> Delete([FromRoute] Guid id)
+    public Task<bool> Delete( Guid id)
     {
         return DeleteAsync(id);
     }
