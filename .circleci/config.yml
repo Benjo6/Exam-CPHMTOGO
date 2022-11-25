@@ -10,7 +10,7 @@ jobs:
       - checkout
       - run:
           command: |
-            cd user-service
+            cd CPHMTOGO/UserService
             yarn 
             yarn test
           name: running test
@@ -21,7 +21,7 @@ jobs:
       - checkout
       - run:
           command: |
-            cd CPHMTOGO\Authentication-Service
+            cd CPHMTOGO/AuthenticationService
             dotnet build
       - run:
           command: |
@@ -34,7 +34,7 @@ jobs:
       - checkout
       - run:
           command: |
-            cd CPHMTOGO\Order-Service
+            cd CPHMTOGO/OrderService
             dotnet build
       - run:
           command: |
