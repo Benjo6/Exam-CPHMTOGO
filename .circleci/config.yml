@@ -22,7 +22,7 @@ jobs:
       - run:
           command: |
             cd CPHMTOGO/TestZone/AuthenticationServiceTests
-            winget install Microsoft.DotNet.SDK.8
+            winget install Microsoft.DotNet.SDK.7
             dotnet test
 workflows:
   test_my_app:
