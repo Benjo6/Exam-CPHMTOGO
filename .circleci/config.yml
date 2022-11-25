@@ -21,7 +21,7 @@ jobs:
       - checkout
       - run:
           command: |
-            cd CPHMTOGO/TestZone/authenticationServiceTest
+            cd CPHMTOGO/TestZone/AuthenticationServiceTests
             dotnet test
 workflows:
   test_my_app:
