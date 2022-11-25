@@ -19,10 +19,10 @@ jobs:
       name: win/default
     steps:
       - checkout
-      - run: 
+      - run:
           command: |
-          cd CPHMTOGO/TestZone/authenticationServiceTest
-          dotnet test
+            cd CPHMTOGO/TestZone/authenticationServiceTest
+            dotnet test
 workflows:
   test_my_app:
     jobs:
