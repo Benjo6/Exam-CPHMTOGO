@@ -1,0 +1,52 @@
+version: "2.1"
+orbs:
+  node: circleci/node@5.0.2
+  win: circleci/windows@5.0
+jobs:
+  user-service:
+    executor:
+      name: node/default
+    steps:
+      - checkout
+      - run:
+          command: |
+            cd CPHMTOGO/UserService
+            yarn 
+            yarn test
+          name: Running Test
+  authentication-service:
+    executor:
+      name: win/default
+    steps:
+      - checkout
+      - run:
+          command: |
+            cd CPHMTOGO/AuthenticationService
+            dotnet build
+          name: Building Solution
+      - run:
+          command: |
+            cd CPHMTOGO/TestZone/AuthenticationServiceTests
+            dotnet test
+          name: Testing Solution
+  order-service:
+    executor:
+      name: win/default
+    steps:
+      - checkout
+      - run:
+          command: |
+            cd CPHMTOGO/OrderService
+            dotnet build
+          name: Building Solution
+      - run:
+          command: |
+            cd CPHMTOGO/TestZone/OrderServiceTests
+            dotnet test
+          name: Testing Solution
+workflows:
+  test_my_app:
+    jobs:
+      - user-service
+      - authentication-service
+      - order-service

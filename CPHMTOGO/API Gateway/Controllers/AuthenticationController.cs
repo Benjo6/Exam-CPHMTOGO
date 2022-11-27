@@ -4,6 +4,7 @@ using service;
 
 namespace APIGateway.Controllers;
 
+
 public class AuthenticationController :GrpcControllerBase<AuthenticationActivity.AuthenticationActivityClient>
 {
     [HttpGet]
