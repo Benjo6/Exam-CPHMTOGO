@@ -1,8 +1,6 @@
-using System.Runtime.InteropServices;
 using AutoMapper;
 using Core.Controller;
 using Core.Service;
-using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using OrderService.Domain;
 using OrderService.Domain.Dto;
@@ -49,4 +47,21 @@ public class OrderController : BaseController<Order,OrderDto>
     {
         return DeleteAsync(id);
     }
+
+    [HttpGet("open-order")]
+    public async Task<IEnumerable<OrderDto>> GetOpenOrdersForEmployees()
+    {
+        return await _baseService.GetOpenOrders();
+
+    }
+
+    [HttpGet("number-order")]
+    public async Task<int> NumberOfOpenOrders()
+    {
+        return await _baseService.NumberOfOpenOrders();
+    }
+    
+  
+    
+    
 }

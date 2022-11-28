@@ -7,7 +7,7 @@ using OrderService.Services.Interfaces;
 
 namespace OrderService.Services;
 
-class OrderService : BaseService<Order,OrderDto>, IOrderService
+public class OrderService : BaseService<Order,OrderDto>, IOrderService
 {
     private readonly IOrderStatusService _statusService;
     private readonly IReceiptRepository _receiptRepository;
@@ -42,5 +42,17 @@ class OrderService : BaseService<Order,OrderDto>, IOrderService
         receipt.OrderId = result.Id;
         _receiptRepository.Create(_mapper.Map<Receipt>(receipt));
         return result;    
+    }
+
+    public async Task<IEnumerable<OrderDto>> GetOpenOrders()
+    {
+       var orders= _repository.GetByCondition(t => t.OrderStatus.Status == Status.STARTED.ToString());
+       return _mapper.Map<IEnumerable<OrderDto>>(orders);
+    }
+
+    public async Task<int> NumberOfOpenOrders()
+    {
+        var orders =  _repository.GetByCondition(t => t.OrderStatus.Status == Status.STARTED.ToString());
+        return orders.Count();
     }
 }

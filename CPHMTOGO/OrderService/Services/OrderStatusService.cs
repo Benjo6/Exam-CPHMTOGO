@@ -8,7 +8,7 @@ using OrderService.Services.Interfaces;
 
 namespace OrderService.Services;
 
-class OrderStatusService : BaseService<OrderStatus,OrderStatusDto> ,IOrderStatusService
+public class OrderStatusService : BaseService<OrderStatus,OrderStatusDto> ,IOrderStatusService
 {
     private IOrderRepository _orderRepository;
     public OrderStatusService(IOrderStatusRepository repository, IMapper mapper, IOrderRepository orderRepository) : base(repository, mapper)

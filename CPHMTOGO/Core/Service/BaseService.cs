@@ -20,7 +20,7 @@ public class BaseService<TEntity, TEntityDto> : IBaseService<TEntity, TEntityDto
 
     public virtual async Task<TEntityDto> GetById(Guid id)
     {
-        TEntity entity = await _repository.GetById(id);
+        TEntity? entity = await _repository.GetById(id);
 
         if (entity ==null)
             return null;

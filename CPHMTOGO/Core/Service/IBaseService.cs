@@ -9,6 +9,7 @@ public interface IBaseService<TEntity,TEntityDto>
 {
     Task<TEntityDto> GetById(Guid id);
     Task<IEnumerable<TEntityDto>> GetAll();
+    
     Task<TEntityDto> Create(TEntityDto entity);
     Task<TEntityDto> Update( TEntityDto entity);
     Task<bool> Delete(Guid id);
