@@ -8,7 +8,7 @@ using OrderService.Services.Interfaces;
 
 namespace OrderService.Services;
 
-class ReceiptService : BaseService<Receipt,ReceiptDto>, IReceiptService
+public class ReceiptService : BaseService<Receipt,ReceiptDto>, IReceiptService
 {
     public ReceiptService(IReceiptRepository repository, IMapper mapper) : base(repository, mapper)
     {
