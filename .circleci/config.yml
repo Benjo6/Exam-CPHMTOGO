@@ -60,7 +60,7 @@ jobs:
             dotnet test
           name: Testing Solution
 workflows:
-  test_my_app:
+  CPHMTOGO_PIPELINE:
     jobs:
       - user-service
       - authentication-service
