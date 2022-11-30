@@ -51,12 +51,12 @@ jobs:
       - checkout
       - run:
           command: |
-            cd CPHMTOGO/PaymentLogging
+            cd CPHMTOGO/PaymentLoggingService
             dotnet build
           name: Building Solution
       - run:
           command: |
-            cd CPHMTOGO/TestZone/PaymentLoggingTests
+            cd CPHMTOGO/TestZone/PaymentLoggingServiceTests
             dotnet test
           name: Testing Solution
 workflows:
