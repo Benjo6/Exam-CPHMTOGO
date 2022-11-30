@@ -1,4 +1,3 @@
-using AuthenticationService;
 using Microsoft.AspNetCore.Mvc;
 using service;
 
