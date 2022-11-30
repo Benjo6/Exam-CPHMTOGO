@@ -44,7 +44,7 @@ jobs:
             cd CPHMTOGO/TestZone/OrderServiceTests
             dotnet test
           name: Testing Solution
- payment-logging:
+  payment-logging:
     executor:
       name: win/default
     steps:
