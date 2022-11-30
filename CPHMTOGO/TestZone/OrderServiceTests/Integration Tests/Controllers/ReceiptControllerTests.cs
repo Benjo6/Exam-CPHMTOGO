@@ -68,12 +68,12 @@ public class ReceiptControllerTests
     }
 
     [Test]
-    public async Task CreateOrder_ReturnCreatedObject()
+    public async Task CreateReceipt_ReturnCreatedObject()
     {
         //Arrange
         ReceiptDto? dto = null;
 
-        _service.Setup(r => r.Update(It.IsAny<ReceiptDto>()).Result).Callback<ReceiptDto>(r=>dto=r);
+        _service.Setup(r => r.Create(It.IsAny<ReceiptDto>()).Result).Callback<ReceiptDto>(r=>dto=r);
         var item = new ReceiptDto
         {
             Id = Guid.NewGuid(),
@@ -82,8 +82,8 @@ public class ReceiptControllerTests
             Time = DateTime.UtcNow
         };
         //Act
-        await _controller.Put(item);
-        _service.Verify(x=> x.Update(It.IsAny<ReceiptDto>()),Times.Once);
+        await _controller.Post(item);
+        _service.Verify(x=> x.Create(It.IsAny<ReceiptDto>()),Times.Once);
 
 
         //Assert

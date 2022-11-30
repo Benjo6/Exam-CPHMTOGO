@@ -25,8 +25,8 @@ public class OrderItemControllerTests
     {
         var items = new List<OrderItemDto>()
         {
-            new OrderItemDto { Preference = "",OrderId = Guid.NewGuid(),Price = 500.50,Quantity = 1},
-            new OrderItemDto { Preference = "",OrderId = Guid.NewGuid(),Price = 500.50,Quantity = 2},
+            new() { Preference = "",OrderId = Guid.NewGuid(),Price = 500.50,Quantity = 1},
+            new() { Preference = "",OrderId = Guid.NewGuid(),Price = 500.50,Quantity = 2},
         };
         _service.Setup(x => x.GetAll().Result).Returns(items);
 

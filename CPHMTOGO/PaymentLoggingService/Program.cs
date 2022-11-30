@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using OrderService.Infrastructure;
-using OrderService.IoC;
+using PaymentLoggingService.Infrastructure;
+using PaymentLoggingService.IoC;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,8 +10,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
-builder.Services.AddDbContext<RepositoryContext>(option =>
+builder.Services.AddDbContext<PaymentLoggingContext>(option =>
 {
     option.UseNpgsql(builder.Configuration["DbConnection"]);
 });
@@ -19,11 +18,7 @@ builder.Services.AddDbContext<RepositoryContext>(option =>
 builder.Services.AddModelRegistry();
 builder.Services.AddServicesRegistry();
 
-
-
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
-
 
 
 var app = builder.Build();
@@ -34,7 +29,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
 
 app.UseHttpsRedirection();
 
