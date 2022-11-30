@@ -1,15 +1,28 @@
-﻿namespace AddressService.Services
-{
-    public class AddressService
-    {
-        private readonly IHttpClientFactory _factory;
-        private HttpClient _clientDawa;
+﻿using AutoMapper;
+using Core.Service;
+using AddressService.Domain;
+using AddressService.Domain.Dto;
+using AddressService.Repositories.Interfaces;
+using AddressService.Services.Interfaces;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using System;
 
-        public AddressService(IHttpClientFactory factory)
-        {
-            _factory = factory;
-            _clientDawa = _factory.CreateClient("Dawa");
-            
-        }
+namespace AddressService.Services;
+
+class AddressService : BaseService<Address, AddressDto>, IAddressService
+{
+    public AddressService(IAddressRepository repository, IMapper mapper) : base(repository, mapper)
+
+    {
+       
     }
+
+    public override Task<AddressDto> Create(AddressDto entityDto)
+    {
+        return base.Create(entityDto);
+    }
+
+
+
 }

@@ -30,9 +30,9 @@ public class AddressController : BaseController<Address, AddressDto>
 
 
     [HttpPost]
-    public async Task<IActionResult> CreateAddress([FromBody] AddressDto address)
+    public async Task<AddressDto> CreateAddress(Guid address, Guid customerId, Guid restaurantId, [FromBody] List<CreateAddressItemDto> AddressDtos)
     {
-        return await AddAsync(address);
+        return await _baseService.CreateAddressTask(new AddressDto { Address = address, RestaurantId = restaurantId, CustomerId = customerId }, AddressDtos);
     }
 
     [HttpPut]
