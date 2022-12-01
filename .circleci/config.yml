@@ -14,14 +14,14 @@ jobs:
             yarn 
             yarn test
           name: Running Test
-  restaurant-service:
+  email-service:
     executor:
       name: node/default
     steps:
       - checkout
       - run:
           command: |
-            cd CPHMTOGO/RestaurantService
+            cd CPHMTOGO/emailService
             yarn 
             yarn test
           name: Running Test
