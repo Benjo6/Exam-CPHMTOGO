@@ -101,7 +101,5 @@ workflows:
       - user-service
       - authentication-service
       - order-service
-      - restaurant-service
-      - payment-service
-      - payment-logging-service
-      - address-service
+      - payment-logging
+      - email-service
