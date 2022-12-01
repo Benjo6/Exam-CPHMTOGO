@@ -5,7 +5,6 @@ import { RestaurantArgs } from "../interfaces/restaurant.interface";
 import { v4 as uuid } from "uuid";
 import { IMenuArgs } from "../interfaces/menu.interface";
 import { IMenuItemArgs } from "../interfaces/menuItem.interface";
-import { Restaurant } from "@prisma/client";
 
 const resolvers = {
 	Query: {
