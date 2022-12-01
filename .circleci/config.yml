@@ -77,3 +77,4 @@ workflows:
       - authentication-service
       - order-service
       - payment-logging
+      - email-service
