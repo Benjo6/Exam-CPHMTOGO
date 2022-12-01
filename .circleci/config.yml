@@ -14,6 +14,17 @@ jobs:
             yarn 
             yarn test
           name: Running Test
+  email-service:
+    executor:
+      name: node/default
+    steps:
+      - checkout
+      - run:
+          command: |
+            cd CPHMTOGO/emailService
+            yarn 
+            yarn test
+          name: Running Test
   authentication-service:
     executor:
       name: win/default
