@@ -19,7 +19,9 @@ class AddressService : BaseService<Address, AddressDto>, IAddressService
     IHttpClientFactory _factory;
     private HttpClient _client;
     IAddressRepository _repository;
-    public AddressService(IAddressRepository repository, IMapper mapper, IHttpClientFactory factory) : base(repository, mapper)
+
+    public AddressService(IAddressRepository repository, IMapper mapper, IHttpClientFactory factory) : base(repository,
+        mapper)
 
     {
         _repository = repository;
@@ -27,65 +29,89 @@ class AddressService : BaseService<Address, AddressDto>, IAddressService
         _client = _factory.CreateClient("Address");
     }
 
-    public async Task<AddressDto> CreateAsync(String street, String streetNr, String zipCode)
-    {
-        Address address = new Address();
-        address.Street = street;
-        address.StreetNr = streetNr;
-        address.Zipcode= zipCode;
-
-        
-
-        var item = await ValidAddress(street, streetNr, zipCode);
-        address.Latitude = item.geometry.coordinates[1];
-        address.Longitude = item.geometry.coordinates[0];
-
-
-        _repository.Create(address);
-        return _mapper.Map<Address, AddressDto>(address);
-    }
-
-   
-
-    public override async Task<AddressDto> Update(AddressDto entityDto)
-    {
-       
-       
-
-        var item = await ValidAddress(entityDto.Street, entityDto.StreetNr, entityDto.ZipCode);
-        entityDto.Latitude = item.geometry.coordinates[1];
-        entityDto.Longitude = item.geometry.coordinates[0];
-
-
-        _repository.Update(_mapper.Map<AddressDto, Address>(entityDto));
-        return entityDto;
-
-
-    }
-
-   private async Task<dynamic> ValidAddress (String street, String streetNr, String zipCode)
+    public async Task<AddressDto> CreateAsync(string street, string streetNr, string zipCode)
     {
         try
         {
-            HttpResponseMessage response = _client.GetAsync($"adresser?vejnavn={street}&postnr={zipCode}&husnr={streetNr}").Result;
-            
-            String content = await response.Content.ReadAsStringAsync();
-            if (response.IsSuccessStatusCode)
+            Address address = new Address();
+            address.Street = street;
+            address.StreetNr = streetNr;
+            address.Zipcode = zipCode;
+            address.CityId = Guid.NewGuid(); //Remove please from Database
+
+
+
+            var item = await ValidateAddress(street, streetNr, zipCode);
+            if (item != null)
             {
-               dynamic address = JValue.Parse(content);
-
-                return address;
+                address.Latitude = item.adgangsadresse.adgangspunkt.koordinater[1];
+                address.Longitude = item.adgangsadresse.adgangspunkt.koordinater[0];
+                if (address.Latitude != null && address.Longitude != null)
+                {
+                    _repository.Create(address);
+                    return _mapper.Map<Address, AddressDto>(address);
+                }
             }
-            return null;
         }
-
-        catch(HttpRequestException e)
+        catch (Exception e)
         {
-            throw new HttpRequestException(e.Message);
+            Console.WriteLine(e.Message);
+            throw;
         }
 
+        return null;
     }
 
+    public async Task<string> AutoCompleteAdresser(string query)
+    {
+        try
+        {
+            string url = "adresser/autocomplete" + (query.Length == 0 ? "" : "?") + query;
+            HttpResponseMessage response = await _client.GetAsync(url);
+            response.EnsureSuccessStatusCode();
+            string content = await response.Content.ReadAsStringAsync();
+            dynamic adresser = JArray.Parse(content);
 
+            foreach (var adresse in adresser)
+            {
+                return FormatAdresseAutocomplete(adresse);
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
 
+        return "No items with these requirements";
+    }
+
+    private async Task<dynamic> ValidateAddress(String street, String streetNr, String zipCode)
+    {
+        try
+        {
+            string url = $"adresser?vejnavn={street}&husnr={streetNr}&postnr={zipCode}";
+            Console.WriteLine("GET " + url);
+            HttpResponseMessage response = await _client.GetAsync(url);
+            response.EnsureSuccessStatusCode();
+            string responseBody = await response.Content.ReadAsStringAsync();
+            dynamic adresser = JArray.Parse(responseBody);
+
+            foreach (dynamic adresse in adresser)
+            {
+                return adresse;
+            }
+        }
+        catch (HttpRequestException e)
+        {
+            Console.WriteLine("Message :{0} ", e.Message);
+        }
+
+        return null;
+    }
+
+    private string FormatAdresseAutocomplete(dynamic a)
+    {
+        return string.Format("{0}", a.tekst);
+    }
 }

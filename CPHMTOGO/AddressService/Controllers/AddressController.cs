@@ -35,19 +35,19 @@ public class AddressController : BaseController<Address, AddressDto>
         return await GetByIdAsync(id);
     }
 
+    [HttpGet("Adresser/{query}")]
+    public async Task<string> GetAutoComplete(string query)
+    {
+        return await _baseService.AutoCompleteAdresser(query);
+    }
+
 
     [HttpPost]
     public async Task<AddressDto> CreateAddress(string street, string streetNr, string zipCode)
     {
         return await _baseService.CreateAsync(street, streetNr, zipCode);
     }
-
-    [HttpPut]
-    public async Task<IActionResult> Put(AddressDto dto)
-    {
-        return await UpdateAsync(dto);
-    }
-
+    
     [HttpDelete]
     public Task<bool> Delete(Guid id)
     {

@@ -10,7 +10,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 
-builder.Services.AddHttpClient("Address", HttpClient => { HttpClient.BaseAddress = new Uri("https://api.dataforsyningen.dk/"); 
+builder.Services.AddHttpClient("Address", HttpClient => { HttpClient.BaseAddress = new Uri("https://api.dataforsyningen.dk/");
+    HttpClient.Timeout = new TimeSpan(0, 20, 0);
 });
 
 builder.Services.AddControllers();
