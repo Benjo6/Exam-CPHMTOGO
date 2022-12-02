@@ -11,9 +11,9 @@ public class AddressDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<LoginInfo>().Property(e => e.Id).ValueGeneratedOnAdd();
+        modelBuilder.Entity<Address>().Property(e => e.Id).ValueGeneratedOnAdd();
     }
 
-    public DbSet<LoginInfo> Infos { get; set; }
+    public DbSet<Address> Addresses { get; set; }
 
 }

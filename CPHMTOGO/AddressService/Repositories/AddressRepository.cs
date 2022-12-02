@@ -4,11 +4,11 @@ using AddressService.Domain;
 using AddressService.Infrastructure;
 using AddressService.Repositories.Interfaces;
 
-namespace Address.Repositories;
+namespace AddressService.Repositories;
 
 public class AddressRepository : RepositoryBase<Address>, IAddressRepository
 {
-    public AddressRepository(RepositoryContext dbContext) : base(dbContext)
+    public AddressRepository(AddressDbContext dbContext) : base(dbContext)
     {
 
 

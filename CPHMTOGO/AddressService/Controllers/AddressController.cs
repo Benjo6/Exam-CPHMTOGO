@@ -28,11 +28,18 @@ public class AddressController : BaseController<Address, AddressDto>
         return await GetListAsync();
     }
 
+    [HttpGet("{id}")] 
+
+    public async Task<IActionResult> Get(Guid id)
+    {
+        return await GetByIdAsync(id);
+    }
+
 
     [HttpPost]
-    public async Task<IActionResult> CreateAddress([FromBody] AddressDto address)
+    public async Task<AddressDto> CreateAddress(string street, string streetNr, string zipCode)
     {
-        return await AddAsync(address);
+        return await _baseService.CreateAsync(street, streetNr, zipCode);
     }
 
     [HttpPut]
@@ -46,4 +53,6 @@ public class AddressController : BaseController<Address, AddressDto>
     {
         return DeleteAsync(id);
     }
+
+
 }

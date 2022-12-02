@@ -10,16 +10,17 @@ public class Address : BaseEntity
 {
 
 
-    [Column("street")] public Guid Street { get; set; }
+    [Column("street")] public string Street { get; set; }
 
-    [Column("streetNr")] public Guid StreetNr { get; set; }
+    [Column("streetNr")] public string StreetNr { get; set; }
 
-    [Column("zipcode")] public Guid Zipcode { get; set; }
+    [Column("zipcode")] public string Zipcode { get; set; }
 
-    [Column("longitude")] public Guid Longitude { get; set; }
+    [Column("longitude")] public double Longitude { get; set; }
 
-    [Column("latitude")] public Guid Latitude { get; set; }
+    [Column("latitude")] public double Latitude { get; set; }
 
+    [Column("cityId"), DatabaseGenerated(DatabaseGeneratedOption.Identity)] public Guid CityId { get; set; }
 
 
 
