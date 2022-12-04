@@ -7,7 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<TokenService>();
 builder.Services.AddScoped<CustomerService>();
-builder.Services.AddScoped<ChargeService>();
+builder.Services.AddScoped<PaymentIntentService>();
+builder.Services.AddScoped<TransferService>();
 builder.Services.AddScoped<IStripeService, StripeService>();
 StripeConfiguration.ApiKey = builder.Configuration.GetValue<string>("StripeOptions:SecretKey");
 

@@ -29,6 +29,18 @@ public class StripeController:ControllerBase
         var response = await _stripeService.CreateCharge(resource, cancellationToken);
         return Ok(response);
     }
+    [HttpPost("transfermoneytorestaurant")]
+    public async Task<ActionResult<PayoutResource>> TransferMoneyToRestaurant(string accountId, double amount,CancellationToken cancellationToken)
+    {
+        var response = await _stripeService.TransferingMoneyToRestaurant(accountId, amount, cancellationToken);
+        return Ok(response);
+    }
+    [HttpPost("transfermoneytoemployee")]
+    public async Task<ActionResult<PayoutResource>> TransferMoneyToEmployee(string accountId, double amount,CancellationToken cancellationToken)
+    {
+        var response = await _stripeService.TransferingMoneyToEmployee(accountId, amount, cancellationToken);
+        return Ok(response);
+    }
 
     [HttpGet("email/{email}")]
     public async Task<ActionResult<CustomerResource>> GetCustomerByEmail(string email,CancellationToken cancellationToken)

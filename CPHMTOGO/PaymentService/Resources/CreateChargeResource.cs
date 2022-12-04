@@ -1,7 +1,6 @@
 namespace PaymentService.Resources;
 
 public record CreateChargeResource(
-    string Currency,
     long Amount,
     string CustomerId,
     string ReceiptEmail,

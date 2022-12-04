@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Razor.TagHelpers;
 using PaymentService.Resources;
 using Stripe;
 
@@ -7,13 +8,15 @@ public class StripeService : IStripeService
 {
     private readonly TokenService _tokenService;
     private readonly CustomerService _customerService;
-    private readonly ChargeService _chargeService;
+    private readonly PaymentIntentService _paymentIntentService;
+    private readonly TransferService _payoutService;
 
-    public StripeService(TokenService tokenService, CustomerService customerService, ChargeService chargeService)
+    public StripeService(TokenService tokenService, CustomerService customerService, PaymentIntentService paymentIntentService, TransferService payoutService) 
     {
         _tokenService = tokenService;
         _customerService = customerService;
-        _chargeService = chargeService;
+        _paymentIntentService = paymentIntentService;
+        _payoutService = payoutService;
     }
 
     public async Task<CustomerResource> CreateCustomer(CreateCustomerResource resource, CancellationToken cancellationToken)
@@ -44,18 +47,52 @@ public class StripeService : IStripeService
 
     public async Task<ChargeResource> CreateCharge(CreateChargeResource resource, CancellationToken cancellationToken)
     {
-        var chargeOptions = new ChargeCreateOptions
+        var chargeOptions = new PaymentIntentCreateOptions
         {
-            Currency = resource.Currency,
+            Currency = "DKK",
             Amount = resource.Amount,
             ReceiptEmail = resource.ReceiptEmail,
             Customer = resource.CustomerId,
             Description = resource.Description
         };
-        var charge = await _chargeService.CreateAsync(chargeOptions, null, cancellationToken);
+        var charge = await _paymentIntentService.CreateAsync(chargeOptions, null, cancellationToken);
 
         return new ChargeResource(charge.Id, charge.Currency, charge.Amount, charge.CustomerId, charge.ReceiptEmail,
             charge.Description);
+    }
+
+    public async Task<PayoutResource> TransferingMoneyToRestaurant(string accountId, double amount,CancellationToken cancellationToken)
+    {
+        if (amount >= 750) amount = amount * 0.97;
+        else amount = amount * 0.97;
+        
+        
+
+        var payoutOptions = new TransferCreateOptions
+        {
+            Currency = "DKK",
+            Amount = (long)Convert.ToDouble(amount),
+            Description = "Payment for the order",
+            Destination = accountId
+        };
+        var payout = await _payoutService.CreateAsync(payoutOptions,null, cancellationToken);
+
+        return new PayoutResource(payout.Currency, payout.Amount, payout.Description);
+    }
+
+    public async Task<PayoutResource> TransferingMoneyToEmployee(string accountId, double amount,
+        CancellationToken cancellationToken)
+    {
+        var payoutOptions = new TransferCreateOptions
+        {
+            Currency = "DKK",
+            Amount = (long)Convert.ToDouble(amount),
+            Description = "Payment for the employeee delievering orders",
+            Destination = accountId
+        };
+        var payout = await _payoutService.CreateAsync(payoutOptions, null, cancellationToken);
+
+        return new PayoutResource(payout.Currency, payout.Amount, payout.Description);
     }
 
     public async Task<CustomerResource> GetCustomerByEmail(string email, CancellationToken cancellationToken)
