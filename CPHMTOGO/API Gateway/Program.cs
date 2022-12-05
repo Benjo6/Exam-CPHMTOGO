@@ -12,7 +12,15 @@ builder.Services.AddGrpcClient<AuthenticationActivity.AuthenticationActivityClie
 });
 builder.Services.AddHttpClient("OrderService", client =>
 {
-    client.BaseAddress = new Uri(builder.Configuration["DbConnection"] ?? throw new InvalidOperationException());
+    client.BaseAddress = new Uri(builder.Configuration["ServicesConfiguration:OrderServiceUrl"] ?? throw new InvalidOperationException());
+});
+builder.Services.AddHttpClient("PaymentService", client =>
+{
+    client.BaseAddress = new Uri(builder.Configuration["ServicesConfiguration:PaymentServiceUrl"] ?? throw new InvalidOperationException());
+});
+builder.Services.AddHttpClient("PaymentLoggingService", client =>
+{
+    client.BaseAddress = new Uri(builder.Configuration["ServicesConfiguration:PaymentLoggingServiceUrl"] ?? throw new InvalidOperationException());
 });
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -22,14 +30,12 @@ builder.Services.AddSwaggerGen();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+app.UseSwagger();
+app.UseSwaggerUI(options =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
-app.UseHttpsRedirection();
-
+    options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+    options.RoutePrefix = string.Empty;
+});
 app.UseAuthorization();
 
 app.MapControllers();

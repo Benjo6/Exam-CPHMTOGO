@@ -42,7 +42,7 @@ public class StripeController:ControllerBase
         return Ok(response);
     }
 
-    [HttpGet("email/{email}")]
+    [HttpGet("{email}")]
     public async Task<ActionResult<CustomerResource>> GetCustomerByEmail(string email,CancellationToken cancellationToken)
     {
         var response = await _stripeService.GetCustomerByEmail(email,cancellationToken);
