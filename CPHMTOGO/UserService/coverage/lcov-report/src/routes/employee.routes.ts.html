@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">33.33% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/24</span>
+                <span class='fraction'>8/24</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">40% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/20</span>
+                <span class='fraction'>8/20</span>
             </div>
         
             
@@ -99,70 +99,70 @@
 <a name='L34'></a><a href='#L34'>34</a>
 <a name='L35'></a><a href='#L35'>35</a>
 <a name='L36'></a><a href='#L36'>36</a>
-<a name='L37'></a><a href='#L37'>37</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<a name='L37'></a><a href='#L37'>37</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" >import express from "express";</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import express from "express";
 import { IEmployeeReq } from "../interfaces/employee.interface";
-<span class="cstat-no" title="statement not covered" >import controller from "../controllers/employee.controller";</span>
+import controller from "../controllers/employee.controller";
 &nbsp;
-const router = <span class="cstat-no" title="statement not covered" >express.Router();</span>
+const router = express.Router();
 &nbsp;
-<span class="cstat-no" title="statement not covered" >router.post("/", <span class="fstat-no" title="function not covered" >async (r</span>eq: IEmployeeReq, res) =&gt;<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" > {</span></span></span>
+router.post("/", <span class="fstat-no" title="function not covered" >async (r</span>eq: IEmployeeReq, res) =&gt;<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" > {</span></span>
 <span class="cstat-no" title="statement not covered" >	try {</span>
 <span class="cstat-no" title="statement not covered" >		res.json(await controller.createEmployee(req.body));</span>
 	} catch (e: any) {
 <span class="cstat-no" title="statement not covered" >		res.json({ msg: e.message });</span>
 	}
 });
-<span class="cstat-no" title="statement not covered" >router.get("/:employeeId", <span class="fstat-no" title="function not covered" >async (r</span>eq: IEmployeeReq, res) =&gt;<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" > {</span></span></span>
+router.get("/:employeeId", <span class="fstat-no" title="function not covered" >async (r</span>eq: IEmployeeReq, res) =&gt;<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" > {</span></span>
 <span class="cstat-no" title="statement not covered" >	try {</span>
 <span class="cstat-no" title="statement not covered" >		res.json(await controller.getEmployeeById(req.params.employeeId));</span>
 	} catch (e: any) {
 <span class="cstat-no" title="statement not covered" >		res.json({ msg: e.message });</span>
 	}
 });
-<span class="cstat-no" title="statement not covered" >router.put("/:employeeId", <span class="fstat-no" title="function not covered" >async (r</span>eq: IEmployeeReq, res) =&gt;<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" > {</span></span></span>
+router.put("/:employeeId", <span class="fstat-no" title="function not covered" >async (r</span>eq: IEmployeeReq, res) =&gt;<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" > {</span></span>
 <span class="cstat-no" title="statement not covered" >	try {</span>
 <span class="cstat-no" title="statement not covered" >		res.json(await controller.updateEmployee(req.body, req.params.employeeId));</span>
 	} catch (e: any) {
 <span class="cstat-no" title="statement not covered" >		res.json({ msg: e.message });</span>
 	}
 });
-<span class="cstat-no" title="statement not covered" >router.delete("/:employeeId", <span class="fstat-no" title="function not covered" >async (r</span>eq: IEmployeeReq, res) =&gt;<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" > {</span></span></span>
+router.delete("/:employeeId", <span class="fstat-no" title="function not covered" >async (r</span>eq: IEmployeeReq, res) =&gt;<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" > {</span></span>
 <span class="cstat-no" title="statement not covered" >	try {</span>
 <span class="cstat-no" title="statement not covered" >		res.json(await controller.deleteEmployee(req.params.employeeId));</span>
 	} catch (e: any) {
@@ -170,7 +170,7 @@ const router = <span class="cstat-no" title="statement not covered" >express.Rou
 	}
 });
 &nbsp;
-<span class="cstat-no" title="statement not covered" >export default router;</span>
+export default router;
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -178,7 +178,7 @@ const router = <span class="cstat-no" title="statement not covered" >express.Rou
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2022-11-24T11:22:14.870Z
+                at 2022-12-11T02:56:22.537Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

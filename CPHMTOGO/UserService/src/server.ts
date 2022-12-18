@@ -3,6 +3,7 @@ import companyRoutes from "./routes/company.routes";
 import customerRoutes from "./routes/customer.routes";
 import employeeRoutes from "./routes/employee.routes";
 import bodyParser from "body-parser";
+import prisma from "../prisma/client";
 
 export const app = express();
 
@@ -13,6 +14,20 @@ app.use("/company", companyRoutes);
 app.use("/customer", customerRoutes);
 app.use("/employee", employeeRoutes);
 
-app.listen(3000, () => {
-	console.log(`user-service listening on port ${3000}`);
+app.get("/", (req, res) => {
+	res.send("server is running");
+});
+
+app.get("/customerUser", async (req, res) => {
+	res.json(
+		await prisma.customer.findUnique({
+			where: {
+				id: "39bfb82a-b55f-457c-9eaa-ac77e98367f3",
+			},
+		})
+	);
+});
+
+app.listen(3001, () => {
+	console.log(`user-service listening on port ${3001}`);
 });
