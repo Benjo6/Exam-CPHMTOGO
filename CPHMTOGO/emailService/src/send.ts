@@ -7,30 +7,46 @@ async function connectQueue() {
 	await channel.assertQueue("orders");
 
 	const order = {
-		id: "123",
-		customer: {
-			name: "John",
+		orderFrom: {
+			restaurantName: "Organic Healthy Products",
+			address: {
+				street: "8161 Misty Circuit",
+				ciry: "Stop, Idaho",
+			},
 		},
-		address: {
-			street: "123 Fake St.",
-			city: "San Francisco",
-		},
-		restaurant: {
-			name: "Roxanne",
+		orderTo: {
+			customerName: "Nancy Watkins",
+			address: {
+				street: "5406 Merry Creek Crossing",
+				city: "Mexico, Florida",
+			},
 		},
 		orderItems: [
 			{
-				name: "apple",
+				amount: 1,
+				unit: "kg",
+				name: "Raspberries",
+				price: 34.23,
+				currency: "USD",
 			},
 			{
-				name: "apple",
+				amount: 1,
+				unit: "kg",
+				name: "Grapes",
+				price: 34.23,
+				currency: "USD",
+			},
+			{
+				amount: 1,
+				unit: "kg",
+				name: "Carrot",
+				price: 25.23,
+				currency: "USD",
 			},
 		],
-		total: 1000,
-		date: new Date().toISOString(),
 	};
 
-	await channel.sendToQueue("orders", Buffer.from(JSON.stringify(order)));
+	channel.sendToQueue("orders", Buffer.from(JSON.stringify(order)));
 
 	await channel.close();
 	await connection.close();
