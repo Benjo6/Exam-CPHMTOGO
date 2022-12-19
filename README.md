@@ -16,7 +16,7 @@ CPHMTOGO's customers can utilize their accounts with the company to place orders
 ![](https://raw.githubusercontent.com/Abed01-lab/prisma-erd/b9fb5f2de610b67b6c673ad1b352c69996e4f22b/prisma/ERD.svg)
 
 
-### SOA
+## SOA
 Our system is based on Service-Oriented Architecture (SOA), which requires us to adhere to certain principles. These principles are shared information and semantics, application integration, service reuse and governance, and management.
 
 Shared Information and Semantics:
