@@ -107,6 +107,7 @@ public class OrderStatusServiceTests
         Assert.That(dto.TimeStamp, Is.EqualTo(item.TimeStamp));
     }
     
+    /*
     [Test]
     public async Task Test_StartOrder_Method()
     {
@@ -135,7 +136,7 @@ public class OrderStatusServiceTests
         Assert.IsNotNull(result);
         Assert.AreEqual(Status.DELIVERING.ToString(), result.Status);
         Assert.AreEqual(mockOrderStatus.Id, result.Id);
-    }
+    }*/
 
     [Test]
     public void Delete_ReturnTrue()
