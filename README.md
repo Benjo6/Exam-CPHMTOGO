@@ -69,4 +69,29 @@ Employee Delivering Process:
 ![](https://github.com/Benjo6/Exam-CPHMTOGO/blob/main/BPM/DeliveringProcess.png)
 
 ## RabbitMQ (ABED)
-## (optional) Hypermedia on reastfull levels
+## Maturity Levels of REST API Design
+It can be stated that CPHMTOGO exhibits a level of sophistication in its design as it satisfies the criteria for the maturity levels of REST API design. This suggests that the API is structured in a way that is coherent, easy to use, and adaptable, making it a valuable resource for developers seeking to incorporate it into their applications.
+
+Level 0: It expose a database through a CRUD interface
+The API provides create, read, update, and delete (CRUD) operations for a database of customer records.
+
+Level 1: It use HTTP verbs to operate on the resources
+The API uses the appropriate HTTP verbs (GET, POST, PUT, DELETE) for each CRUD operation.
+
+Level 2: It use HTTP status codes to indicate success or failure
+The API returns appropriate HTTP status codes (e.g. 200 OK, 404 Not Found) to indicate the success or failure of each request.
+
+Level 3: It use hypermedia controls to expose the API's capabilities
+The API includes links in the responses that allow the client to discover and navigate to other resources and actions.
+
+Level 4: It use an API gateway and microservices architecture
+The API is designed as a set of microservices, each with a specific responsibility, and is accessed through an API gateway that routes requests to the appropriate microservice and handles authentication and authorization.
+
+By adhering to the principles and constraints that define the maturity levels of REST API design, this API exhibits a level of polish and professionalism that makes it an ideal choice for developers seeking to utilize it in their projects. Its well-organized structure, user-friendly design, and versatility make it a highly valuable resource for building effective applications.
+
+
+
+
+
+
+
