@@ -40,7 +40,7 @@ public class OrderItemController: BaseController<OrderItem,OrderItemDto>
         return await UpdateAsync(dto);
     }
 
-    [HttpDelete]
+    [HttpDelete("{id}")]
     public Task<bool> Delete( Guid id)
     {
         return DeleteAsync(id);

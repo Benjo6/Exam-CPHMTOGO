@@ -84,7 +84,7 @@ public class PaymentLoggingControllerTests
     }
 
     [Test]
-    public async Task CreateOrder_ReturnCreatedObject()
+    public async Task Create_ReturnCreatedObject()
     {
         //Arrange
         PaymentLoggingDto? dto = null;

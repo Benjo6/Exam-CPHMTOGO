@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using AutoMapper;
 using Moq;
 using OrderService.Domain;
@@ -80,33 +81,6 @@ public class OrderServiceTests
     }
 
     [Test]
-    public async Task CreateOrder_ReturnCreatedObject()
-    {
-        //Arrange
-        Order? dto = null;
-
-        _repository.Setup(r => r.Create(It.IsAny<Order>())).Callback<Order>(r=>dto=r);
-        var item = new OrderDto()
-        {
-            RestaurantId = Guid.NewGuid(), CustomerId = Guid.NewGuid(), Address = Guid.NewGuid(),
-            EmployeeId = Guid.NewGuid(), Id = Guid.NewGuid(), OrderStatusId = Guid.NewGuid()
-        };
-        //Act
-        await _service.Create(item);
-        _repository.Verify(x=> x.Create(It.IsAny<Order>()),Times.Once);
-
-
-        //Assert
-        Assert.IsNotNull(dto);
-        Assert.That(item.Id, Is.EqualTo(dto.Id));
-        Assert.That(item.Address, Is.EqualTo(dto.Address));
-        Assert.That(item.CustomerId, Is.EqualTo(dto.CustomerId));
-        Assert.That(item.EmployeeId, Is.EqualTo(dto.EmployeeId));
-        Assert.That(item.RestaurantId, Is.EqualTo(dto.RestaurantId));
-        Assert.That(item.OrderStatusId, Is.EqualTo(dto.OrderStatusId));
-    }
-
-    [Test]
     public async Task Update_ReturnUpdatedObject()
     {
         //Arrange
@@ -148,5 +122,100 @@ public class OrderServiceTests
         
         Assert.IsTrue(okresult);
     }
-    
+    [Test]
+    public async Task Test_GetOpenOrders_Fail()
+    {
+        // Arrange
+        _repository.Setup(repo => repo.GetByCondition(It.IsAny<Expression<Func<Order, bool>>>()))
+            .Returns(new List<Order>{
+                new Order{
+                    Id = Guid.NewGuid(),
+                    OrderStatus = new OrderStatus{ Status = Status.STARTED.ToString()}
+                },
+                new Order{
+                    Id = Guid.NewGuid(),
+                    OrderStatus = new OrderStatus{ Status = Status.STARTED.ToString()}
+                },
+                new Order{
+                Id = Guid.NewGuid(),
+                OrderStatus = new OrderStatus{ Status = Status.DELIVERED.ToString()}
+            }
+            }.AsQueryable());
+
+        // Act
+        var openOrders = await _service.GetOpenOrders();
+
+        // Assert
+        Assert.IsFalse(openOrders.Count() == 2);
+    }
+    [Test]
+    public async Task Test_GetOpenOrders_Succeed()
+    {
+        // Arrange
+        _repository.Setup(repo => repo.GetByCondition(It.IsAny<Expression<Func<Order, bool>>>()))
+            .Returns(new List<Order>{
+                new Order{
+                    Id = Guid.NewGuid(),
+                    OrderStatus = new OrderStatus{ Status = Status.STARTED.ToString()}
+                },
+                new Order{
+                    Id = Guid.NewGuid(),
+                    OrderStatus = new OrderStatus{ Status = Status.STARTED.ToString()}
+                }
+            }.AsQueryable());
+
+        // Act
+        var openOrders = await _service.GetOpenOrders();
+
+        // Assert
+        Assert.IsTrue(openOrders.Count() == 2);
+    }
+    [Test]
+    public async Task Test_GetNumberOpenOrders_Fail()
+    {
+        // Arrange
+        _repository.Setup(repo => repo.GetByCondition(It.IsAny<Expression<Func<Order, bool>>>()))
+            .Returns(new List<Order>{
+                new Order{
+                    Id = Guid.NewGuid(),
+                    OrderStatus = new OrderStatus{ Status = Status.STARTED.ToString()}
+                },
+                new Order{
+                    Id = Guid.NewGuid(),
+                    OrderStatus = new OrderStatus{ Status = Status.STARTED.ToString()}
+                },
+                new Order{
+                    Id = Guid.NewGuid(),
+                    OrderStatus = new OrderStatus{ Status = Status.DELIVERED.ToString()}
+                }
+            }.AsQueryable());
+
+        // Act
+        var openOrders = await _service.NumberOfOpenOrders();
+
+        // Assert
+        Assert.IsFalse(openOrders == 2);
+    }
+    [Test]
+    public async Task Test_GetNumberOpenOrders_Succeed()
+    {
+        // Arrange
+        _repository.Setup(repo => repo.GetByCondition(It.IsAny<Expression<Func<Order, bool>>>()))
+            .Returns(new List<Order>{
+                new Order{
+                    Id = Guid.NewGuid(),
+                    OrderStatus = new OrderStatus{ Status = Status.STARTED.ToString()}
+                },
+                new Order{
+                    Id = Guid.NewGuid(),
+                    OrderStatus = new OrderStatus{ Status = Status.STARTED.ToString()}
+                }
+            }.AsQueryable());
+
+        // Act
+        var openOrders = await _service.NumberOfOpenOrders();
+
+        // Assert
+        Assert.IsTrue(openOrders == 2);
+    }
 }

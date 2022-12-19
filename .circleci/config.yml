@@ -70,6 +70,21 @@ jobs:
             cd CPHMTOGO/TestZone/PaymentLoggingServiceTests
             dotnet test
           name: Testing Solution
+  payment-service:
+    executor:
+      name: win/default
+    steps:
+      - checkout
+      - run:
+          command: |
+            cd CPHMTOGO/PaymentService
+            dotnet build
+          name: Building Solution
+      - run:
+          command: |
+            cd CPHMTOGO/TestZone/PaymentServiceTests
+            dotnet test
+          name: Testing Solution
   address-service:
     executor:
       name: win/default
@@ -86,5 +101,6 @@ workflows:
       - user-service
       - authentication-service
       - order-service
+      - payment-service
       - payment-logging-service
       - address-service

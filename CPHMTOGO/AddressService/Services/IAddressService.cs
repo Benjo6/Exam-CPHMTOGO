@@ -10,7 +10,7 @@ namespace AddressService.Services.Interfaces;
 public interface IAddressService : IBaseService<Address, AddressDto>
 {
     
-    public Task<AddressDto> CreateAsync(String street, String streetNr, String zipCode);
+    public Task<AddressDto> CreateAsync(String street, String streetNr, String zipCode,string? etage, string? door);
 
-    Task<string> AutoCompleteAdresser(string query);
+    Task<List<string>> AutoCompleteAdresser(string query);
 }

@@ -1,0 +1,63 @@
+version: "3"
+services:
+##Autentication Service##
+ authentication-service:
+  container_name: 'cphmtogo-authentication-service'
+  build:
+   context: ../Exam-CPHMTOGO/CPHMTOGO
+   dockerfile: AuthenticationService/Dockerfile
+  deploy: 
+   resources:
+    limits:
+     memory: 2048M
+  ports:
+      - 5001:80
+  restart: always
+
+##Order Service##
+ order-service:
+  container_name: 'cphmtogo-order-service'
+  build:
+   context: ../Exam-CPHMTOGO/CPHMTOGO
+   dockerfile: OrderService/Dockerfile
+  deploy: 
+   resources:
+    limits:
+     memory: 2048M
+  ports:
+      - 5002:80
+  restart: always
+
+##Payment Service##
+ payment-service:
+  container_name: 'cphmtogo-payment-service'
+  build:
+   context: ../Exam-CPHMTOGO/CPHMTOGO
+   dockerfile: PaymentService/Dockerfile
+  deploy: 
+   resources:
+    limits:
+     memory: 2048M
+  ports:
+      - 5003:80
+  restart: always
+
+##PaymentLogging Service##
+ paymentlogging-service:
+  container_name: 'cphmtogo-paymentlogging-service'
+  build:
+   context: ../Exam-CPHMTOGO/CPHMTOGO
+   dockerfile: PaymentLoggingService/Dockerfile
+  deploy: 
+   resources:
+    limits:
+     memory: 2048M
+  ports:
+      - 5004:80
+  restart: always
+
+
+
+networks:
+ default:
+  name: cphmtogo

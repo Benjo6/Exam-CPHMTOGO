@@ -35,19 +35,19 @@ public class OrderStatusController : BaseController<OrderStatus, OrderStatusDto>
     }
     
 
-    [HttpPut("startorder/{orderid}/{employeeId}")]
-    public async Task<OrderStatusDto> StartOrder(Guid orderid, Guid employeeId)
+    [HttpPut("startorder")]
+    public async Task<OrderStatusDto> StartOrder(Guid OrderId, Guid EmployeeId)
     {
-        return await _baseService.StartOrder(orderid,employeeId);
+        return await _baseService.StartOrder(OrderId,EmployeeId);
     }
 
-    [HttpPut("closeorder/{orderid}")]
+    [HttpPut("closeorder")]
     public async Task<OrderStatusDto> CloseOrder(Guid orderid)
     {
         return await _baseService.CloseOrder(orderid);
     }
 
-    [HttpDelete]
+    [HttpDelete("{id}")]
     public Task<bool> Delete( Guid id)
     {
         return DeleteAsync(id);
