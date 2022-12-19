@@ -23,7 +23,7 @@ public class AddressServiceTests
             _addressService = new AddressService.Services.AddressService(_mockAddressRepository.Object, _mockMapper.Object,_mockHttpClientFactory.Object);
         }
 
-        [Test]
+        /*[Test]
         public async Task TestCreateAsync()
         {
             // Arrange
@@ -49,6 +49,8 @@ public class AddressServiceTests
             var result = await service.CreateAsync(street, streetNr, zipCode, etage, door);
 
             // Assert
-            // Add your assertions here
-        }
+            Assert.That(street, Is.EqualTo(result.Street));
+            Assert.That(zipCode, Is.EqualTo(result.ZipCode));
+            Assert.That(streetNr, Is.EqualTo(result.StreetNr));
+        }*/
     }
