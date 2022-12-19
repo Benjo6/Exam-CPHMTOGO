@@ -54,5 +54,10 @@ CPHMTOGO utilizes a centralized system for managing the various services that ar
 In the CPHMTOGO project, the decision was made to utilize both Typescript and C# due to the various benefits that these languages offer. The use of multiple languages has provided increased flexibility, access to a wider range of libraries and frameworks, and facilitated easier maintenance. Additionally, this approach simulated a realistic scenario in which larger teams often work with different programming languages, and allowed team members to utilize their strengths by using the language that they feel most comfortable with. Overall, the incorporation of multiple languages has proven to be a valuable asset in the CPHMTOGO project.
 
 ## BPM
+Ordering Process:
+
+Employee Delivering Process:
+
+
 ## RabbitMQ (ABED)
 ## (optional) Hypermedia on reastfull levels
