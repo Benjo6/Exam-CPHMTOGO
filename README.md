@@ -55,9 +55,10 @@ In the CPHMTOGO project, the decision was made to utilize both Typescript and C#
 
 ## BPM
 Ordering Process:
+![](https://github.com/Benjo6/Exam-CPHMTOGO/blob/main/BPM/OrderBPM.png)
 
 Employee Delivering Process:
-
+![](https://github.com/Benjo6/Exam-CPHMTOGO/blob/main/BPM/DeliveringProcess.png)
 
 ## RabbitMQ (ABED)
 ## (optional) Hypermedia on reastfull levels
