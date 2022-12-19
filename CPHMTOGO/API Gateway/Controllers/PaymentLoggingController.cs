@@ -1,4 +1,8 @@
+using APIGateway.Models;
+using APIGateway.Models.PaymentService;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace APIGateway.Controllers;
@@ -15,22 +19,22 @@ public class PaymentLoggingController: ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> Get()
+    public async Task<List<PaymentLoggingModel>> Get()
     {
-        HttpResponseMessage response = await _client.GetAsync("api/PaymentLogging");
+        HttpResponseMessage response = await _client.GetAsync("api/Paymentlogging") ;
         response.EnsureSuccessStatusCode();
         string content = await response.Content.ReadAsStringAsync();
-        dynamic items = JArray.Parse(content);
+        List<PaymentLoggingModel> items = JsonConvert.DeserializeObject<List<PaymentLoggingModel>>(content);
         return items;
     }
 
     [HttpGet("{id}")]
-    public async Task<IActionResult> Get( Guid id)
+    public async Task<PaymentLoggingModel> Get( Guid id)
     {
         HttpResponseMessage response = await _client.GetAsync($"api/PaymentLogging/{id}");
         response.EnsureSuccessStatusCode();
         string content = await response.Content.ReadAsStringAsync();
-        dynamic item = JObject.Parse(content);
+        PaymentLoggingModel item = JsonConvert.DeserializeObject<PaymentLoggingModel>(content);
         return item;
     }
 }

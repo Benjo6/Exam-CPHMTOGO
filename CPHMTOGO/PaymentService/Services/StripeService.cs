@@ -61,10 +61,11 @@ public class StripeService : IStripeService
             charge.Description);
     }
 
-    public async Task<PayoutResource> TransferingMoneyToRestaurant(string accountId, double amount,CancellationToken cancellationToken)
+    public async Task<PayoutResource> TransferingMoneyToRestaurant(CreateTransferResource resource,CancellationToken cancellationToken)
     {
+        var amount = resource.Amount;
         if (amount >= 750) amount = amount * 0.97;
-        else amount = amount * 0.97;
+        else amount =amount* 0.94;
         
         
 
@@ -73,26 +74,36 @@ public class StripeService : IStripeService
             Currency = "DKK",
             Amount = (long)Convert.ToDouble(amount),
             Description = "Payment for the order",
-            Destination = accountId
+            Destination = resource.AccountId
         };
         var payout = await _payoutService.CreateAsync(payoutOptions,null, cancellationToken);
-
+        
         return new PayoutResource(payout.Currency, payout.Amount, payout.Description);
     }
 
-    public async Task<PayoutResource> TransferingMoneyToEmployee(string accountId, double amount,
+    public async Task<PayoutResource> TransferingMoneyToEmployee(CreateTransferResource resource,
         CancellationToken cancellationToken)
     {
         var payoutOptions = new TransferCreateOptions
         {
             Currency = "DKK",
-            Amount = (long)Convert.ToDouble(amount),
+            Amount = (long)Convert.ToDouble(resource.Amount),
             Description = "Payment for the employeee delievering orders",
-            Destination = accountId
+            Destination = resource.AccountId
         };
         var payout = await _payoutService.CreateAsync(payoutOptions, null, cancellationToken);
 
         return new PayoutResource(payout.Currency, payout.Amount, payout.Description);
+    }
+
+    public async Task<IEnumerable<ChargeResource>> GetCharges(int take, CancellationToken cancellationToken)
+    {
+        var stripeCharges = await _paymentIntentService.ListAsync(new PaymentIntentListOptions()
+        {
+            Limit = take > 100 ? 100 : take
+        },null,cancellationToken);
+        return stripeCharges.Select(x =>
+            new ChargeResource(x.Id, x.Currency, x.Amount, x.CustomerId, x.ReceiptEmail, x.Description));
     }
 
     public async Task<CustomerResource> GetCustomerByEmail(string email, CancellationToken cancellationToken)

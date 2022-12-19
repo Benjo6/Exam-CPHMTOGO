@@ -22,6 +22,15 @@ builder.Services.AddHttpClient("PaymentLoggingService", client =>
 {
     client.BaseAddress = new Uri(builder.Configuration["ServicesConfiguration:PaymentLoggingServiceUrl"] ?? throw new InvalidOperationException());
 });
+builder.Services.AddHttpClient("AddressService", client =>
+{
+    client.BaseAddress = new Uri(builder.Configuration["ServicesConfiguration:AddressServiceUrl"] ?? throw new InvalidOperationException());
+});
+builder.Services.AddHttpClient("UserService", client =>
+{
+    client.BaseAddress = new Uri(builder.Configuration["ServicesConfiguration:UserServiceUrl"] ?? throw new InvalidOperationException());
+});
+
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

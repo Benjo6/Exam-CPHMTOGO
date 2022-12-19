@@ -14,3 +14,4 @@ public class PaymentLoggingDto : BaseEntityDto
     [Required(ErrorMessage="What type of transaction is this???")]
     public string Type { get; set; }
 }
+

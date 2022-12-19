@@ -91,6 +91,7 @@ jobs:
     steps:
       - checkout
       - run:
+          command: |
             cd CPHMTOGO/AddressService
             dotnet build
           name: Building Solution

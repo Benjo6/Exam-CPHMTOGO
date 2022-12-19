@@ -14,7 +14,7 @@ public class StripeController:ControllerBase
         _stripeService = stripeService;
     }
 
-    [HttpPost("customer")]
+    [HttpPost("createcustomer")]
     public async Task<ActionResult<CustomerResource>> CreateCustomer([FromBody] CreateCustomerResource resource,
         CancellationToken cancellationToken)
     {
@@ -22,7 +22,7 @@ public class StripeController:ControllerBase
         return Ok(response);
     }
 
-    [HttpPost("charge")]
+    [HttpPost("createcharge")]
     public async Task<ActionResult<ChargeResource>> CreateCharge([FromBody] CreateChargeResource resource,
         CancellationToken cancellationToken)
     {
@@ -30,33 +30,40 @@ public class StripeController:ControllerBase
         return Ok(response);
     }
     [HttpPost("transfermoneytorestaurant")]
-    public async Task<ActionResult<PayoutResource>> TransferMoneyToRestaurant(string accountId, double amount,CancellationToken cancellationToken)
+    public async Task<ActionResult<PayoutResource>> TransferMoneyToRestaurant([FromBody] CreateTransferResource resource,CancellationToken cancellationToken)
     {
-        var response = await _stripeService.TransferingMoneyToRestaurant(accountId, amount, cancellationToken);
+        var response = await _stripeService.TransferingMoneyToRestaurant(resource, cancellationToken);
         return Ok(response);
     }
     [HttpPost("transfermoneytoemployee")]
-    public async Task<ActionResult<PayoutResource>> TransferMoneyToEmployee(string accountId, double amount,CancellationToken cancellationToken)
+    public async Task<ActionResult<PayoutResource>> TransferMoneyToEmployee([FromBody] CreateTransferResource resource,CancellationToken cancellationToken)
     {
-        var response = await _stripeService.TransferingMoneyToEmployee(accountId, amount, cancellationToken);
+        var response = await _stripeService.TransferingMoneyToEmployee(resource, cancellationToken);
         return Ok(response);
     }
 
-    [HttpGet("{email}")]
+    [HttpGet("customer/{email}")]
     public async Task<ActionResult<CustomerResource>> GetCustomerByEmail(string email,CancellationToken cancellationToken)
     {
         var response = await _stripeService.GetCustomerByEmail(email,cancellationToken);
         return Ok(response);
     }
 
-    [HttpGet]
-    public async Task<ActionResult<CustomerResource>> GetCustomers(int take, CancellationToken cancellationToken)
+    [HttpGet("customer")]
+    public async Task<ActionResult<List<CustomerResource>>> GetCustomers(int take, CancellationToken cancellationToken)
     {
         var response = await _stripeService.GetCustomers(take,cancellationToken);
         return Ok(response);
     }
+    
+    [HttpGet("charge")]
+    public async Task<ActionResult<List<CustomerResource>>> GetCharges(int take, CancellationToken cancellationToken)
+    {
+        var response = await _stripeService.GetCharges(take,cancellationToken);
+        return Ok(response);
+    }
 
-    [HttpDelete]
+    [HttpDelete("customer")]
     public async Task<ActionResult<CustomerResource>> DeleteCustomer(string email, CancellationToken cancellationToken)
     {
         var response = await _stripeService.DeleteCustomerByEmail(email, cancellationToken);

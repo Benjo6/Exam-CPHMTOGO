@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "AuthenticationService": {
+    "AuthenticationServices": {
       "commandName": "Project",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"

@@ -14,7 +14,7 @@ using Newtonsoft.Json.Linq;
 
 namespace AddressService.Services;
 
-class AddressService : BaseService<Address, AddressDto>, IAddressService
+public class AddressService : BaseService<Address, AddressDto>, IAddressService
 {
     IHttpClientFactory _factory;
     private HttpClient _client;
@@ -29,7 +29,7 @@ class AddressService : BaseService<Address, AddressDto>, IAddressService
         _client = _factory.CreateClient("Address");
     }
 
-    public async Task<AddressDto> CreateAsync(string street, string streetNr, string zipCode)
+    public async Task<AddressDto> CreateAsync(string street, string streetNr, string zipCode,string? etage,string? door)
     {
         try
         {
@@ -41,7 +41,7 @@ class AddressService : BaseService<Address, AddressDto>, IAddressService
 
 
 
-            var item = await ValidateAddress(street, streetNr, zipCode);
+            var item = await ValidateAddress(street, streetNr, zipCode,etage,door);
             if (item != null)
             {
                 address.Latitude = item.adgangsadresse.adgangspunkt.koordinater[1];
@@ -62,8 +62,10 @@ class AddressService : BaseService<Address, AddressDto>, IAddressService
         return null;
     }
 
-    public async Task<string> AutoCompleteAdresser(string query)
+    public async Task<List<string>> AutoCompleteAdresser(string query)
     {
+        List<string> list = new();
+
         try
         {
             string url = "adresser/autocomplete" + (query.Length == 0 ? "" : "?") + query;
@@ -71,11 +73,11 @@ class AddressService : BaseService<Address, AddressDto>, IAddressService
             response.EnsureSuccessStatusCode();
             string content = await response.Content.ReadAsStringAsync();
             dynamic adresser = JArray.Parse(content);
-
-            foreach (var adresse in adresser)
+            foreach (var address in adresser)
             {
-                return FormatAdresseAutocomplete(adresse);
+                list.Add(FormatAdresseAutocomplete(address));
             }
+
         }
         catch (Exception e)
         {
@@ -83,14 +85,14 @@ class AddressService : BaseService<Address, AddressDto>, IAddressService
             throw;
         }
 
-        return "No items with these requirements";
+        return list.Take(5).ToList();
     }
 
-    private async Task<dynamic> ValidateAddress(String street, String streetNr, String zipCode)
+    private async Task<dynamic> ValidateAddress(String street, String streetNr, String zipCode,string? etage, string? door)
     {
         try
         {
-            string url = $"adresser?vejnavn={street}&husnr={streetNr}&postnr={zipCode}";
+            string url = $"adresser?vejnavn={street}&husnr={streetNr}&postnr={zipCode}"+(etage?.Length==0?"":$"&etage={etage}&dør={door}");
             Console.WriteLine("GET " + url);
             HttpResponseMessage response = await _client.GetAsync(url);
             response.EnsureSuccessStatusCode();
