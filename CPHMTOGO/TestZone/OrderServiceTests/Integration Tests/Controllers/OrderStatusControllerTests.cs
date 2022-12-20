@@ -77,33 +77,47 @@ public class OrderStatusControllerTests
     }
 
     [Test]
-    public async Task StartOrder_ReturnUpdatedObject()
+    public async Task StartOrder_ShouldReturnCorrectResult()
     {
-        /*//Arrange
-        OrderStatusDto dto=null;
-        var item= new OrderDto()
+        // Arrange
+        var orderId = Guid.NewGuid();
+        var employeeId = Guid.NewGuid();
+        var expectedResult = new OrderStatusDto()
         {
-            Id = Guid.NewGuid(),
-            Address = Guid.NewGuid(),
-            CustomerId = Guid.NewGuid(),
-            RestaurantId = Guid.NewGuid(),
+            Status = Status.DELIVERING.ToString()
         };
-        _service.Setup(r => r.StartOrder(It.IsAny<Guid>(),It.IsAny<Guid>()).Result).Returns(dto);
-        
-        //Act
-        await _controller.StartOrder(item.Id,item.EmployeeId);
-        _service.Verify(x=> x.StartOrder(It.IsAny<Guid>(),It.IsAny<Guid>()),Times.Once);
-        
-        //Assert
-        Assert.That(item.OrderStatusId, Is.EqualTo(dto.Id));
-        Assert.That(Status.DELIVERING.ToString(), Is.EqualTo(dto.Status));*/
+
+        // Configure the mock service to return the expected result when StartOrder is called
+        _service
+            .Setup(service => service.StartOrder(orderId, employeeId))
+            .ReturnsAsync(expectedResult);
+
+        // Act
+        var result = await _controller.StartOrder(orderId, employeeId);
+
+        // Assert
+        Assert.That(result, Is.EqualTo(expectedResult));
     }
     [Test]
     public async Task CloseOrder_ReturnUpdatedObject()
     {
-        /*
-        throw new NotImplementedException(); 
-    */
+        // Arrange
+        var orderId = Guid.NewGuid();
+        var expectedResult = new OrderStatusDto()
+        {
+            Status = Status.DELIVERED.ToString()
+        };
+
+        // Configure the mock service to return the expected result when StartOrder is called
+        _service
+            .Setup(service => service.CloseOrder(orderId))
+            .ReturnsAsync(expectedResult);
+
+        // Act
+        var result = await _controller.CloseOrder(orderId);
+
+        // Assert
+        Assert.That(result, Is.EqualTo(expectedResult));
     }
 
     [Test]

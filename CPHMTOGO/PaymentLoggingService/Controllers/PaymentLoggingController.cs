@@ -7,7 +7,7 @@ using PaymentLoggingService.Services.Interfaces;
 
 namespace PaymentLoggingService.Controllers;
 
-[Microsoft.AspNetCore.Components.Route("api/[controller]")]
+[Route("api/[controller]")]
 public class PaymentLoggingController : BaseController<PaymentLogging,PaymentLoggingDto>
 {
     public PaymentLoggingController(IPaymentLoggingService baseService) : base(baseService)

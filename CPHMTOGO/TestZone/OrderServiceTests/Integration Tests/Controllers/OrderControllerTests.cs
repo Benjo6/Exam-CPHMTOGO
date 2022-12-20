@@ -61,34 +61,29 @@ public class OrderControllerTests
     }
 
     [Test]
-    public async Task CreateOrder_ReturnCreatedObject()
+    public async Task CreateOrder_ShouldReturnCorrectResult()
     {
-        /*OrderDto? dto = null;
-        var item = new OrderDto
+        // Arrange
+        var address = Guid.NewGuid();
+        var customerId = Guid.NewGuid();
+        var restaurantId = Guid.NewGuid();
+        var orderDtos = new List<CreateOrderItemDto>();
+        var expectedResult = new OrderDto
         {
-            RestaurantId = Guid.NewGuid(), CustomerId = Guid.NewGuid(), Address = Guid.NewGuid(),
-            EmployeeId = Guid.NewGuid(), Id = Guid.NewGuid(), OrderStatusId = Guid.NewGuid()
-
+            Address = address,CustomerId = customerId,RestaurantId = restaurantId
         };
-        var orderitems = new List<CreateOrderItemDto>()
-        {
-            new() { Preference = "",  Price = 500.50, Quantity = 1 },
-            new() { Preference = "",  Price = 500.50, Quantity = 2 }
-        }; 
-        _service.Setup(r => r.CreateOrderTask(It.IsAny<OrderDto>(),It.IsAny<List<CreateOrderItemDto>>()).Result).Returns(dto);
 
-        await _controller.CreateOrder(item.Address,item.CustomerId,item.RestaurantId,orderitems);
-        _service.Verify(x=> x.CreateOrderTask(It.IsAny<OrderDto>(),It.IsAny<List<CreateOrderItemDto>>()),Times.Once);
-        
-        Assert.That(item.Address, Is.EqualTo(dto.Address));
-        Assert.That(item.CustomerId, Is.EqualTo(dto.CustomerId));
-        Assert.That(item.Id, Is.EqualTo(dto.Id));
-        Assert.That(item.EmployeeId, Is.EqualTo(dto.EmployeeId));
-        Assert.That(item.RestaurantId, Is.EqualTo(dto.RestaurantId));
-        Assert.That(item.OrderStatusId, Is.EqualTo(dto.OrderStatusId));*/
+        // Configure the mock service to return the expected result when CreateOrderTask is called
+        _service
+            .Setup(service => service.CreateOrderTask(It.IsAny<OrderDto>(), orderDtos))
+            .ReturnsAsync(expectedResult);
 
+        // Act
+        var result = await _controller.CreateOrder(address, customerId, restaurantId, orderDtos);
+
+        // Assert
+        Assert.That(result, Is.EqualTo(expectedResult));
     }
-
     [Test]
     public async Task Update_ReturnUpdatedObject()
     {
@@ -131,5 +126,46 @@ public class OrderControllerTests
         var okresult =  _controller.Delete(item.Id).Result;
         
         Assert.IsTrue(okresult);
+    }
+    [Test]
+    public async Task NumberOfOpenOrders_ShouldReturnCorrectResult()
+    {
+        // Arrange
+        var expectedResult = 5;
+
+        // Configure the mock service to return the expected result when NumberOfOpenOrders is called
+        _service
+            .Setup(service => service.NumberOfOpenOrders())
+            .ReturnsAsync(expectedResult);
+
+        // Act
+        var result = await _controller.NumberOfOpenOrders();
+
+        // Assert
+        _service.Verify(service => service.NumberOfOpenOrders(), Times.Once());
+        Assert.That(result, Is.EqualTo(expectedResult));
+    }
+    
+    [Test]
+    public async Task GetOpenOrdersForEmployees_ShouldReturnCorrectResult()
+    {
+        // Arrange
+        var expectedResult = new List<OrderDto>
+        {
+            new(),
+            new()
+        };
+
+        // Configure the mock service to return the expected result when GetOpenOrders is called
+        _service
+            .Setup(service => service.GetOpenOrders())
+            .ReturnsAsync(expectedResult);
+
+        // Act
+        var result = await _controller.GetOpenOrdersForEmployees();
+
+        // Assert
+        _service.Verify(service => service.GetOpenOrders(), Times.Once());
+        Assert.That(result, Is.EqualTo(expectedResult));
     }
 }

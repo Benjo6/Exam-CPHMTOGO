@@ -106,6 +106,37 @@ public class OrderStatusServiceTests
         Assert.That(dto.Status, Is.EqualTo(item.Status));
         Assert.That(dto.TimeStamp, Is.EqualTo(item.TimeStamp));
     }
+    
+    /*
+    [Test]
+    public async Task Test_StartOrder_Method()
+    {
+        // Arrange
+    
+        var orderid = Guid.NewGuid();
+        var employeeId = Guid.NewGuid();
+    
+        var mockOrderStatus = new OrderStatus
+        {
+            Id = Guid.NewGuid(),
+            TimeStamp = DateTime.UtcNow,
+            Status = Status.STARTED.ToString()
+        };
+
+        _repository
+            .Setup(repo => repo.GetById(It.IsAny<Guid>())).Returns(Task.FromResult(mockOrderStatus));
+        
+        _repository
+            .Setup(repo => repo.Update(It.IsAny<OrderStatus>()));
+
+        // Act
+        var result = await _service.StartOrder(orderid, employeeId);
+    
+        // Assert
+        Assert.IsNotNull(result);
+        Assert.AreEqual(Status.DELIVERING.ToString(), result.Status);
+        Assert.AreEqual(mockOrderStatus.Id, result.Id);
+    }*/
 
     [Test]
     public void Delete_ReturnTrue()

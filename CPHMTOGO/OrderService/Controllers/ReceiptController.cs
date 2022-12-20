@@ -33,13 +33,13 @@ public class ReceiptController : BaseController<Receipt,ReceiptDto>
         return await AddAsync(dto);
     }
 
-    [HttpPut("{id}")]
+    [HttpPut]
     public async Task<IActionResult> Put( ReceiptDto dto)
     {
         return await UpdateAsync(dto);
     }
 
-    [HttpDelete]
+    [HttpDelete("{id}")]
     public Task<bool> Delete( Guid id)
     {
         return DeleteAsync(id);

@@ -3,7 +3,7 @@ using service;
 
 namespace APIGateway.Controllers;
 
-
+[Route("[Controller]")]
 public class AuthenticationController :GrpcControllerBase<AuthenticationActivity.AuthenticationActivityClient>
 {
     [HttpGet]
