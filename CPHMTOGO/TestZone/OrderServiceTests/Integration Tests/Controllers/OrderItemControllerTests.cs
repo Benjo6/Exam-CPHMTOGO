@@ -1,4 +1,6 @@
+using Castle.Core.Logging;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Moq;
 using OrderService.Controllers;
 using OrderService.Domain;
@@ -11,13 +13,14 @@ public class OrderItemControllerTests
 {
     private Mock<IOrderItemService> _service;
     private OrderItemController _controller;
+    private Mock<ILogger<OrderItemController>> _logger;
 
 
     [SetUp]
     public void Setup()
     {
         _service = new Mock<IOrderItemService>();
-        _controller = new OrderItemController(_service.Object);
+        _controller = new OrderItemController(_service.Object,_logger.Object);
     }
 
     [Test]
@@ -104,9 +107,9 @@ public class OrderItemControllerTests
             { Preference = "",OrderId = Guid.NewGuid(),Price = 500.50,Quantity = 1};
         _service.Setup(x => x.Delete(item.Id).Result).Returns(true);
 
-        var okresult =  _controller.Delete(item.Id).Result;
+        var okresult =  _controller.Delete(item.Id).Result as OkObjectResult;
         
-        Assert.IsTrue(okresult);
+        Assert.IsTrue(okresult.Value is bool ? (bool)okresult.Value : false);
     }
     
 }

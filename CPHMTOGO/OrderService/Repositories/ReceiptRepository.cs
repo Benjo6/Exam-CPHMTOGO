@@ -8,7 +8,7 @@ namespace OrderService.Repositories;
 
 public class ReceiptRepository : RepositoryBase<Receipt>, IReceiptRepository
 {
-    public ReceiptRepository(RepositoryContext dbContext) : base(dbContext)
+    public ReceiptRepository(RepositoryContext dbContext,ILogger<ReceiptRepository> logger) : base(dbContext,logger)
     {
     }
 

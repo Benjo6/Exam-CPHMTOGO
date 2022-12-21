@@ -8,7 +8,7 @@ namespace AddressService.Repositories;
 
 public class AddressRepository : RepositoryBase<Address>, IAddressRepository
 {
-    public AddressRepository(AddressDbContext dbContext) : base(dbContext)
+    public AddressRepository(AddressDbContext dbContext,ILogger<AddressRepository> logger) : base(dbContext,logger)
     {
 
 

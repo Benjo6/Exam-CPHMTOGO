@@ -1,8 +1,12 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Moq;
+using NUnit.Framework.Internal;
 using OrderService.Domain;
 using OrderService.Infrastructure;
 using OrderService.Repositories;
 using OrderService.Repositories.Interfaces;
+using ILogger = Microsoft.Extensions.Logging.ILogger;
 
 namespace OrderServiceTests.Integration_Tests.Repositories;
 
@@ -20,12 +24,14 @@ public class OrderItemRepositoryTests
             .UseInMemoryDatabase(dbName)
             .Options;
         _repository = await CreateRepositoryAsync();
+        
     }
 
     private async Task<IOrderItemRepository> CreateRepositoryAsync()
     {
+         var logger = new Mock<ILogger<OrderItemRepository>>();
             RepositoryContext context = new RepositoryContext(_dbContextOptions);
-            return new OrderItemRepository(context);
+            return new OrderItemRepository(context,logger.Object);
             
     }
 

@@ -8,7 +8,7 @@ namespace OrderService.Repositories;
 
 public class OrderRepository : RepositoryBase<Order>, IOrderRepository
 {
-    public OrderRepository(RepositoryContext dbContext) : base(dbContext)
+    public OrderRepository(RepositoryContext dbContext,ILogger<OrderRepository> logger) : base(dbContext,logger)
     {
     }
 

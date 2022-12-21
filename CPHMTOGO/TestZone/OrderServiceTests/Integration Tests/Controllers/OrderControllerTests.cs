@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Moq;
 using OrderService.Controllers;
 using OrderService.Domain;
@@ -10,15 +11,16 @@ namespace OrderServiceTests.Integration_Tests.Controllers;
 
 public class OrderControllerTests
 {
-        private Mock<IOrderService> _service;
+    private Mock<IOrderService> _service;
     private OrderController _controller;
+    private Mock<ILogger<OrderController>> _logger;
 
 
     [SetUp]
     public void Setup()
     {
         _service = new Mock<IOrderService>();
-        _controller = new OrderController(_service.Object);
+        _controller = new OrderController(_service.Object,_logger.Object);
     }
 
     [Test]
@@ -123,9 +125,9 @@ public class OrderControllerTests
 
         _service.Setup(x => x.Delete(item.Id).Result).Returns(true);
 
-        var okresult =  _controller.Delete(item.Id).Result;
-        
-        Assert.IsTrue(okresult);
+        var okresult =  _controller.Delete(item.Id).Result as OkObjectResult;
+
+        Assert.IsTrue(okresult.Value is bool ? (bool)okresult.Value : false);
     }
     [Test]
     public async Task NumberOfOpenOrders_ShouldReturnCorrectResult()

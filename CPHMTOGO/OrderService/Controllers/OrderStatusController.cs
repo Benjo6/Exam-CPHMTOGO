@@ -11,7 +11,7 @@ public class OrderStatusController : BaseController<OrderStatus, OrderStatusDto>
 {
     private readonly IOrderStatusService _baseService;
 
-    public OrderStatusController(IOrderStatusService baseService) : base(baseService)
+    public OrderStatusController(IOrderStatusService baseService,ILogger<OrderStatusController> logger) : base(baseService,logger)
     {
         _baseService = baseService;
     }
@@ -48,7 +48,7 @@ public class OrderStatusController : BaseController<OrderStatus, OrderStatusDto>
     }
 
     [HttpDelete("{id}")]
-    public Task<bool> Delete( Guid id)
+    public Task<IActionResult> Delete( Guid id)
     {
         return DeleteAsync(id);
     }

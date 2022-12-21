@@ -13,7 +13,7 @@ public class OrderController : BaseController<Order,OrderDto>
 {
     private readonly IOrderService _baseService;
 
-    public OrderController(IOrderService baseService) : base(baseService)
+    public OrderController(IOrderService baseService, ILogger<OrderController> logger) : base(baseService,logger)
     {
         _baseService = baseService;
     }
@@ -43,7 +43,7 @@ public class OrderController : BaseController<Order,OrderDto>
     }
 
     [HttpDelete]
-    public Task<bool> Delete( Guid id)
+    public Task<IActionResult> Delete( Guid id)
     {
         return DeleteAsync(id);
     }

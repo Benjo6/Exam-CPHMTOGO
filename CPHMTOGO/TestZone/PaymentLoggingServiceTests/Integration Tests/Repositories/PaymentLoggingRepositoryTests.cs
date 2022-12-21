@@ -1,4 +1,7 @@
+using Castle.Core.Logging;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Moq;
 using PaymentLoggingService.Domain;
 using PaymentLoggingService.Infrastructure;
 using PaymentLoggingService.Repositories;
@@ -24,8 +27,9 @@ public class PaymentLoggingRepositoryTests
 
     private async Task<IPaymentLoggingRepository> CreateRepositoryAsync()
     {
+        var logger = new Mock<ILogger<PaymentLoggingRepository>>();
         PaymentLoggingContext context = new PaymentLoggingContext(_dbContextOptions);
-            return new PaymentLoggingRepository(context);
+            return new PaymentLoggingRepository(context,logger.Object);
             
     }
 

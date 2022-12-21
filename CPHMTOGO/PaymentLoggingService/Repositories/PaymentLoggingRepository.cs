@@ -8,7 +8,7 @@ namespace PaymentLoggingService.Repositories;
 
 public class PaymentLoggingRepository : RepositoryBase<PaymentLogging>, IPaymentLoggingRepository
 {
-    public PaymentLoggingRepository(PaymentLoggingContext context) : base(context)
+    public PaymentLoggingRepository(PaymentLoggingContext context, ILogger<PaymentLoggingRepository> logger) : base(context,logger)
     {
     }
 }

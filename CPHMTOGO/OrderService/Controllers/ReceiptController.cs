@@ -11,7 +11,7 @@ namespace OrderService.Controllers;
 [Route("api/[controller]")]
 public class ReceiptController : BaseController<Receipt,ReceiptDto>
 { 
-    public ReceiptController(IReceiptService baseService) : base(baseService)
+    public ReceiptController(IReceiptService baseService, ILogger<ReceiptController> logger) : base(baseService,logger)
     {
     }
     
@@ -40,7 +40,7 @@ public class ReceiptController : BaseController<Receipt,ReceiptDto>
     }
 
     [HttpDelete("{id}")]
-    public Task<bool> Delete( Guid id)
+    public Task<IActionResult> Delete( Guid id)
     {
         return DeleteAsync(id);
     }

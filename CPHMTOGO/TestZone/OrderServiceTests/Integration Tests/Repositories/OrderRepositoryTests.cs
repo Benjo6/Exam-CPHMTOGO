@@ -1,4 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Moq;
 using OrderService.Domain;
 using OrderService.Infrastructure;
 using OrderService.Repositories;
@@ -25,7 +27,8 @@ public class OrderRepositoryTests
     private async Task<IOrderRepository> CreateRepositoryAsync()
     {
             RepositoryContext context = new RepositoryContext(_dbContextOptions);
-            return new OrderRepository(context);
+            var logger = new Mock<ILogger<OrderRepository>>();
+            return new OrderRepository(context,logger.Object);
             
     }
 

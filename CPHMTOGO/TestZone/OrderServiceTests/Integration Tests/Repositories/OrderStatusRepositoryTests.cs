@@ -1,4 +1,7 @@
+using Castle.Core.Logging;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Moq;
 using OrderService.Domain;
 using OrderService.Infrastructure;
 using OrderService.Repositories;
@@ -24,8 +27,9 @@ public class OrderStatusRepositoryTests
 
     private async Task<IOrderStatusRepository> CreateRepositoryAsync()
     {
+        var logger = new Mock<ILogger<OrderStatusRepository>>();
             RepositoryContext context = new RepositoryContext(_dbContextOptions);
-            return new OrderStatusRepository(context);
+            return new OrderStatusRepository(context,logger.Object);
             
     }
 

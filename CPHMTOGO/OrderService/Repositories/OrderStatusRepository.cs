@@ -11,7 +11,7 @@ public class OrderStatusRepository : RepositoryBase<OrderStatus>, IOrderStatusRe
 {
     private readonly RepositoryContext _dbContext;
 
-    public OrderStatusRepository(RepositoryContext dbContext ) : base(dbContext)
+    public OrderStatusRepository(RepositoryContext dbContext, ILogger<OrderStatusRepository> logger ) : base(dbContext,logger)
     {
         _dbContext = dbContext;
     }

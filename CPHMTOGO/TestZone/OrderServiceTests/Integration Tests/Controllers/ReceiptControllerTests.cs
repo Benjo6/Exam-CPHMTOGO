@@ -1,6 +1,7 @@
 using System.Collections;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework.Internal;
 using OrderService.Controllers;
@@ -10,6 +11,7 @@ using OrderService.Profile;
 using OrderService.Repositories.Interfaces;
 using OrderService.Services;
 using OrderService.Services.Interfaces;
+using ILogger = Castle.Core.Logging.ILogger;
 
 namespace OrderServiceTests.Integration_Tests.Controllers;
 
@@ -17,13 +19,14 @@ public class ReceiptControllerTests
 {
     private Mock<IReceiptService> _service;
     private ReceiptController _controller;
+    private Mock<ILogger<ReceiptController>> _logger;
 
 
     [SetUp]
     public void Setup()
     {
         _service = new Mock<IReceiptService>();
-        _controller = new ReceiptController(_service.Object);
+        _controller = new ReceiptController(_service.Object,_logger.Object);
     }
 
     [Test]
@@ -132,9 +135,9 @@ public class ReceiptControllerTests
         };
         _service.Setup(x => x.Delete(item.Id).Result).Returns(true);
 
-        var okresult =  _controller.Delete(item.Id).Result;
+        var okresult =  _controller.Delete(item.Id).Result as OkObjectResult;
         
-        Assert.IsTrue(okresult);
+        Assert.IsTrue(okresult.Value is bool ? (bool)okresult.Value : false);
     }
     
 }

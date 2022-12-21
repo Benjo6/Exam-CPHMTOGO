@@ -1,5 +1,7 @@
 using System.Diagnostics;
+using Castle.Core.Logging;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Moq;
 using OrderService.Controllers;
 using OrderService.Domain;
@@ -14,6 +16,8 @@ public class OrderStatusControllerTests
     private Mock<IOrderStatusService> _service;
     private Mock<IOrderService> _serviceOrder;
     private OrderStatusController _controller;
+    private Mock<ILogger<OrderStatusController>> _logger;
+
 
 
     [SetUp]
@@ -21,7 +25,7 @@ public class OrderStatusControllerTests
     {
         _serviceOrder = new Mock<IOrderService>();
         _service = new Mock<IOrderStatusService>();
-        _controller = new OrderStatusController(_service.Object);
+        _controller = new OrderStatusController(_service.Object,_logger.Object);
     }
 
     [Test]
@@ -127,9 +131,9 @@ public class OrderStatusControllerTests
             {Status = Status.STARTED.ToString(),TimeStamp = DateTime.UtcNow};
         _service.Setup(x => x.Delete(item.Id).Result).Returns(true);
 
-        var okresult =  _controller.Delete(item.Id).Result;
+        var okresult =  _controller.Delete(item.Id).Result as OkObjectResult;
         
-        Assert.IsTrue(okresult);
+        Assert.IsTrue(okresult.Value is bool ? (bool)okresult.Value : false);
     }
     
 }

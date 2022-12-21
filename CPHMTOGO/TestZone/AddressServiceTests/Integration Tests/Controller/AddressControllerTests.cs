@@ -2,7 +2,9 @@
 using AddressService.Controllers;
 using AddressService.Domain.Dto;
 using AddressService.Services.Interfaces;
+using Castle.Core.Logging;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Moq;
 
 namespace AddressServiceTests.Integration_Tests.Controller;
@@ -11,6 +13,7 @@ public class AddressControllerTests
 {
     private AddressController _controller;
     private Mock<IAddressService> _service;
+    private Mock<ILogger<AddressController>> _logger;
 
     [SetUp]
     public void Setup()
@@ -19,7 +22,7 @@ public class AddressControllerTests
         _service = new Mock<IAddressService>();
 
         // Inject the mock IAddressService into the AddressController constructor
-        _controller = new AddressController(_service.Object);
+        _controller = new AddressController(_service.Object,_logger.Object);
     }
     [Test]
     public async Task Get_ReturnCountOfObjects()
