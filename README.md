@@ -68,7 +68,7 @@ Ordering Process:
 Employee Delivering Process:
 ![](https://github.com/Benjo6/Exam-CPHMTOGO/blob/main/BPM/DeliveringProcess.png)
 
-## RabbitMQ (ABED)
+## RabbitMQ
 
 We are using RabbitMQ beacuase we have processes that is required when a specific event happens. This is called Event Driven. They way we use it is to automate the process of sending emails to customers when the make an order. We have created a queue in RabbitMQ called order, and we have a consumer listining on the queue. Whenever a message is sent to the queue, the consumer does something to with that message. We use the message, which is a JSON object with the information about the order, to send out an appropriate email to the customer about the status of the order.
  
