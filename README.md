@@ -9,7 +9,7 @@ CPHMTOGO's customers can utilize their accounts with the company to place orders
 | Name                        | Mail                     |
 |-----------------------------|--------------------------|
 | Benjamin Ćurović            | cph-bc121@cphbusiness.dk |
-| Abdelhamid Hariri           |                          |
+| Abdelhamid Hariri           | cph-ah482@cphbusiness.dk |
 | Jonas Ancker Juul Jørgensen |                          |
 
 ## How to run the project
@@ -69,6 +69,9 @@ Employee Delivering Process:
 ![](https://github.com/Benjo6/Exam-CPHMTOGO/blob/main/BPM/DeliveringProcess.png)
 
 ## RabbitMQ (ABED)
+
+We are using RabbitMQ beacuase we have processes that is required when a specific event happens. This is called Event Driven. They way we use it is to automate the process of sending emails to customers when the make an order. We have created a queue in RabbitMQ called order, and we have a consumer listining on the queue. Whenever a message is sent to the queue, the consumer does something to with that message. We use the message, which is a JSON object with the information about the order, to send out an appropriate email to the customer about the status of the order.
+ 
 ## Maturity Levels of REST API Design
 It can be stated that CPHMTOGO exhibits a level of sophistication in its design as it satisfies the criteria for the maturity levels of REST API design. This suggests that the API is structured in a way that is coherent, easy to use, and adaptable, making it a valuable resource for developers seeking to incorporate it into their applications.
 
