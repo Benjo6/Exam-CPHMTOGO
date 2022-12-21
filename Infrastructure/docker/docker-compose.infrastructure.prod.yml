@@ -2,6 +2,7 @@ version: "3"
 services:
   authentication-db:
     image: postgres
+    container_name: 'authentication-db'
     ports:
       - 3308:5432
     volumes:
@@ -56,3 +57,7 @@ services:
       - ./init/bonuses:/docker-entrypoint-initdb.d
     environment:
       POSTGRES_PASSWORD: test123
+
+networks:
+ default:
+  name: cphmtogo
