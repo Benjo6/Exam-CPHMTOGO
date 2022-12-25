@@ -1,10 +1,10 @@
 CREATE TABLE
   public."MenuItems" (
     id uuid NOT NULL,
+    "menuId" uuid NOT NULL,
     name text NOT NULL,
     description text NOT NULL,
-    price text NOT NULL,
-    "menuId" uuid NOT NULL,
+    price double precision NOT NULL,
     "foodType" text NOT NULL
   );
 
@@ -18,7 +18,7 @@ CREATE TABLE
     id uuid NOT NULL,
     title text NOT NULL,
     "restaurantId" uuid NOT NULL
-);
+  );
 
 ALTER TABLE
   public."Menu"
@@ -27,18 +27,18 @@ ADD
 
 CREATE TABLE
   public."Restaurant" (
-    "id" uuid NOT NULL,
-    "name" text NOT NULL,
-    "address" uuid NOT NULL,
-    "loginInfoId" uuid NOT NULL,
+    id uuid NOT NULL,
+    name text NOT NULL,
     "kontoNr" integer NOT NULL,
     "regNr" integer NOT NULL,
+    role text NOT NULL,
     "accountId" text NOT NULL,
-    "cvr" integer NOT NULL,
-    "role" text NOT NULL 
+    cvr integer NOT NULL,
+    address uuid NOT NULL,
+    "loginInfoId" uuid NOT NULL
   );
 
 ALTER TABLE
   public."Restaurant"
 ADD
-  CONSTRAINT "Restaurant_pkey" PRIMARY KEY (id)
+  CONSTRAINT "Restaurant_pkey" PRIMARY KEY (id);
