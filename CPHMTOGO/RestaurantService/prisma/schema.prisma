@@ -30,10 +30,9 @@ model Restaurant {
     name        String
     address     String
     loginInfoId String
-    cityId      String
     kontoNr     Int
     regNr       Int
-    CVR         Int
+    cvr         Int
     role        String @default("Restaurant")
     menus       Menu[]
 }
