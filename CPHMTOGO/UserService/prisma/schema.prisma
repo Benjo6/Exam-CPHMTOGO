@@ -23,13 +23,8 @@ model Customer {
   phone       Int
   birtdate    DateTime
   address     String   @db.Uuid
-<<<<<<< HEAD
   loginInfoId String   @db.Uuid
   role        String
-=======
-  loginInfoId String
-  role        String   @default("Customer")
->>>>>>> 35c163dc9857cfc21bec320a9ed09dead807ff78
 }
 
 model Employee {
@@ -39,11 +34,7 @@ model Employee {
   active      Boolean
   loginInfoId String  @db.Uuid
   address     String  @db.Uuid
-<<<<<<< HEAD
   role        String
-=======
-  role        String  @default("Employee")
->>>>>>> 35c163dc9857cfc21bec320a9ed09dead807ff78
   kontoNr     Int
   regNr       Int
   accountId   String
