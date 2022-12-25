@@ -10,4 +10,4 @@ CREATE TABLE
 ALTER TABLE
   public."LoginInfo"
 ADD
-  CONSTRAINT "LoginInfo_pkey" PRIMARY KEY (id)
+  CONSTRAINT "LoginInfo_pkey" PRIMARY KEY (id);
