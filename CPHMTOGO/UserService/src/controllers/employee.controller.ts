@@ -1,8 +1,8 @@
+import { Employee } from "@prisma/client";
 import { v4 as uuid } from "uuid";
-import { IEmployee } from "../interfaces/employee.interface";
 import mapper from "../models/employee.model";
 
-function createEmployee(employee: IEmployee) {
+function createEmployee(employee: Employee) {
 	return mapper.createEmployee({
 		id: uuid(),
 		firstname: employee.firstname,
@@ -10,13 +10,14 @@ function createEmployee(employee: IEmployee) {
 		active: employee.active,
 		loginInfoId: employee.loginInfoId,
 		address: employee.address,
-		role: employee.role,
+		role: "Employee",
 		kontoNr: employee.kontoNr,
 		regNr: employee.regNr,
+		accountId: "acct_1MBLzdCfd0VXBbOf",
 	});
 }
 
-function updateEmployee(employee: IEmployee, id: string) {
+function updateEmployee(employee: Employee, id: string) {
 	return mapper.updateEmployee({
 		id,
 		firstname: employee.firstname,
@@ -24,9 +25,10 @@ function updateEmployee(employee: IEmployee, id: string) {
 		active: employee.active,
 		loginInfoId: employee.loginInfoId,
 		address: employee.address,
-		role: employee.role,
+		role: "Employee",
 		kontoNr: employee.kontoNr,
 		regNr: employee.regNr,
+		accountId: "acct_1MBLzdCfd0VXBbOf",
 	});
 }
 
