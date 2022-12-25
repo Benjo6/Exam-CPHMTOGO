@@ -22,7 +22,7 @@ model Customer {
   lastname    String
   phone       Int
   birtdate    DateTime
-  address     String
+  address     String   @db.Uuid
   loginInfoId String
   role        String   @default("Customer")
 }
@@ -33,7 +33,7 @@ model Employee {
   lastname    String
   active      Boolean
   loginInfoId String  @db.Uuid
-  address     String
+  address     String  @db.Uuid
   role        String  @default("Employee")
   kontoNr     Int
   regNr       Int
