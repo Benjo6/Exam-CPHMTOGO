@@ -4,10 +4,10 @@ export interface RestaurantArgs {
 		name: string;
 		address: string;
 		loginInfoId: string;
-		cityId: string;
 		kontoNr: number;
+		accountId: string;
 		regNr: number;
-		CVR: number;
+		cvr: number;
 		role: string;
 	};
 }

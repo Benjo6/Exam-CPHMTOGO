@@ -25,10 +25,10 @@ const typeDefs = `#graphql
     name:        String
     address:      String
     loginInfoId: String
-    cityId:      String
     kontoNr:     Int
     regNr:       Int
-    CVR:         Int
+    accountId: String
+    cvr:         Int
     role:        String
     menus:       [Menu]
   }
@@ -38,11 +38,9 @@ const typeDefs = `#graphql
     name:        String
     address:      String
     loginInfoId: String
-    cityId:      String
     kontoNr:     Int
     regNr:       Int
-    CVR:         Int
-    role:        String
+    cvr:         Int
   }
 
   type Menu {
