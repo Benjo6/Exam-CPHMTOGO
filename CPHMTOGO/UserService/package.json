@@ -8,7 +8,7 @@
 		"lint": "npx eslint .",
 		"dev": "nodemon src/server.ts",
 		"swagger": "tsoa spec",
-		"start": "npx ts-node server.ts",
+		"start": "npx ts-node src/server.ts",
 		"coverage": "nyc"
 	},
 	"keywords": [],

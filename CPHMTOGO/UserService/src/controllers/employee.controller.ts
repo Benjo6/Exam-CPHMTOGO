@@ -1,8 +1,8 @@
-import { Employee } from "@prisma/client";
 import { v4 as uuid } from "uuid";
+import { IEmployee } from "../interfaces/employee.interface";
 import mapper from "../models/employee.model";
 
-function createEmployee(employee: Employee) {
+function createEmployee(employee: IEmployee) {
 	return mapper.createEmployee({
 		id: uuid(),
 		firstname: employee.firstname,
@@ -17,7 +17,7 @@ function createEmployee(employee: Employee) {
 	});
 }
 
-function updateEmployee(employee: Employee, id: string) {
+function updateEmployee(employee: IEmployee, id: string) {
 	return mapper.updateEmployee({
 		id,
 		firstname: employee.firstname,

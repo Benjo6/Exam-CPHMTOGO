@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>19/19</span>
+                <span class='fraction'>0/19</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>4/4</span>
+                <span class='fraction'>0/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>18/18</span>
+                <span class='fraction'>0/18</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -96,61 +96,61 @@
 <a name='L31'></a><a href='#L31'>31</a>
 <a name='L32'></a><a href='#L32'>32</a>
 <a name='L33'></a><a href='#L33'>33</a>
-<a name='L34'></a><a href='#L34'>34</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<a name='L34'></a><a href='#L34'>34</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import express from "express";
-import companyRoutes from "./routes/company.routes";
-import customerRoutes from "./routes/customer.routes";
-import employeeRoutes from "./routes/employee.routes";
-import bodyParser from "body-parser";
-import prisma from "../prisma/client";
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" >import express from "express";</span>
+<span class="cstat-no" title="statement not covered" >import companyRoutes from "./routes/company.routes";</span>
+<span class="cstat-no" title="statement not covered" >import customerRoutes from "./routes/customer.routes";</span>
+<span class="cstat-no" title="statement not covered" >import employeeRoutes from "./routes/employee.routes";</span>
+<span class="cstat-no" title="statement not covered" >import bodyParser from "body-parser";</span>
+<span class="cstat-no" title="statement not covered" >import prisma from "../prisma/client";</span>
 &nbsp;
-export const app = express();
+export const <span class="cstat-no" title="statement not covered" >app = express();</span>
 &nbsp;
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+<span class="cstat-no" title="statement not covered" >app.use(bodyParser.urlencoded({ extended: false }));</span>
+<span class="cstat-no" title="statement not covered" >app.use(bodyParser.json());</span>
 &nbsp;
-app.use("/company", companyRoutes);
-app.use("/customer", customerRoutes);
-app.use("/employee", employeeRoutes);
+<span class="cstat-no" title="statement not covered" >app.use("/company", companyRoutes);</span>
+<span class="cstat-no" title="statement not covered" >app.use("/customer", customerRoutes);</span>
+<span class="cstat-no" title="statement not covered" >app.use("/employee", employeeRoutes);</span>
 &nbsp;
-app.get("/", (req, res) =&gt; {
-	res.send("server is running");
+<span class="cstat-no" title="statement not covered" >app.get("/", <span class="fstat-no" title="function not covered" >(r</span>eq, res) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >	res.send("server is running");</span>
 });
 &nbsp;
-app.get("/customerUser", async (req, res) =&gt; {
-	res.json(
+<span class="cstat-no" title="statement not covered" >app.get("/customerUser", <span class="fstat-no" title="function not covered" >async (r</span>eq, res) =&gt;<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" > {</span></span></span>
+<span class="cstat-no" title="statement not covered" >	res.json(</span>
 		await prisma.customer.findUnique({
 			where: {
 				id: "39bfb82a-b55f-457c-9eaa-ac77e98367f3",
@@ -159,8 +159,8 @@ app.get("/customerUser", async (req, res) =&gt; {
 	);
 });
 &nbsp;
-app.listen(3001, () =&gt; {
-	console.log(`user-service listening on port ${3001}`);
+<span class="cstat-no" title="statement not covered" >app.listen(3000, <span class="fstat-no" title="function not covered" >() =</span>&gt; {</span>
+<span class="cstat-no" title="statement not covered" >	console.log(`user-service listening on port ${3000}`);</span>
 });
 &nbsp;</pre></td></tr></table></pre>
 
@@ -169,7 +169,7 @@ app.listen(3001, () =&gt; {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2022-12-11T02:56:22.537Z
+                at 2022-12-25T11:26:47.466Z
             </div>
         <script src="../prettify.js"></script>
         <script>
