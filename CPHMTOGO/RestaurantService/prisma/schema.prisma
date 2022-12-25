@@ -32,6 +32,7 @@ model Restaurant {
     loginInfoId String
     kontoNr     Int
     regNr       Int
+    accountId   String
     cvr         Int
     role        String @default("Restaurant")
     menus       Menu[]
