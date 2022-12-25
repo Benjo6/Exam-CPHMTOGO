@@ -33,7 +33,7 @@ CREATE TABLE
     "loginInfoId" uuid NOT NULL,
     "kontoNr" integer NOT NULL,
     "regNr" integer NOT NULL,
-    "accountId" string NOT NULL,
+    "accountId" text NOT NULL,
     "cvr" integer NOT NULL,
     "role" text NOT NULL 
   );
