@@ -7,7 +7,7 @@ CREATE TABLE
     longitude float8 NOT NULL,
     latitude float8 NOT NULL,
     etage text,
-    door text,
+    door text
   );
 
 ALTER TABLE
