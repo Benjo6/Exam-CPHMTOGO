@@ -7,7 +7,7 @@ function createCompany(company: ICompany) {
 		id: uuid(),
 		name: company.name,
 		loginInfoId: company.loginInfoId,
-		role: company.role,
+		role: "Company",
 		kontoNr: company.kontoNr,
 		regNr: company.regNr,
 	});
@@ -18,7 +18,7 @@ function updateCompany(company: ICompany, id: string) {
 		id,
 		name: company.name,
 		loginInfoId: company.loginInfoId,
-		role: company.role,
+		role: "Company",
 		kontoNr: company.kontoNr,
 		regNr: company.regNr,
 	});

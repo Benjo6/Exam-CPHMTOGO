@@ -11,7 +11,7 @@ function createCustomer(customer: ICustomer) {
 		birtdate: new Date(customer.birtdate),
 		address: customer.address,
 		loginInfoId: customer.loginInfoId,
-		role: customer.role,
+		role: "Customer",
 	});
 }
 
@@ -24,7 +24,7 @@ function updateCustomer(customer: ICustomer, id: string) {
 		birtdate: new Date(customer.birtdate),
 		address: customer.address,
 		loginInfoId: customer.loginInfoId,
-		role: customer.role,
+		role: "Customer",
 	});
 }
 

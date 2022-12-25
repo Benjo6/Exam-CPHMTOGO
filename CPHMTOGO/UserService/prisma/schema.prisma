@@ -10,8 +10,8 @@ datasource db {
 model Company {
   id          String @id @db.Uuid
   name        String
-  role        String @default("Admin")
-  loginInfoId String
+  role        String
+  loginInfoId String @db.Uuid
   kontoNr     Int
   regNr       Int
 }
@@ -23,8 +23,8 @@ model Customer {
   phone       Int
   birtdate    DateTime
   address     String   @db.Uuid
-  loginInfoId String
-  role        String   @default("Customer")
+  loginInfoId String   @db.Uuid
+  role        String
 }
 
 model Employee {
@@ -34,7 +34,8 @@ model Employee {
   active      Boolean
   loginInfoId String  @db.Uuid
   address     String  @db.Uuid
-  role        String  @default("Employee")
+  role        String
   kontoNr     Int
   regNr       Int
+  accountId   String
 }
