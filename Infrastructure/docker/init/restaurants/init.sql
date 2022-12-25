@@ -27,15 +27,15 @@ ADD
 
 CREATE TABLE
   public."Restaurant" (
-    id uuid NOT NULL,
-    name text NOT NULL,
-    adress text NOT NULL,
-    "loginInfoId" text NOT NULL,
-    "cityId" text NOT NULL,
+    "id" uuid NOT NULL,
+    "name" text NOT NULL,
+    "address" uuid NOT NULL,
+    "loginInfoId" uuid NOT NULL,
     "kontoNr" integer NOT NULL,
     "regNr" integer NOT NULL,
-    "CVR" integer NOT NULL,
-    role text NOT NULL DEFAULT 'Restaurant' ::text
+    "accountId" text NOT NULL,
+    "cvr" integer NOT NULL,
+    "role" text NOT NULL 
   );
 
 ALTER TABLE
