@@ -28,8 +28,8 @@ model MenuItems {
 model Restaurant {
     id          String @id @unique @db.Uuid
     name        String
-    address     String
-    loginInfoId String
+    address     String @db.Uuid
+    loginInfoId String @db.Uuid
     kontoNr     Int
     regNr       Int
     accountId   String
