@@ -49,14 +49,6 @@ services:
       - ./init/orders:/docker-entrypoint-initdb.d
     environment:
       POSTGRES_PASSWORD: test123
-  bonus-db:
-    image: postgres
-    ports:
-      - 3316:5432
-    volumes:
-      - ./init/bonuses:/docker-entrypoint-initdb.d
-    environment:
-      POSTGRES_PASSWORD: test123
 
 networks:
  default:
