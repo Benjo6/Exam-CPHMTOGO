@@ -55,18 +55,13 @@ async function deleteEmployee(id: string) {
 }
 
 function isValidCustomer(employee: Employee) {
-	if (!isValidUuid(employee.id) || !isValidUuid(employee.loginInfoId))
-		throw new Error("Employee.id or employee.loginInfoId is not a valid uuid");
-	if (employee.firstname.length === 0)
-		throw new Error("Employee.firstname is empty");
-	if (employee.lastname.length === 0)
-		throw new Error("Employee.lastname is empty");
+	if (!isValidUuid(employee.id) || !isValidUuid(employee.loginInfoId)) throw new Error("Employee.id or employee.loginInfoId is not a valid uuid");
+	if (employee.firstname.length === 0) throw new Error("Employee.firstname is empty");
+	if (employee.lastname.length === 0) throw new Error("Employee.lastname is empty");
 	if (employee.active == undefined) throw new Error("Employee.active is empty");
 	if (employee.role.length === 0) throw new Error("Employee.role is empty");
-	if (employee.address.length === 0)
-		throw new Error("Employee.address is empty");
-	if (employee.kontoNr <= 0)
-		throw new Error("Employee.kontoNr is zero or less");
+	if (employee.address.length === 0) throw new Error("Employee.address is empty");
+	if (employee.kontoNr <= 0) throw new Error("Employee.kontoNr is zero or less");
 	if (employee.regNr <= 0) throw new Error("Employee.regNr is zero or less");
 	return true;
 }

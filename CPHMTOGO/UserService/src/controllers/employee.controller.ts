@@ -10,9 +10,10 @@ function createEmployee(employee: IEmployee) {
 		active: employee.active,
 		loginInfoId: employee.loginInfoId,
 		address: employee.address,
-		role: employee.role,
+		role: "Employee",
 		kontoNr: employee.kontoNr,
 		regNr: employee.regNr,
+		accountId: "acct_1MBLzdCfd0VXBbOf",
 	});
 }
 
@@ -24,9 +25,10 @@ function updateEmployee(employee: IEmployee, id: string) {
 		active: employee.active,
 		loginInfoId: employee.loginInfoId,
 		address: employee.address,
-		role: employee.role,
+		role: "Employee",
 		kontoNr: employee.kontoNr,
 		regNr: employee.regNr,
+		accountId: "acct_1MBLzdCfd0VXBbOf",
 	});
 }
 

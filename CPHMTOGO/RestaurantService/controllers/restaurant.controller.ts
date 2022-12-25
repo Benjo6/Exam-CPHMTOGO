@@ -29,8 +29,6 @@ async function getAllRestaurants() {
 }
 
 async function createRestaurant(restaurant: Restaurant) {
-	console.log(restaurant);
-
 	return prisma.restaurant.create({
 		data: restaurant,
 		include: {

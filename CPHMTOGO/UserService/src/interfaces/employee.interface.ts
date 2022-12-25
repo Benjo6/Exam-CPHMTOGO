@@ -11,7 +11,6 @@ export interface IEmployee {
 	active: boolean;
 	loginInfoId: string;
 	address: string;
-	role: string;
 	kontoNr: number;
 	regNr: number;
 }
