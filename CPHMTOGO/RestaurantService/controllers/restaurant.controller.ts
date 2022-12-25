@@ -42,17 +42,17 @@ async function createRestaurant(restaurant: Restaurant) {
 		},
 	});
 }
-async function updateRestaurant({ CVR, address, cityId, id, kontoNr, loginInfoId, name, regNr, role }: Restaurant) {
+async function updateRestaurant({ cvr, address, id, kontoNr, loginInfoId, name, regNr, role }: Restaurant) {
 	return prisma.restaurant.update({
 		where: {
 			id,
 		},
 		data: {
 			address,
-			cityId,
-			CVR,
+			cvr,
 			kontoNr,
 			loginInfoId,
+			accountId: "acct_1MBM0IEQFUzeCvJi",
 			name,
 			regNr,
 			role,

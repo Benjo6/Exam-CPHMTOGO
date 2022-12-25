@@ -18,39 +18,39 @@ const resolvers = {
 
 		createRestaurant: async (
 			parent: any,
-			{ restaurant: { CVR, address, cityId, kontoNr, loginInfoId, name, regNr, role } }: RestaurantArgs,
+			{ restaurant: { cvr, address, kontoNr, loginInfoId, name, regNr } }: RestaurantArgs,
 			context: any,
 			info: any
 		) => {
 			return await restaurant.createRestaurant({
 				id: uuid(),
 				address,
-				cityId,
-				CVR,
+				cvr,
 				kontoNr,
 				loginInfoId,
 				name,
 				regNr,
-				role,
+				role: "Restaurant",
+				accountId: "acct_1MBM0IEQFUzeCvJi",
 			});
 		},
 
 		updateRestaurant: async (
 			parent: any,
-			{ restaurant: { id, CVR, address, cityId, kontoNr, loginInfoId, name, regNr, role } }: RestaurantArgs,
+			{ restaurant: { id, cvr, address, kontoNr, loginInfoId, name, regNr } }: RestaurantArgs,
 			context: any,
 			info: any
 		) => {
 			return await restaurant.updateRestaurant({
 				address,
-				cityId,
-				CVR,
+				cvr,
 				id,
 				kontoNr,
 				loginInfoId,
 				name,
 				regNr,
-				role,
+				role: "Restaurant",
+				accountId: "acct_1MBM0IEQFUzeCvJi",
 			});
 		},
 

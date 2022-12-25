@@ -28,12 +28,12 @@ model MenuItems {
 model Restaurant {
     id          String @id @unique @db.Uuid
     name        String
-    address     String
-    loginInfoId String
-    cityId      String
+    address     String @db.Uuid
+    loginInfoId String @db.Uuid
     kontoNr     Int
     regNr       Int
-    CVR         Int
-    role        String @default("Restaurant")
+    accountId   String
+    cvr         Int
+    role        String
     menus       Menu[]
 }
