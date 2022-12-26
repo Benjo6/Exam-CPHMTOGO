@@ -14,9 +14,9 @@ ENV PORT=${PORT}
 ENV DATABASE_URL=postgresql://${DATABASE_USER}:${DATABASE_PASSWORD}@${DATABASE_HOST}:${DATABASE_PORT}/
 
 # Bundle app source
-COPY UserService/ .
+COPY RestaurantService/ .
 
-
+# Install app dependencies
 RUN npm install
 
-EXPOSE 5005
+EXPOSE 5006
