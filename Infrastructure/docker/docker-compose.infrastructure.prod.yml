@@ -57,7 +57,3 @@ services:
       - ./init/bonuses:/docker-entrypoint-initdb.d
     environment:
       POSTGRES_PASSWORD: test123
-
-networks:
- default:
-  name: cphmtogo
