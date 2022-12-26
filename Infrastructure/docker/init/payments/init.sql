@@ -3,7 +3,7 @@ CREATE TABLE
     id uuid NOT NULL,
     "from" uuid NOT NULL,
     "to" uuid NOT NULL,
-    amount double precision NOT NULL,
+    amount float8 NOT NULL,
     type text NOT NULL
   );
 

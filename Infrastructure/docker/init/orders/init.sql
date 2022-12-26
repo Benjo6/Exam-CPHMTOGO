@@ -14,7 +14,7 @@ CREATE TABLE
   public."OrderItem" (
     id uuid NOT NULL,
     preference text NOT NULL,
-    price double precision NOT NULL,
+    price float8 NOT NULL,
     quantity integer NOT NULL,
     "orderId" uuid NOT NULL
   );
@@ -24,13 +24,13 @@ ALTER TABLE
 ADD
   CONSTRAINT "OrderItem_pkey" PRIMARY KEY (id);
 
-  CREATE TABLE
+CREATE TABLE
   public."Order" (
     id uuid NOT NULL,
-    "customerId" text NOT NULL,
-    "employeeId" text NOT NULL,
-    "restaurantId" text NOT NULL,
-    "addressAddress" text NOT NULL,
+    "customerId" uuid NOT NULL,
+    "employeeId" uuid,
+    "restaurantId" uuid NOT NULL,
+    "addressId" uuid NOT NULL,
     "ordreStatusId" uuid NOT NULL
   );
 
@@ -39,10 +39,10 @@ ALTER TABLE
 ADD
   CONSTRAINT "Order_pkey" PRIMARY KEY (id);
 
-  CREATE TABLE
+CREATE TABLE
   public."Receipt" (
     id uuid NOT NULL,
-    amount double precision NOT NULL,
+    amount float8 NOT NULL,
     "time" timestamp(3) without time zone NOT NULL,
     "orderId" uuid NOT NULL
   );
