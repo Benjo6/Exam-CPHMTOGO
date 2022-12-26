@@ -37,7 +37,8 @@ public class AddressService : BaseService<Address, AddressDto>, IAddressService
             address.Street = street;
             address.StreetNr = streetNr;
             address.Zipcode = zipCode;
-            address.CityId = Guid.NewGuid(); //Remove please from Database
+            address.Etage = etage;
+            address.Door = door;
 
 
 

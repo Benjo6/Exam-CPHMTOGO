@@ -8,8 +8,8 @@ namespace OrderService.Domain;
 public class Order : BaseEntity
 {
 
-    [Column("addressAddress")] 
-    public Guid Address { get; set; } 
+    [Column("addressId")] 
+    public Guid AddressId { get; set; } 
 
     [Column("customerId")] public Guid CustomerId { get; set; } 
 

@@ -41,7 +41,7 @@ public class ReceiptController : BaseController<Receipt,ReceiptDto>
     }
 
     [HttpPut]
-    public async Task<IActionResult> Put( ReceiptDto dto)
+    public async Task<IActionResult> Put([FromBody] ReceiptDto dto)
     {
         return await UpdateAsync(dto);
     }

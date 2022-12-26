@@ -39,7 +39,7 @@ public class OrderRepositoryTests
         {
             Id = Guid.NewGuid(),
             CustomerId = Guid.NewGuid(),
-            Address = Guid.NewGuid(),
+            AddressId = Guid.NewGuid(),
             EmployeeId = Guid.NewGuid(),
             OrderStatusId = Guid.NewGuid(),
             RestaurantId =Guid.NewGuid()
@@ -48,7 +48,7 @@ public class OrderRepositoryTests
         {
             Id = Guid.NewGuid(),
             CustomerId = Guid.NewGuid(),
-            Address = Guid.NewGuid(),
+            AddressId = Guid.NewGuid(),
             EmployeeId = Guid.NewGuid(),
             OrderStatusId = Guid.NewGuid(),
             RestaurantId =Guid.NewGuid()
@@ -71,7 +71,7 @@ public class OrderRepositoryTests
         {
             Id = Guid.NewGuid(),
             CustomerId = Guid.NewGuid(),
-            Address = Guid.NewGuid(),
+            AddressId = Guid.NewGuid(),
             EmployeeId = Guid.NewGuid(),
             OrderStatusId = Guid.NewGuid(),
             RestaurantId =Guid.NewGuid()
@@ -82,7 +82,7 @@ public class OrderRepositoryTests
         Assert.IsNotNull(okresult);
         Assert.That(okresult.Id, Is.EqualTo(item.Id));
         Assert.That(okresult.CustomerId, Is.EqualTo(item.CustomerId));
-        Assert.That(okresult.Address, Is.EqualTo(item.Address));
+        Assert.That(okresult.AddressId, Is.EqualTo(item.AddressId));
         Assert.That(okresult.EmployeeId, Is.EqualTo(item.EmployeeId));
         Assert.That(okresult.RestaurantId, Is.EqualTo(item.RestaurantId));
         Assert.That(okresult.OrderStatusId, Is.EqualTo(item.OrderStatusId));
@@ -96,7 +96,7 @@ public class OrderRepositoryTests
         {
             Id = Guid.NewGuid(),
             CustomerId = Guid.NewGuid(),
-            Address = Guid.NewGuid(),
+            AddressId = Guid.NewGuid(),
             EmployeeId = Guid.NewGuid(),
             OrderStatusId = Guid.NewGuid(),
             RestaurantId =Guid.NewGuid()
@@ -109,7 +109,7 @@ public class OrderRepositoryTests
         Assert.IsNotNull(okresult);
         Assert.That(okresult.Id, Is.EqualTo(item.Id));
         Assert.That(okresult.CustomerId, Is.EqualTo(item.CustomerId));
-        Assert.That(okresult.Address, Is.EqualTo(item.Address));
+        Assert.That(okresult.AddressId, Is.EqualTo(item.AddressId));
         Assert.That(okresult.EmployeeId, Is.EqualTo(item.EmployeeId));
         Assert.That(okresult.RestaurantId, Is.EqualTo(item.RestaurantId));
         Assert.That(okresult.OrderStatusId, Is.EqualTo(item.OrderStatusId));
@@ -124,7 +124,7 @@ public class OrderRepositoryTests
         {
             Id = Guid.NewGuid(),
             CustomerId = Guid.NewGuid(),
-            Address = Guid.NewGuid(),
+            AddressId = Guid.NewGuid(),
             EmployeeId = Guid.NewGuid(),
             OrderStatusId = Guid.NewGuid(),
             RestaurantId =Guid.NewGuid()
@@ -139,7 +139,7 @@ public class OrderRepositoryTests
         Assert.IsNotNull(okresult);
         Assert.That(okresult.Id, Is.EqualTo(orderitem.Id));
         Assert.That(okresult.CustomerId, Is.EqualTo(new Guid("630c0e49-2d28-4146-ae30-53ec48d280ae")));
-        Assert.That(okresult.Address, Is.EqualTo(orderitem.Address));
+        Assert.That(okresult.AddressId, Is.EqualTo(orderitem.AddressId));
         Assert.That(okresult.EmployeeId, Is.EqualTo(orderitem.EmployeeId));
         Assert.That(okresult.RestaurantId, Is.EqualTo(orderitem.RestaurantId));
         Assert.That(okresult.OrderStatusId, Is.EqualTo(orderitem.OrderStatusId));
@@ -153,7 +153,7 @@ public class OrderRepositoryTests
         {
             Id = Guid.NewGuid(),
             CustomerId = Guid.NewGuid(),
-            Address = Guid.NewGuid(),
+            AddressId = Guid.NewGuid(),
             EmployeeId = Guid.NewGuid(),
             OrderStatusId = Guid.NewGuid(),
             RestaurantId =Guid.NewGuid()

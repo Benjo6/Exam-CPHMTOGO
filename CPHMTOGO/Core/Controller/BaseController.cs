@@ -72,7 +72,7 @@ public class BaseController<TEntity,TEntityDto> : ControllerBase
                 return NoContent();
             }
 
-            return Ok(result);
+            return Ok(result.Result);
 
         }
         catch (Exception e)

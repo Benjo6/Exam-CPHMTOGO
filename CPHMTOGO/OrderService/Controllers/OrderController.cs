@@ -43,10 +43,10 @@ public class OrderController : BaseController<Order,OrderDto>
         return await UpdateAsync(dto);
     }
 
-    [HttpDelete]
-    public Task<IActionResult> Delete( Guid id)
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete( Guid id)
     {
-        return DeleteAsync(id);
+        return await DeleteAsync(id);
     }
 
     [HttpGet("open-order")]

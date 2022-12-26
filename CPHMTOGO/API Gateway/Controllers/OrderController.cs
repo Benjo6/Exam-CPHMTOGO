@@ -1,32 +1,26 @@
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json.Linq;
-using System.Net.Http;
-using System.Runtime.InteropServices;
 using System.Text;
-using APIGateway.Models;
 using APIGateway.Models.OrderService;
 using APIGateway.Models.PaymentService;
-using APIGateway.Models.RestaurantService;
 using APIGateway.Models.UserService;
 using GraphQL;
 using GraphQL.Client.Abstractions;
 using Newtonsoft.Json;
-using TimeSpan = System.TimeSpan;
 
 namespace APIGateway.Controllers;
 [Route("[controller]")]
 public class OrderController:ControllerBase
 {
-    private HttpClient _client;
-    private HttpClient _clientPayment;
-    private IGraphQLClient _clientQL;
-    private HttpClient _clientUser;
-    private  HttpClient _clientPaymentLogging;
+    private readonly HttpClient _client;
+    private readonly HttpClient _clientPayment;
+    private readonly IGraphQLClient _clientQl;
+    private readonly HttpClient _clientUser;
+    private readonly HttpClient _clientPaymentLogging;
 
 
     public OrderController(IHttpClientFactory factory, IGraphQLClient clientQl)
     {
-        _clientQL = clientQl;
+        _clientQl = clientQl;
         _client = factory.CreateClient("OrderService");
         _clientPayment = factory.CreateClient("PaymentService");
         _clientPaymentLogging = factory.CreateClient("PaymentLoggingService");
@@ -41,18 +35,28 @@ public class OrderController:ControllerBase
     public async Task<IActionResult> GetOrder()
     {
         HttpResponseMessage response = await _client.GetAsync("api/Order");
+        if (!response.IsSuccessStatusCode)
+        {
+            return Ok("There might not be any items in the database");
+            
+        }
         response.EnsureSuccessStatusCode();
         string content = await response.Content.ReadAsStringAsync();
-        List<OrderModel> items = JsonConvert.DeserializeObject<List<OrderModel>>(content);
+        List<OrderModel> items = JsonConvert.DeserializeObject<List<OrderModel>>(content)?? throw new Exception("There is no such receipt in the database");
         return Ok(items);
     } 
     [HttpGet("order/{id}")]
     public async Task<IActionResult> GetOrder(Guid id)
     {
         HttpResponseMessage response = await _client.GetAsync($"api/Order/{id}");
+        if (!response.IsSuccessStatusCode)
+        {
+            return Ok($"There isn't an order with that {id}");
+            
+        }
         response.EnsureSuccessStatusCode();
         string content = await response.Content.ReadAsStringAsync();
-        OrderModel item = JsonConvert.DeserializeObject<OrderModel>(content);
+        OrderModel item = JsonConvert.DeserializeObject<OrderModel>(content)?? throw new Exception("There is no such receipt in the database");
         return Ok(item);
     }
 
@@ -62,7 +66,7 @@ public class OrderController:ControllerBase
         HttpResponseMessage response = await _client.GetAsync("api/Order/open-order");
         response.EnsureSuccessStatusCode();
         string content = await response.Content.ReadAsStringAsync();
-        List<OrderModel> item = JsonConvert.DeserializeObject<List<OrderModel>>(content);
+        List<OrderModel> item = JsonConvert.DeserializeObject<List<OrderModel>>(content)?? throw new Exception("There is no such receipt in the database");
         return Ok(item);
     }
 
@@ -84,7 +88,7 @@ public class OrderController:ControllerBase
         HttpResponseMessage response = await _client.PostAsync("api/Order", request);
         response.EnsureSuccessStatusCode();
         string contentOrder = await response.Content.ReadAsStringAsync();
-        OrderModel order = JsonConvert.DeserializeObject<OrderModel>(contentOrder) ?? throw new InvalidOperationException("There were failures in the order creation process");
+        OrderModel order = JsonConvert.DeserializeObject<OrderModel>(contentOrder) ?? throw new Exception("There is no such receipt in the database");
         
         //Find Receipt
         HttpResponseMessage responseReceipt = await _client.GetAsync($"api/Receipt/order/{order.Id}");
@@ -94,11 +98,11 @@ public class OrderController:ControllerBase
 
         
         //Create PaymentLogging
-        var jsonPL = JsonConvert.SerializeObject(new CreatePaymentLoggingModel(order.CustomerId, 
+        var jsonPl = JsonConvert.SerializeObject(new CreatePaymentLoggingModel(order.CustomerId, 
             new Guid("cd863618-5ad2-48e6-8d8e-826257160e6d"), receipt.Amount, "CustomerPayment")); 
-        var dataPL = new StringContent(jsonPL, Encoding.UTF8, "application/json");
-        HttpResponseMessage responsePL = await _clientPaymentLogging.PostAsync("api/PaymentLogging", dataPL);
-        responsePL.EnsureSuccessStatusCode();
+        var dataPl = new StringContent(jsonPl, Encoding.UTF8, "application/json");
+        HttpResponseMessage responsePl = await _clientPaymentLogging.PostAsync("api/PaymentLogging", dataPl);
+        responsePl.EnsureSuccessStatusCode();
         
         //Find Restaurant
         // Construct the GraphQL query
@@ -138,14 +142,14 @@ getRestaurant(id: $getRestaurantId) {
         };
 
         // Execute the query and retrieve the result
-        var result = await _clientQL.SendQueryAsync<ResponseRestaurant>(query);
+        var result = await _clientQl.SendQueryAsync<ResponseRestaurant>(query);
         var restaurant =result.Data.getRestaurant;
         
         //Transfer Money to Restaurant (Change to Account_Id)
         var jsonR = JsonConvert.SerializeObject(new PaymentTransferModel("acct_1MBM0IEQFUzeCvJi",receipt.Amount));
         var dataR = new StringContent(jsonR, Encoding.UTF8, "application/json");
         HttpResponseMessage responseR = await _clientPayment.PostAsync("stripe/transfermoneytoemployee", dataR);
-        response.EnsureSuccessStatusCode();
+        responseR.EnsureSuccessStatusCode();
 
         return Ok(order);
     }
@@ -170,6 +174,11 @@ getRestaurant(id: $getRestaurantId) {
     public async Task<IActionResult> GetReceipt()
     {
         HttpResponseMessage response = await _client.GetAsync("api/Receipt");
+        if (!response.IsSuccessStatusCode)
+        {
+            return Ok("There might not be any items in the database");
+            
+        }
         response.EnsureSuccessStatusCode();
         string content = await response.Content.ReadAsStringAsync();
         List<OrderReceiptModel> items = JsonConvert.DeserializeObject<List<OrderReceiptModel>>(content) ?? throw new Exception("It cannot get the items from the list");
@@ -179,27 +188,39 @@ getRestaurant(id: $getRestaurantId) {
     public async Task<IActionResult> GetReceipt(Guid id)
     {
         HttpResponseMessage response = await _client.GetAsync($"api/Receipt/{id}");
+        if (!response.IsSuccessStatusCode)
+        {
+            return Ok($"There isn't a receipt with that {id}");
+        }
         response.EnsureSuccessStatusCode();
         string content = await response.Content.ReadAsStringAsync();
         OrderReceiptModel item = JsonConvert.DeserializeObject<OrderReceiptModel>(content)?? throw new Exception("It cannot get the item");
         return Ok(item);
     }
-    [HttpGet("receipt/order/{orderid}")]
-    public async Task<IActionResult> GetByOrderIdReceipt(Guid id)
+    [HttpGet("receipt/order/{orderId}")]
+    public async Task<IActionResult> GetByOrderIdReceipt(Guid orderId)
     {
-        HttpResponseMessage response = await _client.GetAsync($"api/Receipt/order/{id}");
+        HttpResponseMessage response = await _client.GetAsync($"api/Receipt/order/{orderId}");
+        if (!response.IsSuccessStatusCode)
+        {
+            return Ok($"There isn't a receipt with that {orderId}");
+        }
         response.EnsureSuccessStatusCode();
         string content = await response.Content.ReadAsStringAsync();
         OrderReceiptModel item = JsonConvert.DeserializeObject<OrderReceiptModel>(content)?? throw new Exception("It cannot get the item");
         return Ok(item);
     }
 
-    [HttpPut("receipt/{model}")]
+    [HttpPut("receipt")]
     public async Task<IActionResult> UpdateReceipt ([FromBody] OrderReceiptModel model)
     {
         var json = JsonConvert.SerializeObject(model);
         var data = new StringContent(json, Encoding.UTF8, "application/json");
-        HttpResponseMessage response = await _client.PutAsync($"api/Receipt/{model}", data);
+        HttpResponseMessage response = await _client.PutAsync($"api/Receipt", data);
+        if (!response.IsSuccessStatusCode)
+        {
+            return Ok("The Receipt wasn't updated in the database");
+        }
         response.EnsureSuccessStatusCode();
         string content = await response.Content.ReadAsStringAsync();
         OrderReceiptModel item = JsonConvert.DeserializeObject<OrderReceiptModel>(content)?? throw new Exception("There is something wrong with the receiving model");
@@ -210,6 +231,10 @@ getRestaurant(id: $getRestaurantId) {
     public async Task<IActionResult> DeleteReceipt(Guid id)
     {
         HttpResponseMessage response = await _client.DeleteAsync($"api/Receipt/{id}");
+        if (!response.IsSuccessStatusCode)
+        {
+            return Ok(false);
+        }
         response.EnsureSuccessStatusCode();
         string content = await response.Content.ReadAsStringAsync();
         bool answer = JsonConvert.DeserializeObject<bool>(content);
@@ -223,6 +248,10 @@ getRestaurant(id: $getRestaurantId) {
     public async Task<IActionResult> GetOrderStatus()
     {
         HttpResponseMessage response = await _client.GetAsync("api/OrderStatus");
+        if (!response.IsSuccessStatusCode)
+        {
+            return Ok("There might not be any items in the database");
+        }
         response.EnsureSuccessStatusCode();
         string content = await response.Content.ReadAsStringAsync();
         List<OrderStatusModel> items = JsonConvert.DeserializeObject<List<OrderStatusModel>>(content)?? throw new Exception("There is something wrong with the receiving model");
@@ -232,6 +261,10 @@ getRestaurant(id: $getRestaurantId) {
     public async Task<IActionResult> GetOrderStatus(Guid id)
     {
         HttpResponseMessage response = await _client.GetAsync($"api/OrderStatus/{id}");
+        if (!response.IsSuccessStatusCode)
+        {
+            return Ok($"There isn't an order status with that {id}");
+        }
         response.EnsureSuccessStatusCode();
         string content = await response.Content.ReadAsStringAsync();
         OrderStatusModel item = JsonConvert.DeserializeObject<OrderStatusModel>(content)?? throw new Exception("There is something wrong with the receiving model");
@@ -242,9 +275,13 @@ getRestaurant(id: $getRestaurantId) {
     public async Task<IActionResult> StartOrder(Guid orderId, Guid employeeId)
     {
         var json = JsonConvert.SerializeObject(new StartOrderStatusModel(orderId,employeeId));
-
         var data = new StringContent(json, Encoding.UTF8, "application/json");
         HttpResponseMessage response = await _client.PutAsync("api/OrderStatus/startorder",data);
+        if (!response.IsSuccessStatusCode)
+        {
+            return Ok("The OrderStatus isn't updated");
+        }
+        
         response.EnsureSuccessStatusCode();
         string content = await response.Content.ReadAsStringAsync();
         OrderStatusModel item = JsonConvert.DeserializeObject<OrderStatusModel>(content)?? throw new Exception("There is something wrong with the receiving model");
@@ -256,18 +293,30 @@ getRestaurant(id: $getRestaurantId) {
         var json = JsonConvert.SerializeObject(orderId);
         var data = new StringContent(json, Encoding.UTF8, "application/json");
         HttpResponseMessage response = await _client.PutAsync("api/OrderStatus/closeorder",data);
+        if (!response.IsSuccessStatusCode)
+        {
+            return Ok("OrderStatus didn't successfully update");
+        }
         response.EnsureSuccessStatusCode();
         string content = await response.Content.ReadAsStringAsync();
         OrderStatusModel item = JsonConvert.DeserializeObject<OrderStatusModel>(content)?? throw new Exception("There is something wrong with the receiving model");
         
         //Find Receipt
         HttpResponseMessage responseRec = await _client.GetAsync($"api/Receipt/order/{orderId}");
+        if (!responseRec.IsSuccessStatusCode)
+        {
+            return Ok("Receipt isn't found");
+        }
         responseRec.EnsureSuccessStatusCode();
         string contentRec = await responseRec.Content.ReadAsStringAsync();
         OrderReceiptModel receipt = JsonConvert.DeserializeObject<OrderReceiptModel>(contentRec)?? throw new Exception("It cannot get the item");
         
         //Find Employee
         HttpResponseMessage responseEmployee = await _clientUser.GetAsync($"employee/{employeeId}");
+        if (!responseEmployee.IsSuccessStatusCode)
+        {
+            return Ok("Employee isn't found");
+        }
         responseEmployee.EnsureSuccessStatusCode();
         string contentEmployee = await response.Content.ReadAsStringAsync();
         EmployeeModel employee = JsonConvert.DeserializeObject<EmployeeModel>(contentEmployee)?? throw new Exception("There is something wrong with the receiving model");
@@ -290,6 +339,10 @@ getRestaurant(id: $getRestaurantId) {
         var jsonEm = JsonConvert.SerializeObject(new PaymentTransferModel("acct_1MBLzdCfd0VXBbOf",money));
         var dataEm = new StringContent(jsonEm, Encoding.UTF8, "application/json");
         HttpResponseMessage responseEm = await _clientPayment.PostAsync("stripe/transfermoneytoemployee", dataEm);
+        if (!responseEm.IsSuccessStatusCode)
+        {
+            return Ok("The money wasn't transfered to the employee");
+        }
         responseEm.EnsureSuccessStatusCode();
         
         return Ok(item);
@@ -298,7 +351,12 @@ getRestaurant(id: $getRestaurantId) {
     [HttpDelete("orderstatus/{id}")]
     public async Task<IActionResult> DeleteOrderStatus(Guid id)
     {
-        HttpResponseMessage response = await _client.DeleteAsync($"OrderStatus/{id}");
+        HttpResponseMessage response = await _client.DeleteAsync($"api/OrderStatus/{id}");
+        if (!response.IsSuccessStatusCode)
+        {
+            return Ok(false);
+        }
+
         response.EnsureSuccessStatusCode();
         string content = await response.Content.ReadAsStringAsync();
         bool answer = JsonConvert.DeserializeObject<bool>(content);
@@ -309,31 +367,43 @@ getRestaurant(id: $getRestaurantId) {
 
 
     #region OrderItem
-    [HttpGet("orderitem")]
+    [HttpGet("orderItem")]
     public async Task<IActionResult> GetOrderItem()
     {
         HttpResponseMessage response = await _client.GetAsync("api/OrderItem");
+        if (!response.IsSuccessStatusCode)
+        {
+            return Ok("There might not be any items in the database");
+        }
         response.EnsureSuccessStatusCode();
         string content = await response.Content.ReadAsStringAsync();
         List<OrderItemModel> items = JsonConvert.DeserializeObject<List<OrderItemModel>>(content)?? throw new Exception("There is something wrong with the receiving model");
         return Ok(items);
     }
-    [HttpGet("orderitem/{id}")]
+    [HttpGet("orderItem/{id}")]
     public async Task<IActionResult> GetOrderItem(Guid id)
     {
         HttpResponseMessage response = await _client.GetAsync($"api/OrderItem/{id}");
+        if (!response.IsSuccessStatusCode)
+        {
+            return Ok($"There isn't an order status with that {id}");
+        }
         response.EnsureSuccessStatusCode();
         string content = await response.Content.ReadAsStringAsync();
         OrderItemModel item = JsonConvert.DeserializeObject<OrderItemModel>(content)?? throw new Exception("There is something wrong with the receiving model");
         return Ok(item);
     }
 
-    [HttpPost("orderitem")]
+    [HttpPost("orderItem")]
     public async Task<IActionResult> Post([FromBody] CreateSpecificOrderItemModel model)
     {
         var json = JsonConvert.SerializeObject(model);
         var data = new StringContent(json, Encoding.UTF8, "application/json");
         HttpResponseMessage response = await _client.PostAsync($"api/OrderItem", data);
+        if (!response.IsSuccessStatusCode)
+        {
+            return Ok($"The Order Item wasn't created");
+        }
         response.EnsureSuccessStatusCode();
         string content = await response.Content.ReadAsStringAsync();
         OrderItemModel item = JsonConvert.DeserializeObject<OrderItemModel>(content)?? throw new Exception("There is something wrong with the receiving model");
@@ -341,19 +411,33 @@ getRestaurant(id: $getRestaurantId) {
     }
 
 
-    [HttpPut("orderitem")]
+    [HttpPut("orderItem")]
     public async Task<IActionResult> UpdateOrderItem (OrderItemModel model)
     {
         var json = JsonConvert.SerializeObject(model);
         var data = new StringContent(json, Encoding.UTF8, "application/json");
         HttpResponseMessage response = await _client.PutAsync("api/OrderItem", data);
-        return Ok(response);
+        if (!response.IsSuccessStatusCode)
+        {
+            return Ok($"The Order Item wasn't updated");
+        }
+
+        response.EnsureSuccessStatusCode();
+        string content = await response.Content.ReadAsStringAsync();
+        OrderItemModel item = JsonConvert.DeserializeObject<OrderItemModel>(content)?? throw new Exception("There is something wrong with the receiving model");
+
+
+        return Ok(item);
     }
     
-    [HttpDelete("orderitem/{id}")]
+    [HttpDelete("orderItem/{id}")]
     public async Task<IActionResult> DeleteOrderItem(Guid id)
     {
         HttpResponseMessage response = await _client.DeleteAsync($"api/OrderItem/{id}");
+        if (!response.IsSuccessStatusCode)
+        {
+            return Ok(false);
+        }
         response.EnsureSuccessStatusCode();
         string content = await response.Content.ReadAsStringAsync();
         bool answer = JsonConvert.DeserializeObject<bool>(content);

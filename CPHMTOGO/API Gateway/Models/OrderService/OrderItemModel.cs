@@ -1,3 +1,3 @@
 namespace APIGateway.Models.OrderService;
 
-public record OrderItemModel(String Preference, Double Price, int Quantity, Guid OrderId,Guid Id);
+public record OrderItemModel(string Preference, double Price, int Quantity, Guid OrderId,Guid Id);

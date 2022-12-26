@@ -1,5 +1,4 @@
 using System.Text;
-using APIGateway.Models.PaymentService;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -9,12 +8,10 @@ namespace APIGateway.Controllers;
 
 public class AddressController: ControllerBase
 {
-    private IHttpClientFactory _factory;
-    private HttpClient _client;
+    private readonly HttpClient _client;
 
     public AddressController(IHttpClientFactory factory)
     {
-        _factory = factory;
         _client = factory.CreateClient("AddressService");
     }
 
@@ -24,7 +21,7 @@ public class AddressController: ControllerBase
         HttpResponseMessage response = await _client.GetAsync("api/Address");
         response.EnsureSuccessStatusCode();
         string content = await response.Content.ReadAsStringAsync();
-        List<AddressModel> items = JsonConvert.DeserializeObject<List<AddressModel>>(content);
+        List<AddressModel> items = JsonConvert.DeserializeObject<List<AddressModel>>(content) ?? throw new Exception("There is something wrong with the receiving model");
         return Ok(items);
     }
     [HttpGet("address/{id}")]
@@ -33,7 +30,7 @@ public class AddressController: ControllerBase
         HttpResponseMessage response = await _client.GetAsync($"api/Address/{id}");
         response.EnsureSuccessStatusCode();
         string content = await response.Content.ReadAsStringAsync();
-        AddressModel item = JsonConvert.DeserializeObject<AddressModel>(content);
+        AddressModel item = JsonConvert.DeserializeObject<AddressModel>(content) ?? throw new Exception("There is something wrong with the receiving model");
         return Ok(item);
     }
 
@@ -43,7 +40,7 @@ public class AddressController: ControllerBase
         HttpResponseMessage response = await _client.GetAsync($"api/Address/Adresser/{query}"); 
         response.EnsureSuccessStatusCode();
         string content = await response.Content.ReadAsStringAsync();
-        List<string> items = JsonConvert.DeserializeObject<List<string>>(content) ?? throw new InvalidOperationException();
+        List<string> items = JsonConvert.DeserializeObject<List<string>>(content) ?? throw new Exception("There is something wrong with the receiving model");
         return Ok(items);
     }
 
@@ -55,7 +52,7 @@ public class AddressController: ControllerBase
         HttpResponseMessage response = await _client.PostAsync($"api/Address/createaddress/{street}/{streetNr}/{zipCode}", data);
         response.EnsureSuccessStatusCode();
         string content = await response.Content.ReadAsStringAsync();
-        AddressModel item = JsonConvert.DeserializeObject<AddressModel>(content) ?? throw new InvalidOperationException();
+        AddressModel item = JsonConvert.DeserializeObject<AddressModel>(content) ?? throw new Exception("There is something wrong with the receiving model");
         return Ok(item);
     }
 

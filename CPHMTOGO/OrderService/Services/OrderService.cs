@@ -24,7 +24,7 @@ public class OrderService : BaseService<Order,OrderDto>, IOrderService
     {
         var orderstatus = new OrderStatusDto();
         var resultStatus= _statusService.Create(orderstatus);
-        var order = new OrderDto(){Address = entity.Address, CustomerId = entity.CustomerId, RestaurantId = entity.RestaurantId};
+        var order = new OrderDto(){AddressId = entity.AddressId, CustomerId = entity.CustomerId, RestaurantId = entity.RestaurantId};
         order.OrderStatusId = resultStatus.Result.Id;
         var result = await base.Create(order);
         var list = new List<OrderItem>();

@@ -18,6 +18,7 @@ public class AddressDto : BaseEntityDto
 		public double Longitude { get; set; }
 
 		public double Latitude { get; set; }
-
+		public string Etage { get; set; }
+		public string Door { get; set; }
 
 }

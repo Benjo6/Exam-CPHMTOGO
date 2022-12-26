@@ -28,8 +28,8 @@ public class OrderControllerTests
     {
         var items = new List<OrderDto>()
         {
-            new OrderDto {RestaurantId = Guid.NewGuid(),CustomerId = Guid.NewGuid(),Address = Guid.NewGuid(),Id = Guid.NewGuid(),OrderStatusId = Guid.NewGuid()},
-            new OrderDto {RestaurantId = Guid.NewGuid(),CustomerId = Guid.NewGuid(),Address = Guid.NewGuid(),Id = Guid.NewGuid(),OrderStatusId = Guid.NewGuid()},
+            new OrderDto {RestaurantId = Guid.NewGuid(),CustomerId = Guid.NewGuid(),AddressId = Guid.NewGuid(),Id = Guid.NewGuid(),OrderStatusId = Guid.NewGuid()},
+            new OrderDto {RestaurantId = Guid.NewGuid(),CustomerId = Guid.NewGuid(),AddressId = Guid.NewGuid(),Id = Guid.NewGuid(),OrderStatusId = Guid.NewGuid()},
         };
         _service.Setup(x => x.GetAll().Result).Returns(items);
 
@@ -47,7 +47,7 @@ public class OrderControllerTests
 
         var item = new OrderDto
         {
-            RestaurantId = Guid.NewGuid(), CustomerId = Guid.NewGuid(), Address = Guid.NewGuid(),
+            RestaurantId = Guid.NewGuid(), CustomerId = Guid.NewGuid(), AddressId = Guid.NewGuid(),
              Id = Guid.NewGuid(), OrderStatusId = Guid.NewGuid()
         };
 
@@ -72,7 +72,7 @@ public class OrderControllerTests
         var orderDtos = new List<CreateOrderItemDto>();
         var expectedResult = new OrderDto
         {
-            Address = address,CustomerId = customerId,RestaurantId = restaurantId
+            AddressId = address,CustomerId = customerId,RestaurantId = restaurantId
         };
 
         // Configure the mock service to return the expected result when CreateOrderTask is called
@@ -81,7 +81,7 @@ public class OrderControllerTests
             .ReturnsAsync(expectedResult);
 
         // Act
-        var result = await _controller.CreateOrder(new CreateOrderDto(){Address = address,CustomerId = customerId,RestaurantId = restaurantId,OrderItems = orderDtos});
+        var result = await _controller.CreateOrder(new CreateOrderDto(){AddressId = address,CustomerId = customerId,RestaurantId = restaurantId,OrderItems = orderDtos});
 
         // Assert
         Assert.That(result, Is.EqualTo(expectedResult));
@@ -95,7 +95,7 @@ public class OrderControllerTests
         _service.Setup(r => r.Update(It.IsAny<OrderDto>()).Result).Callback<OrderDto>(r=>dto=r);
         var item = new OrderDto
         {
-            RestaurantId = Guid.NewGuid(), CustomerId = Guid.NewGuid(), Address = Guid.NewGuid(),
+            RestaurantId = Guid.NewGuid(), CustomerId = Guid.NewGuid(), AddressId = Guid.NewGuid(),
             Id = Guid.NewGuid(), OrderStatusId = Guid.NewGuid()
         };
 
@@ -106,7 +106,7 @@ public class OrderControllerTests
 
         //Assert
         Assert.That(item.RestaurantId, Is.EqualTo(dto.RestaurantId));
-        Assert.That(item.Address, Is.EqualTo(dto.Address));
+        Assert.That(item.AddressId, Is.EqualTo(dto.AddressId));
         Assert.That(item.CustomerId, Is.EqualTo(dto.CustomerId));
         Assert.That(item.Id, Is.EqualTo(dto.Id));
         Assert.That(item.OrderStatusId, Is.EqualTo(dto.OrderStatusId));
@@ -118,7 +118,7 @@ public class OrderControllerTests
     {
         var item = new OrderDto
         {
-            RestaurantId = Guid.NewGuid(), CustomerId = Guid.NewGuid(), Address = Guid.NewGuid(), Id = Guid.NewGuid(), OrderStatusId = Guid.NewGuid()
+            RestaurantId = Guid.NewGuid(), CustomerId = Guid.NewGuid(), AddressId = Guid.NewGuid(), Id = Guid.NewGuid(), OrderStatusId = Guid.NewGuid()
         };
 
         _service.Setup(x => x.Delete(item.Id).Result).Returns(true);
