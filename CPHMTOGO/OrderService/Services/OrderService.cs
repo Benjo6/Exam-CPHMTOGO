@@ -20,20 +20,23 @@ public class OrderService : BaseService<Order,OrderDto>, IOrderService
     }
     
 
-    public async Task<OrderDto> CreateOrderTask(OrderDto entity, List<CreateOrderItemDto> itemDtos)
+    public async Task<OrderDto> CreateOrderTask(CreateOrderDto entity)
     {
         var orderstatus = new OrderStatusDto();
         var resultStatus= _statusService.Create(orderstatus);
-        entity.OrderStatusId = resultStatus.Result.Id;
-        var result = await base.Create(entity);
-        foreach (var item in _mapper.Map<List<OrderItem>>(itemDtos))
+        var order = new OrderDto(){Address = entity.Address, CustomerId = entity.CustomerId, RestaurantId = entity.RestaurantId};
+        order.OrderStatusId = resultStatus.Result.Id;
+        var result = await base.Create(order);
+        var list = new List<OrderItem>();
+        foreach (var item in _mapper.Map<List<OrderItem>>(entity.OrderItems))
         {
             item.OrderId = result.Id;
+            list.Add(item);
             _itemRepository.Create(item);
         }
 
         var receipt = new ReceiptDto();
-        foreach (var item in itemDtos.Select(i=>new{i.Price,i.Quantity}))
+        foreach (var item in list.Select(i=>new{i.Price,i.Quantity}))
         {
             receipt.Amount += item.Price*item.Quantity;
         }

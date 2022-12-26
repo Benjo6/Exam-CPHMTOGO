@@ -1,4 +1,7 @@
 using AuthenticationService;
+using GraphQL.Client.Abstractions;
+using GraphQL.Client.Http;
+using GraphQL.Client.Serializer.Newtonsoft;
 using service;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -30,6 +33,9 @@ builder.Services.AddHttpClient("UserService", client =>
 {
     client.BaseAddress = new Uri(builder.Configuration["ServicesConfiguration:UserServiceUrl"] ?? throw new InvalidOperationException());
 });
+builder.Services.AddScoped<IGraphQLClient>(s =>
+    new GraphQLHttpClient(builder.Configuration["ServicesConfiguration:RestaurantServiceUrl"],
+        new NewtonsoftJsonSerializer()));
 
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

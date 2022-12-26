@@ -10,9 +10,11 @@ namespace OrderService.Controllers;
 
 [Route("api/[controller]")]
 public class ReceiptController : BaseController<Receipt,ReceiptDto>
-{ 
+{
+    private IReceiptService _baseService;
     public ReceiptController(IReceiptService baseService, ILogger<ReceiptController> logger) : base(baseService,logger)
     {
+        _baseService = baseService;
     }
     
     [HttpGet]
@@ -25,6 +27,11 @@ public class ReceiptController : BaseController<Receipt,ReceiptDto>
     public async Task<IActionResult> Get([FromRoute] Guid id)
     {
         return await GetByIdAsync(id);
+    }
+    [HttpGet("order/{orderid}")]
+    public async Task<IActionResult> GetByOrderId([FromRoute] Guid orderid)
+    {
+        return Ok(await _baseService.GetByOrderId(orderid));
     }
 
     [HttpPost]

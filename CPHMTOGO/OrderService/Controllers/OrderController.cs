@@ -31,9 +31,10 @@ public class OrderController : BaseController<Order,OrderDto>
     }
 
     [HttpPost]
-    public async Task<OrderDto> CreateOrder(Guid address, Guid customerId, Guid restaurantId, [FromBody] List<CreateOrderItemDto> orderDtos)
+    public async Task<OrderDto> CreateOrder([FromBody] CreateOrderDto dto)
     {
-       return await _baseService.CreateOrderTask(new OrderDto{Address = address,RestaurantId = restaurantId,CustomerId = customerId},orderDtos);
+        
+       return await _baseService.CreateOrderTask(dto);
     }
 
     [HttpPut]

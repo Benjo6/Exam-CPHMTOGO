@@ -6,6 +6,7 @@ using Moq;
 using OrderService.Controllers;
 using OrderService.Domain;
 using OrderService.Domain.Dto;
+using OrderService.Domain.Model;
 using OrderService.Profile;
 using OrderService.Services.Interfaces;
 
@@ -93,11 +94,11 @@ public class OrderStatusControllerTests
 
         // Configure the mock service to return the expected result when StartOrder is called
         _service
-            .Setup(service => service.StartOrder(orderId, employeeId))
+            .Setup(service => service.StartOrder(new StartOrderStatusModel(employeeId,orderId)))
             .ReturnsAsync(expectedResult);
 
         // Act
-        var result = await _controller.StartOrder(orderId, employeeId);
+        var result = await _controller.StartOrder(new StartOrderStatusModel(employeeId, orderId));
 
         // Assert
         Assert.That(result, Is.EqualTo(expectedResult));

@@ -2,6 +2,7 @@ using Core.Controller;
 using Microsoft.AspNetCore.Mvc;
 using OrderService.Domain;
 using OrderService.Domain.Dto;
+using OrderService.Domain.Model;
 using OrderService.Services.Interfaces;
 
 namespace OrderService.Controllers;
@@ -36,15 +37,15 @@ public class OrderStatusController : BaseController<OrderStatus, OrderStatusDto>
     
 
     [HttpPut("startorder")]
-    public async Task<OrderStatusDto> StartOrder(Guid OrderId, Guid EmployeeId)
+    public async Task<OrderStatusDto> StartOrder([FromBody] StartOrderStatusModel model)
     {
-        return await _baseService.StartOrder(OrderId,EmployeeId);
+        return await _baseService.StartOrder(model);
     }
 
     [HttpPut("closeorder")]
-    public async Task<OrderStatusDto> CloseOrder(Guid orderid)
+    public async Task<OrderStatusDto> CloseOrder([FromBody]Guid orderId)
     {
-        return await _baseService.CloseOrder(orderid);
+        return await _baseService.CloseOrder(orderId);
     }
 
     [HttpDelete("{id}")]

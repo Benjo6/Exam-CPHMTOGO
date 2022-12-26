@@ -3,6 +3,7 @@ using Core.Repository;
 using Core.Service;
 using OrderService.Domain;
 using OrderService.Domain.Dto;
+using OrderService.Domain.Model;
 using OrderService.Repositories.Interfaces;
 using OrderService.Services.Interfaces;
 
@@ -30,10 +31,10 @@ public class OrderStatusService : BaseService<OrderStatus,OrderStatusDto> ,IOrde
         return entityDto;
     }
 
-    public Task<OrderStatusDto> StartOrder(Guid orderid, Guid employeeId)
+    public Task<OrderStatusDto> StartOrder(StartOrderStatusModel model)
     {
-        var order = _orderRepository.GetById(orderid).Result;
-        order.EmployeeId = employeeId;
+        var order = _orderRepository.GetById(model.OrderId).Result;
+        order.EmployeeId = model.EmployeeId;
         _orderRepository.Update(order);
         OrderStatusDto entityDto = GetById(order.OrderStatusId).Result;
         entityDto.TimeStamp=DateTime.UtcNow;
@@ -52,4 +53,5 @@ public class OrderStatusService : BaseService<OrderStatus,OrderStatusDto> ,IOrde
         return _mapper.Map<Task<OrderStatusDto>>(entityDto);
     }
 
+    
 }

@@ -10,6 +10,7 @@ public class OrderProfile:AutoMapper.Profile
         CreateMap<Order, OrderDto>()
             .ForMember(y => y.OrderStatusId, x => x.MapFrom(y => y.OrderStatusId));
         CreateMap<OrderDto, Order>();
+        CreateMap<CreateOrderDto, OrderDto>();
 
 
         
