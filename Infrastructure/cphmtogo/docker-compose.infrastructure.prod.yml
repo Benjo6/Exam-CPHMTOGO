@@ -1,0 +1,170 @@
+version: "2.1"
+services:
+  authentication-db:
+    image: postgres
+    container_name: 'authentication-db'
+    ports:
+      - 3308:5432
+    volumes:
+      - ./init/authentication:/docker-entrypoint-initdb.d
+    environment:
+      POSTGRES_PASSWORD: test123
+    networks:
+      - cphmtogo
+
+  payment-db:
+    image: postgres
+    ports:
+      - 3309:5432
+    volumes:
+      - ./init/payments:/docker-entrypoint-initdb.d
+    environment:
+      POSTGRES_PASSWORD: test123
+    networks:
+      - cphmtogo
+
+  address-db:
+    image: postgres
+    ports:
+      - 33010:5432
+    volumes:
+      - ./init/addresses:/docker-entrypoint-initdb.d
+    environment:
+      POSTGRES_PASSWORD: test123
+    networks:
+      - cphmtogo
+
+  restaurant-db:
+    image: postgres
+    ports:
+      - 3311:5432
+    volumes:
+      - ./init/restaurants:/docker-entrypoint-initdb.d
+    environment:
+      POSTGRES_PASSWORD: test123
+    networks:
+      - cphmtogo
+
+  users-db:
+    image: postgres
+    ports:
+      - 3312:5432
+    volumes:
+      - ./init/users:/docker-entrypoint-initdb.d
+    environment:
+      POSTGRES_PASSWORD: test123
+    networks:
+      - cphmtogo
+
+  order-db:
+    image: postgres
+    ports:
+      - 3313:5432
+    volumes:
+      - ./init/orders:/docker-entrypoint-initdb.d
+    environment:
+      POSTGRES_PASSWORD: test123
+    networks:
+      - cphmtogo
+
+  user-service:
+    build:
+      context: ../Exam-CPHMTOGO/CPHMTOGO
+      dockerfile: UserService/Dockerfile
+      args:
+        DATABASE_PORT: 5432
+        DATABASE_HOST: users-db
+        DATABASE_USER: postgres
+        DATABASE_PASSWORD: test123
+        PORT: 5005
+    depends_on:
+      - "users-db"
+    restart: on-failure
+    command: >
+      bash -c "npx prisma db push --accept-data-loss
+      && npm run start"
+    networks:
+      - cphmtogo
+    ports:
+      - 5005:5005
+
+  restaurant-service:
+    build:
+      context: ../Exam-CPHMTOGO/CPHMTOGO
+      dockerfile: RestaurantService/Dockerfile
+      args:
+        DATABASE_PORT: 5432
+        DATABASE_HOST: restaurant-db
+        DATABASE_USER: postgres
+        DATABASE_PASSWORD: test123
+        PORT: 5006
+    depends_on:
+      - "restaurant-db"
+    restart: on-failure
+    command: >
+      bash -c "npx prisma db push --accept-data-loss
+      && npm run start"
+    networks:
+      - cphmtogo
+    ports:
+      - 5006:5006
+
+    ##Autentication Service##
+  authentication-service:
+    container_name: 'cphmtogo-authentication-service'
+    build:
+      context: ../Exam-CPHMTOGO/CPHMTOGO
+      dockerfile: AuthenticationService/Dockerfile
+    deploy: 
+      resources:
+        limits:
+          memory: 2048M
+    ports:
+        - 5001:80
+    restart: always
+
+  ##Order Service##
+  order-service:
+    container_name: 'cphmtogo-order-service'
+    build:
+      context: ../Exam-CPHMTOGO/CPHMTOGO
+      dockerfile: OrderService/Dockerfile
+    deploy: 
+      resources:  
+        limits:
+          memory: 2048M
+    ports:
+        - 5002:80
+    restart: always
+
+  ##Payment Service##
+  payment-service:
+    container_name: 'cphmtogo-payment-service'
+    build:
+      context: ../Exam-CPHMTOGO/CPHMTOGO
+      dockerfile: PaymentService/Dockerfile
+    deploy: 
+      resources:
+        limits:
+          memory: 2048M
+    ports:
+        - 5003:80
+    restart: always
+
+  ##PaymentLogging Service##
+  paymentlogging-service:
+    container_name: 'cphmtogo-paymentlogging-service'
+    build:
+      context: ../Exam-CPHMTOGO/CPHMTOGO
+      dockerfile: PaymentLoggingService/Dockerfile
+    deploy: 
+      resources:
+        limits:
+          memory: 2048M
+    ports:
+        - 5004:80
+    restart: always
+
+networks:
+  cphmtogo:
+    driver: bridge
