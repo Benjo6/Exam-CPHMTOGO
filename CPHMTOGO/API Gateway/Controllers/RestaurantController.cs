@@ -21,17 +21,16 @@ public class RestaurantController : ControllerBase
         // Construct the GraphQL query
         var query = new GraphQLRequest
         {
-            Query = @"
-                    query($getRestaurantId: String)  {
+            Query = @"query($getRestaurantId: String)  {
   getRestaurant(id: $getRestaurantId) {
     id
     name
-    address
-    cityId
     loginInfoId
+    address
     kontoNr
     regNr
-    CVR
+    accountId
+    cvr
     role
     menus {
       id
@@ -65,19 +64,18 @@ public class RestaurantController : ControllerBase
         // Construct the GraphQL query
         var query = new GraphQLRequest
         {
-            Query = @"
-                    query  {
+            Query = @"query  {
   getAllRestaurants {
     id
     name
     address
     loginInfoId
-    cityId
     kontoNr
+    accountId
     regNr
-    CVR
+    cvr
     role
- menus {
+    menus {
       id
       title
       restaurantId
@@ -102,7 +100,7 @@ public class RestaurantController : ControllerBase
     }
 
     [HttpPost("restaurant")]
-    public async Task<CreateRestaurantModel> CreateRestaurant(CreateRestaurantModel model)
+    public async Task<RestaurantModel> CreateRestaurant(CreateRestaurantModel model)
     {
         // Construct the GraphQL mutation
         var query = new GraphQLRequest
@@ -112,11 +110,11 @@ public class RestaurantController : ControllerBase
     id
     name
     address
-    cityId
     loginInfoId
     kontoNr
     regNr
-    CVR
+    accountId
+    cvr
     role
   }
 }",
@@ -140,12 +138,13 @@ public class RestaurantController : ControllerBase
             Query = @"query($restaurant: RestaurantInput)  {
   updateRestaurant(restaurant: $restaurant) {
     id
-    address
     name
+    address
     loginInfoId
-    cityId
     kontoNr
     regNr
+    accountId
+    cvr
     role
   }
 }",
@@ -169,11 +168,11 @@ public class RestaurantController : ControllerBase
     id
     name
     address
-    cityId
     loginInfoId
     kontoNr
     regNr
-    CVR
+    accountId
+    cvr
     role
     menus {
       id
@@ -204,21 +203,21 @@ public class RestaurantController : ControllerBase
     {
         var query = new GraphQLRequest
         {
-            Query = @"
-            query  {
-            getAllMenus {
-            id
-            title
-            restaurantId 
-menuItems {
+            Query = @"query  {
+  getAllMenus {
+    id
+    title
+    restaurantId
+    menuItems {
       id
       name
       description
-      menuId
       price
+      menuId
       foodType
-    }  }
-        }"
+    }
+  }
+}"
         };
 
         // Execute the query and retrieve the result
@@ -235,10 +234,10 @@ menuItems {
         {
             Query = @"query($getMenuId: String)  {
   getMenu(id: $getMenuId) {
-    id
     title
+    id
     restaurantId
-menuItems {
+    menuItems {
       id
       name
       description
@@ -319,8 +318,8 @@ menuItems {
       name
       description
       price
-      menuId
       foodType
+      menuId
     }
   }
 }",
@@ -342,8 +341,8 @@ menuItems {
     id
     name
     description
-    price
     menuId
+    price
     foodType
   }
 }"
@@ -363,8 +362,8 @@ menuItems {
         {
             Query = @"query($getMenuItemId: String)  {
   getMenuItem(id: $getMenuItemId) {
-    name
     id
+    name
     description
     price
     menuId
@@ -390,10 +389,10 @@ menuItems {
             Query = @"query($menuItem: MenuItemInput)  {
   createMenuItem(menuItem: $menuItem) {
     id
+    price
     name
     description
     menuId
-    price
     foodType
   }
 }",
@@ -439,10 +438,10 @@ menuItems {
         {
             Query = @"query($deleteMenuItemId: String)  {
   deleteMenuItem(id: $deleteMenuItemId) {
-    id
     name
-    price
+    id
     description
+    price
     menuId
     foodType
   }
@@ -480,9 +479,10 @@ public class ResponseRestaurant
     public RestaurantModel updateRestaurant;
     public MenuModel creaetMenu;
     public MenuItemModel createMenuItem;
+    public string getAccountId;
     public List<RestaurantModel> getAllRestaurants { get; set; }
     public RestaurantModel getRestaurant { get; set; }
-    public CreateRestaurantModel createRestaurant { get; set; }
+    public RestaurantModel createRestaurant { get; set; }
     public RestaurantModel deleteRestaurant { get; set; }
 }
 

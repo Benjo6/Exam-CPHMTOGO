@@ -86,12 +86,20 @@ public class OrderController:ControllerBase
         //Create Order
         var request = new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8, $"application/json");
         HttpResponseMessage response = await _client.PostAsync("api/Order", request);
+        if (!response.IsSuccessStatusCode)
+        {
+            return Ok($"The order wasn't created in the database");
+        }
         response.EnsureSuccessStatusCode();
         string contentOrder = await response.Content.ReadAsStringAsync();
         OrderModel order = JsonConvert.DeserializeObject<OrderModel>(contentOrder) ?? throw new Exception("There is no such receipt in the database");
         
         //Find Receipt
         HttpResponseMessage responseReceipt = await _client.GetAsync($"api/Receipt/order/{order.Id}");
+        if (!responseReceipt.IsSuccessStatusCode)
+        {
+            return Ok($"There is no receipt with the id {order.Id}");
+        }
         responseReceipt.EnsureSuccessStatusCode();
         string contentReceipt = await responseReceipt.Content.ReadAsStringAsync();
         OrderReceiptModel receipt = JsonConvert.DeserializeObject<OrderReceiptModel>(contentReceipt) ?? throw new Exception("There is no such receipt in the database");
@@ -102,37 +110,19 @@ public class OrderController:ControllerBase
             new Guid("cd863618-5ad2-48e6-8d8e-826257160e6d"), receipt.Amount, "CustomerPayment")); 
         var dataPl = new StringContent(jsonPl, Encoding.UTF8, "application/json");
         HttpResponseMessage responsePl = await _clientPaymentLogging.PostAsync("api/PaymentLogging", dataPl);
+        if (!responsePl.IsSuccessStatusCode)
+        {
+            return Ok($"The Paymentlogging isn't created");
+        }
         responsePl.EnsureSuccessStatusCode();
         
         //Find Restaurant
         // Construct the GraphQL query
         var query = new GraphQLRequest
         {
-            Query = @"
-                    query($getRestaurantId: String)  {
-getRestaurant(id: $getRestaurantId) {
-    id
-    name
-    address
-    cityId
-    loginInfoId
-    kontoNr
-    regNr
-    CVR
-    role
-    menus {
-      id
-      title
-      restaurantId
-      menuItems {
-        id
-        name
-        description
-        price
-        menuId
-        foodType
-      }
-    }
+            Query = @"query($getRestaurantId: String)  {
+  getRestaurant(id: $getRestaurantId) {
+    accountId
   }
 }",
             Variables = new
@@ -146,9 +136,13 @@ getRestaurant(id: $getRestaurantId) {
         var restaurant =result.Data.getRestaurant;
         
         //Transfer Money to Restaurant (Change to Account_Id)
-        var jsonR = JsonConvert.SerializeObject(new PaymentTransferModel("acct_1MBM0IEQFUzeCvJi",receipt.Amount));
+        var jsonR = JsonConvert.SerializeObject(new PaymentTransferModel(restaurant.accountId,receipt.Amount));
         var dataR = new StringContent(jsonR, Encoding.UTF8, "application/json");
         HttpResponseMessage responseR = await _clientPayment.PostAsync("stripe/transfermoneytoemployee", dataR);
+        if (!responseR.IsSuccessStatusCode)
+        {
+            return Ok($"The transfer didn't went through");
+        }
         responseR.EnsureSuccessStatusCode();
 
         return Ok(order);

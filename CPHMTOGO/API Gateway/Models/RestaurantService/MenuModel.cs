@@ -5,5 +5,5 @@ public record MenuModel(string id, string title, string restaurantId){
 
 };
 
-public record UpdateMenuModel(string id, string title, string restaurantId);
+public record UpdateMenuModel(string id, string title);
 public record CreateMenuModel( string title, string restaurantId);
