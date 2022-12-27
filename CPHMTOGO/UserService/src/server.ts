@@ -28,6 +28,6 @@ app.get("/customerUser", async (req, res) => {
 	);
 });
 
-app.listen(3000, () => {
-	console.log(`user-service listening on port ${3000}`);
+app.listen(process.env.PORT, () => {
+	console.log(`user-service listening on port ${process.env.PORT}`);
 });
