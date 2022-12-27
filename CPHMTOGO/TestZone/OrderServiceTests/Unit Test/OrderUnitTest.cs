@@ -20,12 +20,12 @@ public class OrderUnitTest
         //Arrange
         var guid = Guid.NewGuid();
         //Act
-        _dot.Object.Create(new Order { Address = guid, CustomerId = guid, OrderStatusId = guid, RestaurantId = guid });
+        _dot.Object.Create(new Order { AddressId = guid, CustomerId = guid, OrderStatusId = guid, RestaurantId = guid });
         _dot.Object.GetById(guid);
-        _dot.Object.Update(new Order{Address = guid,CustomerId = guid,OrderStatusId = guid,RestaurantId = guid, Id = guid});
+        _dot.Object.Update(new Order{AddressId = guid,CustomerId = guid,OrderStatusId = guid,RestaurantId = guid, Id = guid});
         _dot.Object.SaveChanges();
         _dot.Object.GetAll();
-        _dot.Object.GetByCondition(t=>t.Address==guid);
+        _dot.Object.GetByCondition(t=>t.AddressId==guid);
         _dot.Object.Delete(guid);
         //Assert
         _dot.VerifyAll();

@@ -1,3 +1,4 @@
 namespace APIGateway.Models.UserService;
 
-public record CustomerModel(Guid Id, string FirstName, string LastName, int Phone,DateTime BirtDate,Guid Address, Guid LoginInfoId);
+public record CustomerModel(Guid id, string firstname, string lastname, int phone,DateTime birtdate,Guid address, Guid loginInfoId);
+public record CreateCustomerModel(string firstname, string lastname, int phone,DateTime birtdate,Guid address, Guid loginInfoId);

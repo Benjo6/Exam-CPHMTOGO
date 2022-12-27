@@ -13,7 +13,7 @@ public class OrderController : BaseController<Order,OrderDto>
 {
     private readonly IOrderService _baseService;
 
-    public OrderController(IOrderService baseService) : base(baseService)
+    public OrderController(IOrderService baseService, ILogger<OrderController> logger) : base(baseService,logger)
     {
         _baseService = baseService;
     }
@@ -31,9 +31,10 @@ public class OrderController : BaseController<Order,OrderDto>
     }
 
     [HttpPost]
-    public async Task<OrderDto> CreateOrder(Guid address, Guid customerId, Guid restaurantId, [FromBody] List<CreateOrderItemDto> orderDtos)
+    public async Task<OrderDto> CreateOrder([FromBody] CreateOrderDto dto)
     {
-       return await _baseService.CreateOrderTask(new OrderDto{Address = address,RestaurantId = restaurantId,CustomerId = customerId},orderDtos);
+        
+       return await _baseService.CreateOrderTask(dto);
     }
 
     [HttpPut]
@@ -42,10 +43,10 @@ public class OrderController : BaseController<Order,OrderDto>
         return await UpdateAsync(dto);
     }
 
-    [HttpDelete]
-    public Task<bool> Delete( Guid id)
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete( Guid id)
     {
-        return DeleteAsync(id);
+        return await DeleteAsync(id);
     }
 
     [HttpGet("open-order")]

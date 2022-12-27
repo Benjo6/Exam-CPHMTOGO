@@ -1,8 +1,15 @@
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Moq;
+using NUnit.Framework.Internal;
 using OrderService.Domain;
+using OrderService.Domain.Dto;
 using OrderService.Infrastructure;
 using OrderService.Repositories;
 using OrderService.Repositories.Interfaces;
+using Exception = System.Exception;
+using ILogger = Microsoft.Extensions.Logging.ILogger;
 
 namespace OrderServiceTests.Integration_Tests.Repositories;
 
@@ -20,12 +27,14 @@ public class OrderItemRepositoryTests
             .UseInMemoryDatabase(dbName)
             .Options;
         _repository = await CreateRepositoryAsync();
+        
     }
 
     private async Task<IOrderItemRepository> CreateRepositoryAsync()
     {
+         var logger = new Mock<ILogger<OrderItemRepository>>();
             RepositoryContext context = new RepositoryContext(_dbContextOptions);
-            return new OrderItemRepository(context);
+            return new OrderItemRepository(context,logger.Object);
             
     }
 
@@ -142,23 +151,24 @@ public class OrderItemRepositoryTests
     }
 
     [Test]
-    public async Task Delete_ReturnTrue()
+    public async Task Delete_ReturnsOkResult()
     {
+        // Arrange
         var item = new OrderItem()
         {
             Id = Guid.NewGuid(),
             OrderId = Guid.NewGuid(),
             Preference = "",
-            Price = 20.50,
-            Quantity = 3
-
+            Price = 10,
+            Quantity = 1
         };
 
-        _repository.Create(item);
-        _repository.Delete(item.Id);
-        var result= await _repository.GetById(item.Id);
-        Assert.Null(result);
+        // Act
+        var okresult = _repository.Create(item);
+        _repository.Delete(okresult.Id);
+        var result = _repository.GetById(okresult.Id).Exception;
 
+        // Assert
+        Assert.IsInstanceOf<Exception>(result);
     }
-    
 }

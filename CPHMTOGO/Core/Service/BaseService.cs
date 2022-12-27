@@ -48,9 +48,9 @@ public class BaseService<TEntity, TEntityDto> : IBaseService<TEntity, TEntityDto
 
     public virtual async Task<TEntityDto> Update( TEntityDto entityDto)
     { 
-        _repository.Update(_mapper.Map<TEntity>(entityDto));
+         _repository.Update(_mapper.Map<TEntity>(entityDto));
 
-        return _mapper.Map<TEntityDto>(entityDto);
+        return entityDto;
     }
 
     public async Task<bool> Delete(Guid id)

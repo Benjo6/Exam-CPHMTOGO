@@ -10,9 +10,11 @@ namespace OrderService.Controllers;
 
 [Route("api/[controller]")]
 public class ReceiptController : BaseController<Receipt,ReceiptDto>
-{ 
-    public ReceiptController(IReceiptService baseService) : base(baseService)
+{
+    private IReceiptService _baseService;
+    public ReceiptController(IReceiptService baseService, ILogger<ReceiptController> logger) : base(baseService,logger)
     {
+        _baseService = baseService;
     }
     
     [HttpGet]
@@ -26,6 +28,11 @@ public class ReceiptController : BaseController<Receipt,ReceiptDto>
     {
         return await GetByIdAsync(id);
     }
+    [HttpGet("order/{orderid}")]
+    public async Task<IActionResult> GetByOrderId([FromRoute] Guid orderid)
+    {
+        return Ok(await _baseService.GetByOrderId(orderid));
+    }
 
     [HttpPost]
     public async Task<IActionResult> Post([FromBody] ReceiptDto dto)
@@ -34,13 +41,13 @@ public class ReceiptController : BaseController<Receipt,ReceiptDto>
     }
 
     [HttpPut]
-    public async Task<IActionResult> Put( ReceiptDto dto)
+    public async Task<IActionResult> Put([FromBody] ReceiptDto dto)
     {
         return await UpdateAsync(dto);
     }
 
     [HttpDelete("{id}")]
-    public Task<bool> Delete( Guid id)
+    public Task<IActionResult> Delete( Guid id)
     {
         return DeleteAsync(id);
     }

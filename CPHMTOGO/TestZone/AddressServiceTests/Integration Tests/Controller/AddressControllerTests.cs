@@ -2,7 +2,9 @@
 using AddressService.Controllers;
 using AddressService.Domain.Dto;
 using AddressService.Services.Interfaces;
+using Castle.Core.Logging;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Moq;
 
 namespace AddressServiceTests.Integration_Tests.Controller;
@@ -11,43 +13,29 @@ public class AddressControllerTests
 {
     private AddressController _controller;
     private Mock<IAddressService> _service;
+    private Mock<ILogger<AddressController>> _logger;
 
     [SetUp]
     public void Setup()
     {
         // Create a mock of the IAddressService interface
         _service = new Mock<IAddressService>();
+        _logger = new Mock<ILogger<AddressController>>();
 
-        // Inject the mock IAddressService into the AddressController constructor
-        _controller = new AddressController(_service.Object);
+            // Inject the mock IAddressService into the AddressController constructor
+        _controller = new AddressController(_service.Object,_logger.Object);
     }
     [Test]
-    public async Task Get_ReturnCountOfObjects()
+    public async Task AddressController_GetAll_ReturnsOkResult()
     {
-        //Act
-        var items = new List<AddressDto>()
-        {
-            new() {
-                Id = Guid.NewGuid(),
-            },
-            new() {
-                Id = Guid.NewGuid(),
+        //Arrange 
+        _service.Setup(x => x.GetAll()).ReturnsAsync(new List<AddressDto>());
 
-            },
-            new() {
-                Id = Guid.NewGuid(),
+        // Act
+        var result = await _controller.Get();
 
-            }
-        };
-        _service.Setup(x => x.GetAll().Result).Returns(items);
-
-        //Act
-        var okresult = await _controller.Get() as OkObjectResult;
-        Assert.IsNotNull(okresult);
-        var result = okresult.Value as List<AddressDto>;
-        
-        //Assert
-        Assert.That(result.Count(), Is.EqualTo(3));
+        // Assert
+        Assert.IsInstanceOf<OkObjectResult>(result);
     }
     [Test]
     public async Task Get_ReturnObjectById()

@@ -1,3 +1,4 @@
+using System.Net;
 using System.Text;
 using APIGateway.Models.OrderService;
 using APIGateway.Models.UserService;
@@ -9,14 +10,9 @@ namespace APIGateway.Controllers;
 [Route("[controller]")]
 public class UserController: ControllerBase
 {
-    private IHttpClientFactory _factory;
     private HttpClient _client;
-
-
-
     public UserController(IHttpClientFactory factory)
     {
-        _factory = factory;
         _client = factory.CreateClient("UserService");
 
     }
@@ -24,94 +20,99 @@ public class UserController: ControllerBase
     #region Company
 
     [HttpGet("company/{id}")]
-    public async Task<CompanyModel> GetCompany(Guid id)
+    public async Task<IActionResult> GetCompany(Guid id)
     {
         HttpResponseMessage response = await _client.GetAsync($"company/{id}");
         response.EnsureSuccessStatusCode();
         string content = await response.Content.ReadAsStringAsync();
-        CompanyModel item = JsonConvert.DeserializeObject<CompanyModel>(content);
-        return item;
+        CompanyModel item = JsonConvert.DeserializeObject<CompanyModel>(content)?? throw new Exception("There is something wrong with the receiving model");
+        return Ok(item);
     }
     
     [HttpPost("company")]
-    public async Task<CompanyModel> CreateCompany([FromBody] CompanyModel model)
+    public async Task<IActionResult> CreateCompany([FromBody] CreateCompanyModel model)
     {
         var json = JsonConvert.SerializeObject(model);
         var data = new StringContent(json, Encoding.UTF8, "application/json");
-        HttpResponseMessage response = await _client.PostAsync($"company/{model}", data);
+        HttpResponseMessage response = await _client.PostAsync($"company/", data);
         response.EnsureSuccessStatusCode();
         string content = await response.Content.ReadAsStringAsync();
-        CompanyModel item = JsonConvert.DeserializeObject<CompanyModel>(content) ?? throw new InvalidOperationException();
-        return item;
+        NewCompanyModel item = JsonConvert.DeserializeObject<NewCompanyModel>(content) ?? throw new Exception("There is something wrong with the receiving model");
+        return Ok(item);
     }
 
     [HttpPut("company")]
-    public async Task<CompanyModel> UpdateCompany([FromBody] CompanyModel model)
+    public async Task<IActionResult> UpdateCompany([FromBody] NewCompanyModel model)
     {
         var json = JsonConvert.SerializeObject(model);
         var data = new StringContent(json, Encoding.UTF8, "application/json");
-        HttpResponseMessage response = await _client.PutAsync($"company/{model}/{model.Id}", data);
+        HttpResponseMessage response = await _client.PutAsync($"company/{model.id}", data);
         response.EnsureSuccessStatusCode();
         string content = await response.Content.ReadAsStringAsync();
-        CompanyModel item = JsonConvert.DeserializeObject<CompanyModel>(content);
-        return item;
+        NewCompanyModel item = JsonConvert.DeserializeObject<NewCompanyModel>(content)?? throw new Exception("There is something wrong with the receiving model");
+        return Ok(item);
     }
     
     [HttpDelete("company/{id}")]
-    public async Task<CompanyModel> DeleteCompany(Guid id)
+    public async Task<IActionResult> DeleteCompany(Guid id)
     {
         HttpResponseMessage response = await _client.DeleteAsync($"company/{id}");
-        response.EnsureSuccessStatusCode();
-        string content = await response.Content.ReadAsStringAsync();
-        CompanyModel answer = JsonConvert.DeserializeObject<CompanyModel>(content);
-        return answer;
+        
+        if (response.StatusCode == HttpStatusCode.OK)
+        {
+            return Ok(true);
+
+        }
+
+        return Ok(false);
+
     }    
 
     #endregion
 
     #region Customer
     [HttpGet("customer/{id}")]
-    public async Task<CustomerModel> GetCustomer(Guid id)
+    public async Task<IActionResult> GetCustomer(Guid id)
     {
         HttpResponseMessage response = await _client.GetAsync($"customer/{id}");
         response.EnsureSuccessStatusCode();
         string content = await response.Content.ReadAsStringAsync();
-        CustomerModel item = JsonConvert.DeserializeObject<CustomerModel>(content);
-        return item;
+        CustomerModel item = JsonConvert.DeserializeObject<CustomerModel>(content)?? throw new Exception("There is something wrong with the receiving model");
+        return Ok(item);
     }
     
     [HttpPost("customer")]
-    public async Task<CustomerModel> CreateCustomer([FromBody] CustomerModel model)
+    public async Task<IActionResult> CreateCustomer([FromBody] CreateCustomerModel model)
     {
         var json = JsonConvert.SerializeObject(model);
         var data = new StringContent(json, Encoding.UTF8, "application/json");
-        HttpResponseMessage response = await _client.PostAsync($"customer/{model}", data);
+        HttpResponseMessage response = await _client.PostAsync($"customer/", data);
         response.EnsureSuccessStatusCode();
         string content = await response.Content.ReadAsStringAsync();
-        CustomerModel item = JsonConvert.DeserializeObject<CustomerModel>(content) ?? throw new InvalidOperationException();
-        return item;
+        CustomerModel item = JsonConvert.DeserializeObject<CustomerModel>(content) ?? throw new Exception("There is something wrong with the receiving model");
+        return Ok(item);
     }
 
     [HttpPut("customer")]
-    public async Task<CustomerModel> UpdateCustomer ([FromBody] CustomerModel model)
+    public async Task<IActionResult> UpdateCustomer ([FromBody] CustomerModel model)
     {
         var json = JsonConvert.SerializeObject(model);
         var data = new StringContent(json, Encoding.UTF8, "application/json");
-        HttpResponseMessage response = await _client.PutAsync($"customer/{model}/{model.Id}", data);
+        HttpResponseMessage response = await _client.PutAsync($"customer/{model.id}", data);
         response.EnsureSuccessStatusCode();
         string content = await response.Content.ReadAsStringAsync();
-        CustomerModel item = JsonConvert.DeserializeObject<CustomerModel>(content);
-        return item;
+        CustomerModel item = JsonConvert.DeserializeObject<CustomerModel>(content)?? throw new Exception("There is something wrong with the receiving model");
+        return Ok(item);
     }
     
     [HttpDelete("customer/{id}")]
-    public async Task<CustomerModel> DeleteCustomer(Guid id)
+    public async Task<IActionResult> DeleteCustomer(Guid id)
     {
         HttpResponseMessage response = await _client.DeleteAsync($"customer/{id}");
         response.EnsureSuccessStatusCode();
         string content = await response.Content.ReadAsStringAsync();
-        CustomerModel answer = JsonConvert.DeserializeObject<CustomerModel>(content);
-        return answer;
+        string answer = JsonConvert.DeserializeObject<string>(content)?? throw new Exception("There is something wrong with the receiving model");
+        return Ok(answer);
     }
     
 
@@ -119,50 +120,51 @@ public class UserController: ControllerBase
 
     #region Employee
     [HttpGet("employee/{id}")]
-    public async Task<EmployeeModel> GetEmployee(Guid id)
+    public async Task<IActionResult> GetEmployee(Guid id)
     {
         HttpResponseMessage response = await _client.GetAsync($"employee/{id}");
         response.EnsureSuccessStatusCode();
         string content = await response.Content.ReadAsStringAsync();
-        EmployeeModel item = JsonConvert.DeserializeObject<EmployeeModel>(content);
-        return item;
+        EmployeeModel item = JsonConvert.DeserializeObject<EmployeeModel>(content)?? throw new Exception("There is something wrong with the receiving model");
+        return Ok(item);
     }
     
     [HttpPost("employee")]
-    public async Task<EmployeeModel> CreateEmployee([FromBody] EmployeeModel model)
+    public async Task<IActionResult> CreateEmployee([FromBody] CreateEmployeeModel model)
     {
         var json = JsonConvert.SerializeObject(model);
         var data = new StringContent(json, Encoding.UTF8, "application/json");
-        HttpResponseMessage response = await _client.PostAsync($"employee/{model}", data);
+        HttpResponseMessage response = await _client.PostAsync($"employee/", data);
         response.EnsureSuccessStatusCode();
         string content = await response.Content.ReadAsStringAsync();
-        EmployeeModel item = JsonConvert.DeserializeObject<EmployeeModel>(content) ?? throw new InvalidOperationException();
-        return item;
+        EmployeeModel item = JsonConvert.DeserializeObject<EmployeeModel>(content) ?? throw new Exception("There is something wrong with the receiving model");
+        return Ok(item);
     }
 
     [HttpPut("employee")]
-    public async Task<EmployeeModel> UpdateEmployee ([FromBody] EmployeeModel model)
+    public async Task<IActionResult> UpdateEmployee ([FromBody] EmployeeModel model)
     {
         var json = JsonConvert.SerializeObject(model);
         var data = new StringContent(json, Encoding.UTF8, "application/json");
-        HttpResponseMessage response = await _client.PutAsync($"employee/{model}/{model.Id}", data);
+        HttpResponseMessage response = await _client.PutAsync($"employee/{model.id}", data);
         response.EnsureSuccessStatusCode();
         string content = await response.Content.ReadAsStringAsync();
-        EmployeeModel item = JsonConvert.DeserializeObject<EmployeeModel>(content);
-        return item;
+        EmployeeModel item = JsonConvert.DeserializeObject<EmployeeModel>(content)?? throw new Exception("There is something wrong with the receiving model");
+        return Ok(item);
     }
     
     [HttpDelete("employee/{id}")]
-    public async Task<EmployeeModel> DeleteEmployee(Guid id)
+    public async Task<IActionResult> DeleteEmployee(Guid id)
     {
         HttpResponseMessage response = await _client.DeleteAsync($"employee/{id}");
         response.EnsureSuccessStatusCode();
         string content = await response.Content.ReadAsStringAsync();
-        EmployeeModel answer = JsonConvert.DeserializeObject<EmployeeModel>(content);
-        return answer;
+        EmployeeModel answer = JsonConvert.DeserializeObject<EmployeeModel>(content)?? throw new Exception("There is something wrong with the receiving model");
+        return Ok(answer);
     }
     
 
     #endregion
     
 }
+

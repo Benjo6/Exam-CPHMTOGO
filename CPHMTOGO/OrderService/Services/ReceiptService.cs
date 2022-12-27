@@ -13,4 +13,10 @@ public class ReceiptService : BaseService<Receipt,ReceiptDto>, IReceiptService
     public ReceiptService(IReceiptRepository repository, IMapper mapper) : base(repository, mapper)
     {
     }
+
+    public async Task<ReceiptDto> GetByOrderId(Guid orderid)
+    {
+        return _mapper.Map<ReceiptDto>(_repository.GetByCondition(x => x.OrderId==orderid).SingleOrDefault());
+         
+    }
 }

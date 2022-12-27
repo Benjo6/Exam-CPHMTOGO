@@ -10,7 +10,7 @@ namespace PaymentLoggingService.Controllers;
 [Route("api/[controller]")]
 public class PaymentLoggingController : BaseController<PaymentLogging,PaymentLoggingDto>
 {
-    public PaymentLoggingController(IPaymentLoggingService baseService) : base(baseService)
+    public PaymentLoggingController(IPaymentLoggingService baseService, ILogger<PaymentLoggingController> logger) : base(baseService,logger)
     {
     }
 

@@ -1,4 +1,6 @@
+using Castle.Core.Logging;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Moq;
 using PaymentLoggingService.Controllers;
 using PaymentLoggingService.Domain;
@@ -11,13 +13,15 @@ public class PaymentLoggingControllerTests
 {
     private Mock<IPaymentLoggingService> _service;
     private PaymentLoggingController _controller;
+    private Mock<ILogger<PaymentLoggingController>> _logger;
 
 
     [SetUp]
     public void Setup()
     {
+        _logger = new Mock<ILogger<PaymentLoggingController>>();
         _service = new Mock<IPaymentLoggingService>();
-        _controller = new PaymentLoggingController(_service.Object);
+        _controller = new PaymentLoggingController(_service.Object,_logger.Object);
     }
 
     [Test]

@@ -1,4 +1,7 @@
+using Castle.Core.Logging;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Moq;
 using OrderService.Domain;
 using OrderService.Infrastructure;
 using OrderService.Repositories;
@@ -24,8 +27,9 @@ public class OrderStatusRepositoryTests
 
     private async Task<IOrderStatusRepository> CreateRepositoryAsync()
     {
+        var logger = new Mock<ILogger<OrderStatusRepository>>();
             RepositoryContext context = new RepositoryContext(_dbContextOptions);
-            return new OrderStatusRepository(context);
+            return new OrderStatusRepository(context,logger.Object);
             
     }
 
@@ -119,10 +123,10 @@ public class OrderStatusRepositoryTests
             Assert.That(okresult.Id, Is.EqualTo(item.Id));
         }
     }
-
     [Test]
-    public async Task Delete_ReturnTrue()
+    public async Task Delete_ReturnsOkResult()
     {
+        // Arrange
         var item = new OrderStatus()
         {
             Id = Guid.NewGuid(),
@@ -130,11 +134,13 @@ public class OrderStatusRepositoryTests
             TimeStamp= DateTime.UtcNow
         };
 
-        _repository.Create(item);
-        _repository.Delete(item.Id);
-        var result= await _repository.GetById(item.Id);
-        Assert.Null(result);
+        // Act
+        var okresult = _repository.Create(item);
+        _repository.Delete(okresult.Id);
+        var result = _repository.GetById(okresult.Id).Exception;
 
+        // Assert
+        Assert.IsInstanceOf<Exception>(result);
     }
     
 }

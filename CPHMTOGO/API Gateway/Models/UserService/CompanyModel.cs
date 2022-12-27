@@ -1,3 +1,4 @@
 namespace APIGateway.Models.UserService;
 
-public record CompanyModel(Guid Id, string Name,int KontoNr,int RegNr);
+public record NewCompanyModel(string id, string name,int kontoNr,int regNr, Guid loginInfoId);
+public record CompanyModel(string id, string name,int kontoNr,int regNr);

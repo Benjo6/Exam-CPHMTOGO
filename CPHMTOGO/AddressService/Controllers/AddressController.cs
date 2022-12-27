@@ -17,7 +17,7 @@ public class AddressController : BaseController<Address, AddressDto>
 {
     private readonly IAddressService _baseService;
 
-    public AddressController(IAddressService baseService) : base(baseService)
+    public AddressController(IAddressService baseService, ILogger<AddressController> logger) : base(baseService,logger)
     {
         _baseService = baseService;
     }
@@ -49,7 +49,7 @@ public class AddressController : BaseController<Address, AddressDto>
     }
     
     [HttpDelete("{id}")]
-    public Task<bool> Delete(Guid id)
+    public Task<IActionResult> Delete(Guid id)
     {
         return DeleteAsync(id);
     }

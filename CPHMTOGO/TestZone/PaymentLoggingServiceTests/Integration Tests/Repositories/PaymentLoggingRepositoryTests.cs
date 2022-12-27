@@ -1,4 +1,7 @@
+using Castle.Core.Logging;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Moq;
 using PaymentLoggingService.Domain;
 using PaymentLoggingService.Infrastructure;
 using PaymentLoggingService.Repositories;
@@ -24,8 +27,9 @@ public class PaymentLoggingRepositoryTests
 
     private async Task<IPaymentLoggingRepository> CreateRepositoryAsync()
     {
+        var logger = new Mock<ILogger<PaymentLoggingRepository>>();
         PaymentLoggingContext context = new PaymentLoggingContext(_dbContextOptions);
-            return new PaymentLoggingRepository(context);
+            return new PaymentLoggingRepository(context,logger.Object);
             
     }
 
@@ -113,56 +117,4 @@ public class PaymentLoggingRepositoryTests
         Assert.That(okresult.Type, Is.EqualTo(item.Type));
     }
 
-    [Test]
-    public async Task Update_ReturnUpdatedObject()
-    {
-        //Arrange
-        var item = new PaymentLogging
-        {
-            Id = Guid.NewGuid(),
-            Amount = 430.50,
-            From = Guid.NewGuid(),
-            To = Guid.NewGuid(),
-            Type = "Payment"
-        };
-        //Act
-        var itemPaymentLogging = _repository.Create(item);
-        itemPaymentLogging.Amount = 500.0;
-         _repository.Update(itemPaymentLogging);
-        var okresult = await _repository.GetById(item.Id);
-
-         //Assert
-         if (okresult != null)
-         {
-             Assert.That(okresult.Id, Is.EqualTo(itemPaymentLogging.Id));
-             Assert.That(okresult.Amount, Is.EqualTo(itemPaymentLogging.Amount));
-             Assert.That(okresult.From, Is.EqualTo(itemPaymentLogging.From));
-             Assert.That(okresult.To, Is.EqualTo(itemPaymentLogging.To));
-             Assert.That(okresult.Type, Is.EqualTo(itemPaymentLogging.Type));
-         }
-    }
-
-    [Test]
-    public async Task Delete_ReturnTrue()
-    {
-        //Arrange
-        var item = new PaymentLogging
-        {
-            Id = Guid.NewGuid(),
-            Amount = 430.50,
-            From = Guid.NewGuid(),
-            To = Guid.NewGuid(),
-            Type = "Payment"
-        };
-        _repository.Create(item);
-        
-        //Act
-        _repository.Delete(item.Id);
-        var result= await _repository.GetById(item.Id);
-        
-        //Assert
-        Assert.Null(result);
-
-    }
-    
 }

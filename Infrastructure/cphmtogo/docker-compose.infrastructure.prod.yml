@@ -111,17 +111,27 @@ services:
 
     ##Autentication Service##
   authentication-service:
-    container_name: 'cphmtogo-authentication-service'
-    build:
-      context: ../Exam-CPHMTOGO/CPHMTOGO
-      dockerfile: AuthenticationService/Dockerfile
-    deploy: 
+     container_name: 'cphmtogo-authentication-service'
+     build:
+       context: ../Exam-CPHMTOGO/CPHMTOGO
+       dockerfile: AuthenticationService/Dockerfile
+     deploy: 
       resources:
         limits:
           memory: 2048M
-    ports:
-        - 5001:80
-    restart: always
+     ports:
+       - 5001:80
+     environment:
+       DATABASE_HOST: authentication-db
+       DATABASE_PORT: 5432
+       DATABASE_USER: postgres
+       DATABASE_PASSWORD: test123
+     restart: always
+     depends_on:
+      - authentication-db
+     networks:
+      - cphmtogo
+
 
   ##Order Service##
   order-service:
@@ -133,9 +143,43 @@ services:
       resources:  
         limits:
           memory: 2048M
+    environment:
+      - DATABASE_HOST=order-db
+      - DATABASE_PORT=5432
+      - DATABASE_USER=postgres
+      - DATABASE_PASSWORD=test123
     ports:
         - 5002:80
+    depends_on:
+      - order-db
     restart: always
+    networks:
+      - cphmtogo
+  
+  ##Address Service##
+  address-service:
+    container_name: 'cphmtogo-address-service'
+    build:
+      context: ../Exam-CPHMTOGO/CPHMTOGO
+      dockerfile: AddressService/Dockerfile
+    deploy: 
+      resources:  
+        limits:
+          memory: 2048M
+    environment:
+      - DATABASE_HOST=address-db
+      - DATABASE_PORT=5432
+      - DATABASE_USER=postgres
+      - DATABASE_PASSWORD=test123
+    ports:
+        - 5007:80
+    depends_on:
+      - address-db
+    restart: always
+    networks:
+      - cphmtogo
+
+
 
   ##Payment Service##
   payment-service:
@@ -163,7 +207,18 @@ services:
           memory: 2048M
     ports:
         - 5004:80
+    environment:
+      - DATABASE_HOST=payment-db
+      - DATABASE_PORT=5432
+      - DATABASE_USER=postgres
+      - DATABASE_PASSWORD=test123
+    ports:
+        - 5004:80
+    depends_on:
+      - payment-db
     restart: always
+    networks:
+      - cphmtogo
 
 networks:
   cphmtogo:

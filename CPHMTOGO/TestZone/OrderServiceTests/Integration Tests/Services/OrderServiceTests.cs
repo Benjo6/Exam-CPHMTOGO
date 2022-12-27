@@ -39,12 +39,12 @@ public class OrderServiceTests
         {
             new() 
             {
-                RestaurantId = Guid.NewGuid(), CustomerId = Guid.NewGuid(), Address = Guid.NewGuid(),
+                RestaurantId = Guid.NewGuid(), CustomerId = Guid.NewGuid(), AddressId = Guid.NewGuid(),
                 EmployeeId = Guid.NewGuid(), Id = Guid.NewGuid(), OrderStatusId = Guid.NewGuid()
             },
             new ()
             {
-                RestaurantId = Guid.NewGuid(), CustomerId = Guid.NewGuid(), Address = Guid.NewGuid(),
+                RestaurantId = Guid.NewGuid(), CustomerId = Guid.NewGuid(), AddressId = Guid.NewGuid(),
                 EmployeeId = Guid.NewGuid(), Id = Guid.NewGuid(), OrderStatusId = Guid.NewGuid()
             }
         };
@@ -62,7 +62,7 @@ public class OrderServiceTests
 
         var item = new Order
         {
-            RestaurantId = Guid.NewGuid(), CustomerId = Guid.NewGuid(), Address = Guid.NewGuid(),
+            RestaurantId = Guid.NewGuid(), CustomerId = Guid.NewGuid(), AddressId = Guid.NewGuid(),
             EmployeeId = Guid.NewGuid(), Id = Guid.NewGuid(), OrderStatusId = Guid.NewGuid()
         };
 
@@ -71,9 +71,8 @@ public class OrderServiceTests
         var okresult = await _service.GetById(item.Id);
         Assert.IsNotNull(okresult);
         Assert.That(okresult.Id, Is.EqualTo(item.Id));
-        Assert.That(okresult.Address, Is.EqualTo(item.Address));
+        Assert.That(okresult.AddressId, Is.EqualTo(item.AddressId));
         Assert.That(okresult.CustomerId, Is.EqualTo(item.CustomerId));
-        Assert.That(okresult.EmployeeId, Is.EqualTo(item.EmployeeId));
         Assert.That(okresult.RestaurantId, Is.EqualTo(item.RestaurantId));
         Assert.That(okresult.OrderStatusId, Is.EqualTo(item.OrderStatusId));
 
@@ -89,8 +88,8 @@ public class OrderServiceTests
         _repository.Setup(r => r.Update(It.IsAny<Order>())).Callback<Order>(r=>dto=r);
         var item = new OrderDto
         {
-            RestaurantId = Guid.NewGuid(), CustomerId = Guid.NewGuid(), Address = Guid.NewGuid(),
-            EmployeeId = Guid.NewGuid(), Id = Guid.NewGuid(), OrderStatusId = Guid.NewGuid()
+            RestaurantId = Guid.NewGuid(), CustomerId = Guid.NewGuid(), AddressId = Guid.NewGuid(),
+            Id = Guid.NewGuid(), OrderStatusId = Guid.NewGuid()
         };
         //Act
         await _service.Update(item);
@@ -100,9 +99,8 @@ public class OrderServiceTests
         //Assert
         Assert.IsNotNull(dto);
         Assert.That(item.Id, Is.EqualTo(dto.Id));
-        Assert.That(item.Address, Is.EqualTo(dto.Address));
+        Assert.That(item.AddressId, Is.EqualTo(dto.AddressId));
         Assert.That(item.CustomerId, Is.EqualTo(dto.CustomerId));
-        Assert.That(item.EmployeeId, Is.EqualTo(dto.EmployeeId));
         Assert.That(item.RestaurantId, Is.EqualTo(dto.RestaurantId));
         Assert.That(item.OrderStatusId, Is.EqualTo(dto.OrderStatusId));
         
@@ -113,8 +111,8 @@ public class OrderServiceTests
     {
         var item = new OrderDto
         {
-            RestaurantId = Guid.NewGuid(), CustomerId = Guid.NewGuid(), Address = Guid.NewGuid(),
-            EmployeeId = Guid.NewGuid(), Id = Guid.NewGuid(), OrderStatusId = Guid.NewGuid()
+            RestaurantId = Guid.NewGuid(), CustomerId = Guid.NewGuid(), AddressId = Guid.NewGuid(),
+             Id = Guid.NewGuid(), OrderStatusId = Guid.NewGuid()
         };
         _repository.Setup(x => x.Delete(item.Id));
 

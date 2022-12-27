@@ -1,4 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Moq;
 using OrderService.Domain;
 using OrderService.Infrastructure;
 using OrderService.Repositories;
@@ -25,7 +27,8 @@ public class OrderRepositoryTests
     private async Task<IOrderRepository> CreateRepositoryAsync()
     {
             RepositoryContext context = new RepositoryContext(_dbContextOptions);
-            return new OrderRepository(context);
+            var logger = new Mock<ILogger<OrderRepository>>();
+            return new OrderRepository(context,logger.Object);
             
     }
 
@@ -36,7 +39,7 @@ public class OrderRepositoryTests
         {
             Id = Guid.NewGuid(),
             CustomerId = Guid.NewGuid(),
-            Address = Guid.NewGuid(),
+            AddressId = Guid.NewGuid(),
             EmployeeId = Guid.NewGuid(),
             OrderStatusId = Guid.NewGuid(),
             RestaurantId =Guid.NewGuid()
@@ -45,7 +48,7 @@ public class OrderRepositoryTests
         {
             Id = Guid.NewGuid(),
             CustomerId = Guid.NewGuid(),
-            Address = Guid.NewGuid(),
+            AddressId = Guid.NewGuid(),
             EmployeeId = Guid.NewGuid(),
             OrderStatusId = Guid.NewGuid(),
             RestaurantId =Guid.NewGuid()
@@ -68,7 +71,7 @@ public class OrderRepositoryTests
         {
             Id = Guid.NewGuid(),
             CustomerId = Guid.NewGuid(),
-            Address = Guid.NewGuid(),
+            AddressId = Guid.NewGuid(),
             EmployeeId = Guid.NewGuid(),
             OrderStatusId = Guid.NewGuid(),
             RestaurantId =Guid.NewGuid()
@@ -79,7 +82,7 @@ public class OrderRepositoryTests
         Assert.IsNotNull(okresult);
         Assert.That(okresult.Id, Is.EqualTo(item.Id));
         Assert.That(okresult.CustomerId, Is.EqualTo(item.CustomerId));
-        Assert.That(okresult.Address, Is.EqualTo(item.Address));
+        Assert.That(okresult.AddressId, Is.EqualTo(item.AddressId));
         Assert.That(okresult.EmployeeId, Is.EqualTo(item.EmployeeId));
         Assert.That(okresult.RestaurantId, Is.EqualTo(item.RestaurantId));
         Assert.That(okresult.OrderStatusId, Is.EqualTo(item.OrderStatusId));
@@ -93,7 +96,7 @@ public class OrderRepositoryTests
         {
             Id = Guid.NewGuid(),
             CustomerId = Guid.NewGuid(),
-            Address = Guid.NewGuid(),
+            AddressId = Guid.NewGuid(),
             EmployeeId = Guid.NewGuid(),
             OrderStatusId = Guid.NewGuid(),
             RestaurantId =Guid.NewGuid()
@@ -106,7 +109,7 @@ public class OrderRepositoryTests
         Assert.IsNotNull(okresult);
         Assert.That(okresult.Id, Is.EqualTo(item.Id));
         Assert.That(okresult.CustomerId, Is.EqualTo(item.CustomerId));
-        Assert.That(okresult.Address, Is.EqualTo(item.Address));
+        Assert.That(okresult.AddressId, Is.EqualTo(item.AddressId));
         Assert.That(okresult.EmployeeId, Is.EqualTo(item.EmployeeId));
         Assert.That(okresult.RestaurantId, Is.EqualTo(item.RestaurantId));
         Assert.That(okresult.OrderStatusId, Is.EqualTo(item.OrderStatusId));
@@ -121,7 +124,7 @@ public class OrderRepositoryTests
         {
             Id = Guid.NewGuid(),
             CustomerId = Guid.NewGuid(),
-            Address = Guid.NewGuid(),
+            AddressId = Guid.NewGuid(),
             EmployeeId = Guid.NewGuid(),
             OrderStatusId = Guid.NewGuid(),
             RestaurantId =Guid.NewGuid()
@@ -136,31 +139,34 @@ public class OrderRepositoryTests
         Assert.IsNotNull(okresult);
         Assert.That(okresult.Id, Is.EqualTo(orderitem.Id));
         Assert.That(okresult.CustomerId, Is.EqualTo(new Guid("630c0e49-2d28-4146-ae30-53ec48d280ae")));
-        Assert.That(okresult.Address, Is.EqualTo(orderitem.Address));
+        Assert.That(okresult.AddressId, Is.EqualTo(orderitem.AddressId));
         Assert.That(okresult.EmployeeId, Is.EqualTo(orderitem.EmployeeId));
         Assert.That(okresult.RestaurantId, Is.EqualTo(orderitem.RestaurantId));
         Assert.That(okresult.OrderStatusId, Is.EqualTo(orderitem.OrderStatusId));
 
     }
-
+    
     [Test]
-    public async Task Delete_ReturnTrue()
+    public async Task Delete_ReturnsOkResult()
     {
+        // Arrange
         var item = new Order()
         {
             Id = Guid.NewGuid(),
             CustomerId = Guid.NewGuid(),
-            Address = Guid.NewGuid(),
+            AddressId = Guid.NewGuid(),
             EmployeeId = Guid.NewGuid(),
             OrderStatusId = Guid.NewGuid(),
             RestaurantId =Guid.NewGuid()
         };
 
-        _repository.Create(item);
-        _repository.Delete(item.Id);
-        var result= await _repository.GetById(item.Id);
-        Assert.Null(result);
+        // Act
+        var okresult = _repository.Create(item);
+        _repository.Delete(okresult.Id);
+        var result = _repository.GetById(okresult.Id).Exception;
 
+        // Assert
+        Assert.IsInstanceOf<Exception>(result);
     }
     
 }
