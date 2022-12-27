@@ -145,10 +145,11 @@ public class OrderRepositoryTests
         Assert.That(okresult.OrderStatusId, Is.EqualTo(orderitem.OrderStatusId));
 
     }
-
+    
     [Test]
-    public async Task Delete_ReturnTrue()
+    public async Task Delete_ReturnsOkResult()
     {
+        // Arrange
         var item = new Order()
         {
             Id = Guid.NewGuid(),
@@ -159,11 +160,13 @@ public class OrderRepositoryTests
             RestaurantId =Guid.NewGuid()
         };
 
-        _repository.Create(item);
-        _repository.Delete(item.Id);
-        var result= await _repository.GetById(item.Id);
-        Assert.Null(result);
+        // Act
+        var okresult = _repository.Create(item);
+        _repository.Delete(okresult.Id);
+        var result = _repository.GetById(okresult.Id).Exception;
 
+        // Assert
+        Assert.IsInstanceOf<Exception>(result);
     }
     
 }

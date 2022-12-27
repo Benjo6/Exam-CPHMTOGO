@@ -135,10 +135,10 @@ public class ReceiptRepositoryTests
              Assert.That(okresult.Id, Is.EqualTo(itemReceipt.Id));
          }
     }
-
     [Test]
-    public async Task Delete_ReturnTrue()
+    public async Task Delete_ReturnsOkResult()
     {
+        // Arrange
         var item = new Receipt()
         {
             Id = Guid.NewGuid(),
@@ -146,11 +146,14 @@ public class ReceiptRepositoryTests
             OrderId = Guid.NewGuid(),
             Time = DateTime.UtcNow
         };
-        _repository.Create(item);
-        _repository.Delete(item.Id);
-        var result= await _repository.GetById(item.Id);
-        Assert.Null(result);
 
+        // Act
+        var okresult = _repository.Create(item);
+        _repository.Delete(okresult.Id);
+        var result = _repository.GetById(okresult.Id).Exception;
+
+        // Assert
+        Assert.IsInstanceOf<Exception>(result);
     }
     
 }

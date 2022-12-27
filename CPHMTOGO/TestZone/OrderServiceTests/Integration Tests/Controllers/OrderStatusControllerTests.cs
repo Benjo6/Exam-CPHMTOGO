@@ -15,7 +15,6 @@ namespace OrderServiceTests.Integration_Tests.Controllers;
 public class OrderStatusControllerTests
 {
     private Mock<IOrderStatusService> _service;
-    private Mock<IOrderService> _serviceOrder;
     private OrderStatusController _controller;
     private Mock<ILogger<OrderStatusController>> _logger;
 
@@ -24,117 +23,85 @@ public class OrderStatusControllerTests
     [SetUp]
     public void Setup()
     {
-        _serviceOrder = new Mock<IOrderService>();
         _service = new Mock<IOrderStatusService>();
-        _controller = new OrderStatusController(_service.Object,_logger.Object);
-    }
 
-    [Test]
-    public async Task Get_ReturnCountOfObjects()
-    {
-        var items = new List<OrderStatusDto>()
-        {
-            new OrderStatusDto {Status = Status.STARTED.ToString(),TimeStamp = DateTime.UtcNow},
-            new OrderStatusDto {Status = Status.STARTED.ToString(),TimeStamp = DateTime.UtcNow}
-        };
-        _service.Setup(x => x.GetAll().Result).Returns(items);
+        // Setup mock methods for IOrderStatusService
+        _service.Setup(x => x.Create(It.IsAny<OrderStatusDto>())).ReturnsAsync(new OrderStatusDto());
+        _service.Setup(x => x.GetAll()).ReturnsAsync(new List<OrderStatusDto>());
+        _service.Setup(x => x.GetById(It.IsAny<Guid>())).ReturnsAsync(new OrderStatusDto());
+        _service.Setup(x => x.StartOrder(It.IsAny<StartOrderStatusModel>())).ReturnsAsync(new OrderStatusDto());
+        _service.Setup(x => x.CloseOrder(It.IsAny<Guid>())).ReturnsAsync(new OrderStatusDto());
+        _service.Setup(x => x.Delete(It.IsAny<Guid>())).ReturnsAsync(true);
 
-        var okresult = await _controller.Get() as OkObjectResult;
-        Assert.IsNotNull(okresult);
-
-        var result = okresult.Value as List<OrderStatusDto>;
-
-        Assert.That(result.Count(), Is.EqualTo(2));
-    }
-
-    [Test]
-    public async Task Get_ReturnObjectById()
-    {
-
-        var item = new OrderStatusDto 
-            {Status = Status.STARTED.ToString(),TimeStamp = DateTime.UtcNow};
-
-        _service.Setup(x => x.GetById(item.Id).Result).Returns(item);
-
-        var okresult = await _controller.Get(item.Id) as OkObjectResult;
-        Assert.IsNotNull(okresult);
-
-        var result = okresult.Value as OrderStatusDto;
         
-        Assert.That(result, Is.EqualTo(item));
 
+        // Assign mock ILogger to _logger
+        _logger = new Mock<ILogger<OrderStatusController>>();
+
+        // Create instance of OrderStatusController with mock IOrderItemService and ILogger
+        _controller = new OrderStatusController(_service.Object, _logger.Object);
     }
 
     [Test]
-    public async Task CreateOrder_ReturnCreatedObject()
+    public async Task OrderStatusController_Get_ReturnsOkResult()
     {
-        OrderStatusDto? statusDto = null;
-        _service.Setup(r => r.Create(It.IsAny<OrderStatusDto>())).Callback<OrderStatusDto>(r => statusDto = r);
-
-        var orderstatus = new OrderStatusDto();
-
-        await _controller.Post();
-        _service.Verify(x=> x.Create(It.IsAny<OrderStatusDto>()),Times.Once);
-        
-        Assert.That(orderstatus.Status, Is.EqualTo(statusDto.Status));
-        Assert.That(orderstatus.TimeStamp, Is.EqualTo(statusDto.TimeStamp));
-        Assert.That(orderstatus.Id, Is.EqualTo(statusDto.Id));
-    }
-
-    [Test]
-    public async Task StartOrder_ShouldReturnCorrectResult()
-    {
-        // Arrange
-        var orderId = Guid.NewGuid();
-        var employeeId = Guid.NewGuid();
-        var expectedResult = new OrderStatusDto()
-        {
-            Status = Status.DELIVERING.ToString()
-        };
-
-        // Configure the mock service to return the expected result when StartOrder is called
-        _service
-            .Setup(service => service.StartOrder(new StartOrderStatusModel(employeeId,orderId)))
-            .ReturnsAsync(expectedResult);
-
         // Act
-        var result = await _controller.StartOrder(new StartOrderStatusModel(employeeId, orderId));
+        var result = await _controller.Get();
 
         // Assert
-        Assert.That(result, Is.EqualTo(expectedResult));
+        Assert.IsInstanceOf<OkObjectResult>(result);
     }
+
     [Test]
-    public async Task CloseOrder_ReturnUpdatedObject()
+    public async Task OrderStatusController_GetById_ReturnsOkResult()
     {
-        // Arrange
-        var orderId = Guid.NewGuid();
-        var expectedResult = new OrderStatusDto()
-        {
-            Status = Status.DELIVERED.ToString()
-        };
-
-        // Configure the mock service to return the expected result when StartOrder is called
-        _service
-            .Setup(service => service.CloseOrder(orderId))
-            .ReturnsAsync(expectedResult);
-
         // Act
-        var result = await _controller.CloseOrder(orderId);
+        var result = await _controller.Get(Guid.NewGuid());
 
         // Assert
-        Assert.That(result, Is.EqualTo(expectedResult));
+        Assert.IsInstanceOf<OkObjectResult>(result);
     }
 
     [Test]
-    public void Delete_ReturnTrue()
+    public async Task OrderStatusController_Post_ReturnsOkResult()
     {
-        var item = new OrderStatusDto()
-            {Status = Status.STARTED.ToString(),TimeStamp = DateTime.UtcNow};
-        _service.Setup(x => x.Delete(item.Id).Result).Returns(true);
+        // Act
+        var result = await _controller.Post();
 
-        var okresult =  _controller.Delete(item.Id).Result as OkObjectResult;
-        
-        Assert.IsTrue(okresult.Value is bool ? (bool)okresult.Value : false);
+        // Assert
+        Assert.IsInstanceOf<OkObjectResult>(result);
     }
-    
+    [Test]
+    public async Task OrderStatusController_StartOrder_ReturnsOkResult()
+    {
+        // Arrange
+        var dto = new StartOrderStatusModel(Guid.NewGuid(), Guid.NewGuid());
+        // Act
+        var result = await _controller.StartOrder(dto);
+
+        // Assert
+        Assert.IsInstanceOf<OrderStatusDto>(result);
+    }
+    [Test]
+    public async Task OrderStatusController_Close_ReturnsOkResult()
+    {
+
+        // Act
+        var result = await _controller.CloseOrder(Guid.NewGuid());
+
+        // Assert
+        Assert.IsInstanceOf<OrderStatusDto>(result);
+    }
+    [Test]
+    public async Task OrderStatusController_Delete_ReturnsOkResult()
+    {
+        // Arrange
+        var dto = new OrderStatusDto();
+
+        // Act
+        var result = await _controller.Delete(dto.Id);
+
+        // Assert
+        Assert.IsInstanceOf<OkObjectResult>(result);
+    }
 }
