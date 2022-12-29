@@ -12,7 +12,16 @@ service AuthenticationActivity {
   rpc SignUp(SignUpRequest) returns(google.protobuf.BoolValue);
   rpc SignIn(SignInRequest) returns(google.protobuf.BoolValue);
   rpc ChangePassword(ChangePasswordRequest) returns(google.protobuf.BoolValue);
+  rpc GetById(google.protobuf.StringValue) returns(LoginInfoResponse);
 }
+
+//Get by Id response
+message LoginInfoResponse{
+  string id=1;
+  string username =2;
+  string email = 3;
+}
+
 
 // Sign in request message 
 message SignInRequest {

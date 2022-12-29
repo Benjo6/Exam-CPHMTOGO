@@ -131,7 +131,19 @@ services:
       - authentication-db
      networks:
       - cphmtogo
-
+    
+   ##Api Gateway##
+  api-gateway:
+     container_name: 'cphmtogo-api-gateway'
+     build:
+       context: ../Exam-CPHMTOGO/CPHMTOGO
+       dockerfile: API Gateway/Dockerfile
+     deploy: 
+      resources:
+        limits:
+          memory: 2048M
+     ports:
+       - 5000:80
 
   ##Order Service##
   order-service:
@@ -191,6 +203,8 @@ services:
       resources:
         limits:
           memory: 2048M
+    environment:
+      - StripeOptions:SecretKey=sk_test_51MAb53LP7ahF5MeN8CPV6kKlKYCwnyNU7hWmw96ATcs3wnjuDlICR6tzbxt85b6kmnAsJc5kAu9y0e9P5oGyYcQ400pwT6DpaP
     ports:
         - 5003:80
     restart: always

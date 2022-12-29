@@ -2,6 +2,7 @@ using AuthenticationService;
 using GraphQL.Client.Abstractions;
 using GraphQL.Client.Http;
 using GraphQL.Client.Serializer.Newtonsoft;
+using RabbitMQ.Client;
 using service;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -37,6 +38,8 @@ builder.Services.AddScoped<IGraphQLClient>(s =>
     new GraphQLHttpClient(builder.Configuration["ServicesConfiguration:RestaurantServiceUrl"],
         new NewtonsoftJsonSerializer()));
 
+builder.Services.AddScoped<IConnectionFactory>(s =>
+        new ConnectionFactory(){Uri =new Uri(builder.Configuration["ServicesConfiguration:MessageBrokerUrl"])});
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

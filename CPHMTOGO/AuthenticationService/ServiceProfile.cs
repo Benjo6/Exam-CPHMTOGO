@@ -13,5 +13,6 @@ public class ServiceProfile:Profile
         CreateMap<SignUpRequest, SignUpCommand>();
         CreateMap<ChangePasswordRequest, ChangePasswordCommand>();
 
+
     }
 }
