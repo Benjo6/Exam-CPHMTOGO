@@ -4,10 +4,11 @@ using AutoMapper;
 using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
 using service;
+using static service.AuthenticationActivity;
 
 namespace AuthenticationService.Service;
 
-public class AuthenticationService : AuthenticationActivity.AuthenticationActivityBase
+public class AuthenticationService : AuthenticationActivityBase
 {
     private readonly IAuthenticationApplicationRepository _repository;
     private readonly IMapper _mapper;
@@ -42,5 +43,12 @@ public class AuthenticationService : AuthenticationActivity.AuthenticationActivi
         {
             Value = response
         };
+    }
+
+    public override async Task<LoginInfoResponse> GetById(StringValue request, ServerCallContext context)
+    {
+        var response = await _repository.GetById(new Guid(request.Value));
+        return new LoginInfoResponse()
+            { Email = response.Email, Id = response.Id.ToString(), Username = response.Username };
     }
 }

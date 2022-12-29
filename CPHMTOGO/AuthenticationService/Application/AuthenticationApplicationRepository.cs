@@ -68,6 +68,21 @@ public class AuthenticationApplicationRepository : IAuthenticationApplicationRep
         return false;
     }
 
+    public async Task<LoginInfo> GetById(Guid id)
+    {
+        try
+        {
+            var item = await _dbContext.Infos.AsNoTracking().Where(t => t.Id == id).SingleOrDefaultAsync();
+            return item ?? throw new Exception("No item");
+
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }   
+    }
+
     private async Task<bool> UserExists(string username)
     {
         if (await _dbContext.Infos.AnyAsync(x=>x.Username==username))

@@ -5,7 +5,9 @@ using APIGateway.Models.PaymentService;
 using APIGateway.Models.UserService;
 using GraphQL;
 using GraphQL.Client.Abstractions;
+using Grpc.Net.ClientFactory;
 using Newtonsoft.Json;
+using RabbitMQ.Client;
 
 namespace APIGateway.Controllers;
 [Route("[controller]")]
@@ -16,15 +18,17 @@ public class OrderController:ControllerBase
     private readonly IGraphQLClient _clientQl;
     private readonly HttpClient _clientUser;
     private readonly HttpClient _clientPaymentLogging;
+    private readonly IConnectionFactory _connectionFactory;
+    private readonly AuthenticationController _authenticationController;
 
-
-    public OrderController(IHttpClientFactory factory, IGraphQLClient clientQl)
+    public OrderController(IHttpClientFactory factory, IGraphQLClient clientQl, IConnectionFactory connectionFactory, AuthenticationController authenticationController)
     {
         _clientQl = clientQl;
+        _connectionFactory = connectionFactory;
+        _authenticationController = authenticationController;
         _client = factory.CreateClient("OrderService");
         _clientPayment = factory.CreateClient("PaymentService");
         _clientPaymentLogging = factory.CreateClient("PaymentLoggingService");
-
         _clientUser = factory.CreateClient("UserService");
 
     }
@@ -144,6 +148,28 @@ public class OrderController:ControllerBase
             return Ok($"The transfer didn't went through");
         }
         responseR.EnsureSuccessStatusCode();
+        
+        // //Message to Customer
+        // using (var connection = _connectionFactory.CreateConnection())
+        //     using(var channel = connection.CreateModel())
+        // {
+        //     // Declare queue
+        //     channel.QueueDeclare(queue: "CustomerMail", durable: false, exclusive: false, autoDelete: false,
+        //         arguments: null);
+        //     
+        //     //Find Customer Email
+        //     var customer = await _authenticationController.GetById(order.CustomerId);
+        //
+        //     //Create Message
+        //     var body = Encoding.UTF8.GetBytes(new
+        //     {
+        //         customer,
+        //         
+        //     });
+        // }
+        //
+        // //Message to Restaurant
+        //
 
         return Ok(order);
     }
@@ -314,20 +340,21 @@ public class OrderController:ControllerBase
         responseEmployee.EnsureSuccessStatusCode();
         string contentEmployee = await response.Content.ReadAsStringAsync();
         EmployeeModel employee = JsonConvert.DeserializeObject<EmployeeModel>(contentEmployee)?? throw new Exception("There is something wrong with the receiving model");
+        
         //Transfer money to Employee
         var money = receipt.Amount;
         if (item.TimeSpan.Hour >12)
         {
-            money *= 0.05;
+            money *= 0.01;
 
         }
         else if (item.TimeSpan.Hour>20)
         {
-            money *= 0.07;
+            money *= 0.015;
         }
         else
         {
-            money *= 0.02;
+            money *= 0.005;
         }
 
         var jsonEm = JsonConvert.SerializeObject(new PaymentTransferModel("acct_1MBLzdCfd0VXBbOf",money));
