@@ -5,9 +5,9 @@ using APIGateway.Models.PaymentService;
 using APIGateway.Models.UserService;
 using GraphQL;
 using GraphQL.Client.Abstractions;
-using Grpc.Net.ClientFactory;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
+using Exception = System.Exception;
 
 namespace APIGateway.Controllers;
 [Route("[controller]")]
@@ -18,14 +18,16 @@ public class OrderController:ControllerBase
     private readonly IGraphQLClient _clientQl;
     private readonly HttpClient _clientUser;
     private readonly HttpClient _clientPaymentLogging;
-    private readonly IConnectionFactory _connectionFactory;
-    private readonly AuthenticationController _authenticationController;
+    //private readonly IConnectionFactory _connectionFactory;
+    //private readonly AuthenticationController _authenticationController;
+    private readonly ILogger<OrderController> _logger;
 
-    public OrderController(IHttpClientFactory factory, IGraphQLClient clientQl, IConnectionFactory connectionFactory, AuthenticationController authenticationController)
+    public OrderController(IHttpClientFactory factory, IGraphQLClient clientQl, ILogger<OrderController> logger)
     {
         _clientQl = clientQl;
-        _connectionFactory = connectionFactory;
-        _authenticationController = authenticationController;
+       // _connectionFactory = connectionFactory;
+        //_authenticationController = authenticationController;
+        _logger = logger;
         _client = factory.CreateClient("OrderService");
         _clientPayment = factory.CreateClient("PaymentService");
         _clientPaymentLogging = factory.CreateClient("PaymentLoggingService");
@@ -87,14 +89,24 @@ public class OrderController:ControllerBase
     [HttpPost("order/createorder")]
     public async Task<IActionResult> Create( [FromBody] CreateOrderModel model)
     {
-        //Create Order
+        // Track the start time of the process
+        var startTime = DateTime.Now;
+        // Initialize counters for success and error rates
+        var successCount = 0;
+        var errorCount = 0;
+
+        try
+        {
+            //Create Order
         var request = new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8, $"application/json");
         HttpResponseMessage response = await _client.PostAsync("api/Order", request);
         if (!response.IsSuccessStatusCode)
         {
+            errorCount++;
             return Ok($"The order wasn't created in the database");
         }
-        response.EnsureSuccessStatusCode();
+
+        successCount++;
         string contentOrder = await response.Content.ReadAsStringAsync();
         OrderModel order = JsonConvert.DeserializeObject<OrderModel>(contentOrder) ?? throw new Exception("There is no such receipt in the database");
         
@@ -102,13 +114,14 @@ public class OrderController:ControllerBase
         HttpResponseMessage responseReceipt = await _client.GetAsync($"api/Receipt/order/{order.Id}");
         if (!responseReceipt.IsSuccessStatusCode)
         {
+            errorCount++;
             return Ok($"There is no receipt with the id {order.Id}");
         }
-        responseReceipt.EnsureSuccessStatusCode();
+        successCount++;
         string contentReceipt = await responseReceipt.Content.ReadAsStringAsync();
         OrderReceiptModel receipt = JsonConvert.DeserializeObject<OrderReceiptModel>(contentReceipt) ?? throw new Exception("There is no such receipt in the database");
 
-        
+
         //Create PaymentLogging
         var jsonPl = JsonConvert.SerializeObject(new CreatePaymentLoggingModel(order.CustomerId, 
             new Guid("cd863618-5ad2-48e6-8d8e-826257160e6d"), receipt.Amount, "CustomerPayment")); 
@@ -116,9 +129,10 @@ public class OrderController:ControllerBase
         HttpResponseMessage responsePl = await _clientPaymentLogging.PostAsync("api/PaymentLogging", dataPl);
         if (!responsePl.IsSuccessStatusCode)
         {
+            errorCount++;
             return Ok($"The Paymentlogging isn't created");
         }
-        responsePl.EnsureSuccessStatusCode();
+        successCount++;
         
         //Find Restaurant
         // Construct the GraphQL query
@@ -137,7 +151,12 @@ public class OrderController:ControllerBase
 
         // Execute the query and retrieve the result
         var result = await _clientQl.SendQueryAsync<ResponseRestaurant>(query);
+        if (result == null)
+        {
+            errorCount++;
+        }
         var restaurant =result.Data.getRestaurant;
+        successCount++;
         
         //Transfer Money to Restaurant (Change to Account_Id)
         var jsonR = JsonConvert.SerializeObject(new PaymentTransferModel(restaurant.accountId,receipt.Amount));
@@ -145,10 +164,23 @@ public class OrderController:ControllerBase
         HttpResponseMessage responseR = await _clientPayment.PostAsync("stripe/transfermoneytoemployee", dataR);
         if (!responseR.IsSuccessStatusCode)
         {
+            errorCount++;
             return Ok($"The transfer didn't went through");
         }
-        responseR.EnsureSuccessStatusCode();
+        successCount++;
         
+        //Create PaymentLogging for Restaurant payment
+        var jsonRe = JsonConvert.SerializeObject(new CreatePaymentLoggingModel(new Guid("cd863618-5ad2-48e6-8d8e-826257160e6d"), 
+            order.RestaurantId, receipt.Amount, "PaymentToRestaurant")); 
+        var dataRe = new StringContent(jsonRe, Encoding.UTF8, "application/json");
+        HttpResponseMessage responseRe = await _clientPaymentLogging.PostAsync("api/PaymentLogging", dataRe);
+        if (!responseRe.IsSuccessStatusCode)
+        {
+            errorCount++;
+            return Ok($"The Paymentlogging isn't created");
+        }
+        successCount++;
+
         // //Message to Customer
         // using (var connection = _connectionFactory.CreateConnection())
         //     using(var channel = connection.CreateModel())
@@ -171,7 +203,25 @@ public class OrderController:ControllerBase
         // //Message to Restaurant
         //
 
-        return Ok(order);
+        }
+        catch(Exception ex)
+        {
+            errorCount++;
+            _logger.LogError(ex, "An error occurred while processing the order");
+        }
+        finally{
+             // Calculate the duration of the process
+            var duration = DateTime.Now - startTime;
+        
+            // Log the success and error rates
+            _logger.LogInformation("Order processing complete. Success rate: {successRate}%, Error rate: {errorRate}%", 
+                successCount / (successCount + errorCount) * 100, errorCount / (successCount + errorCount) * 100);
+        
+            // Log the duration of the process
+            _logger.LogInformation("Process duration: {duration}", duration);
+        }
+        return Ok("The order has been created");
+
     }
 
     
@@ -310,63 +360,112 @@ public class OrderController:ControllerBase
     [HttpPut("orderstatus/closeorder/{orderId}")]
     public async Task<IActionResult> CloseOrder(Guid orderId, Guid employeeId)
     {
-        var json = JsonConvert.SerializeObject(orderId);
-        var data = new StringContent(json, Encoding.UTF8, "application/json");
-        HttpResponseMessage response = await _client.PutAsync("api/OrderStatus/closeorder",data);
-        if (!response.IsSuccessStatusCode)
+        // Track the start time of the process
+        var startTime = DateTime.Now;
+
+        // Initialize counters for success and error rates
+        var successCount = 0;
+        var errorCount = 0;
+        try
         {
-            return Ok("OrderStatus didn't successfully update");
-        }
-        response.EnsureSuccessStatusCode();
-        string content = await response.Content.ReadAsStringAsync();
-        OrderStatusModel item = JsonConvert.DeserializeObject<OrderStatusModel>(content)?? throw new Exception("There is something wrong with the receiving model");
-        
-        //Find Receipt
-        HttpResponseMessage responseRec = await _client.GetAsync($"api/Receipt/order/{orderId}");
-        if (!responseRec.IsSuccessStatusCode)
-        {
-            return Ok("Receipt isn't found");
-        }
-        responseRec.EnsureSuccessStatusCode();
-        string contentRec = await responseRec.Content.ReadAsStringAsync();
-        OrderReceiptModel receipt = JsonConvert.DeserializeObject<OrderReceiptModel>(contentRec)?? throw new Exception("It cannot get the item");
-        
-        //Find Employee
-        HttpResponseMessage responseEmployee = await _clientUser.GetAsync($"employee/{employeeId}");
-        if (!responseEmployee.IsSuccessStatusCode)
-        {
-            return Ok("Employee isn't found");
-        }
-        responseEmployee.EnsureSuccessStatusCode();
-        string contentEmployee = await response.Content.ReadAsStringAsync();
-        EmployeeModel employee = JsonConvert.DeserializeObject<EmployeeModel>(contentEmployee)?? throw new Exception("There is something wrong with the receiving model");
-        
-        //Transfer money to Employee
-        var money = receipt.Amount;
-        if (item.TimeSpan.Hour >12)
-        {
-            money *= 0.01;
+            var json = JsonConvert.SerializeObject(orderId);
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
+            HttpResponseMessage response = await _client.PutAsync("api/OrderStatus/closeorder", data);
+            if (!response.IsSuccessStatusCode)
+            {
+                errorCount++;
+                return Ok("OrderStatus didn't successfully update");
+            }
+
+            successCount++;
+            string content = await response.Content.ReadAsStringAsync();
+            OrderStatusModel item = JsonConvert.DeserializeObject<OrderStatusModel>(content) ??
+                                    throw new Exception("There is something wrong with the receiving model");
+
+            //Find Receipt
+            HttpResponseMessage responseRec = await _client.GetAsync($"api/Receipt/order/{orderId}");
+            if (!responseRec.IsSuccessStatusCode)
+            {
+                errorCount++;
+                return Ok("Receipt isn't found");
+            }
+
+            successCount++;
+            string contentRec = await responseRec.Content.ReadAsStringAsync();
+            OrderReceiptModel receipt = JsonConvert.DeserializeObject<OrderReceiptModel>(contentRec) ??
+                                        throw new Exception("It cannot get the item");
+
+            //Find Employee
+            HttpResponseMessage responseEmployee = await _clientUser.GetAsync($"employee/{employeeId}");
+            if (!responseEmployee.IsSuccessStatusCode)
+            {
+                errorCount++;
+                return Ok("Employee isn't found");
+            }
+
+            successCount++;
+            string contentEmployee = await response.Content.ReadAsStringAsync();
+            EmployeeModel employee = JsonConvert.DeserializeObject<EmployeeModel>(contentEmployee) ??
+                                     throw new Exception("There is something wrong with the receiving model");
+
+            //Transfer money to Employee
+            var money = receipt.Amount;
+            if (item.TimeSpan.Hour > 12)
+            {
+                money *= 0.01;
+
+            }
+            else if (item.TimeSpan.Hour > 20)
+            {
+                money *= 0.015;
+            }
+            else
+            {
+                money *= 0.005;
+            }
+
+            var jsonEm = JsonConvert.SerializeObject(new PaymentTransferModel("acct_1MBLzdCfd0VXBbOf", money));
+            var dataEm = new StringContent(jsonEm, Encoding.UTF8, "application/json");
+            HttpResponseMessage responseEm = await _clientPayment.PostAsync("stripe/transfermoneytoemployee", dataEm);
+            if (!responseEm.IsSuccessStatusCode)
+            {
+                errorCount++;
+                return Ok("The money wasn't transfered to the employee");
+            }
+
+            successCount++;
+            //Create PaymentLogging for Employee payment
+            var jsonRe = JsonConvert.SerializeObject(new CreatePaymentLoggingModel(new Guid("cd863618-5ad2-48e6-8d8e-826257160e6d"), 
+                employeeId, receipt.Amount, "PaymentToEmployee")); 
+            var dataRe = new StringContent(jsonRe, Encoding.UTF8, "application/json");
+            HttpResponseMessage responseRe = await _clientPaymentLogging.PostAsync("api/PaymentLogging", dataRe);
+            if (!responseRe.IsSuccessStatusCode)
+            {
+                errorCount++;
+                return Ok($"The Paymentlogging isn't created");
+            }
+            successCount++;
 
         }
-        else if (item.TimeSpan.Hour>20)
+        catch (Exception ex)
         {
-            money *= 0.015;
+            // Increment the error count and log the exception
+            errorCount++;
+            _logger.LogError(ex, "An error occurred while processing the order");
         }
-        else
+        finally
         {
-            money *= 0.005;
-        }
+            // Calculate the duration of the process
+            var duration = DateTime.Now - startTime;
 
-        var jsonEm = JsonConvert.SerializeObject(new PaymentTransferModel("acct_1MBLzdCfd0VXBbOf",money));
-        var dataEm = new StringContent(jsonEm, Encoding.UTF8, "application/json");
-        HttpResponseMessage responseEm = await _clientPayment.PostAsync("stripe/transfermoneytoemployee", dataEm);
-        if (!responseEm.IsSuccessStatusCode)
-        {
-            return Ok("The money wasn't transfered to the employee");
+            // Log the success and error rates
+            _logger.LogInformation("Order processing complete. Success rate: {successRate}%, Error rate: {errorRate}%", 
+                successCount / (successCount + errorCount) * 100, errorCount / (successCount + errorCount) * 100);
+
+            // Log the duration of the process
+            _logger.LogInformation("Process duration: {duration}", duration);
         }
-        responseEm.EnsureSuccessStatusCode();
-        
-        return Ok(item);
+        return Ok("The order has been closed");
     }
     
     [HttpDelete("orderstatus/{id}")]
