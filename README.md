@@ -9,7 +9,7 @@ CPHMTOGO's customers can utilize their accounts with the company to place orders
 |-----------------------------|--------------------------|
 | Benjamin Ćurović            | cph-bc121@cphbusiness.dk |
 | Abdelhamid Hariri           | cph-ah482@cphbusiness.dk |
-| Jonas Ancker Juul Jørgensen |                          |
+| Jonas Ancker Juul Jørgensen | cph-jj467@cphbusiness.dk                         |
 
 ## How to run the project
 Prerequisite:
