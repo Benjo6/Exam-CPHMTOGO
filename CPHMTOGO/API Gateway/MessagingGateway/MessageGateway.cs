@@ -15,7 +15,7 @@ public class MessageGateway
         _connectionFactory = connectionFactory;
     }
 
-    public void SendMailMessage(string email, string firstname, string lastname,double amount ,List<CreateOrderItemModel> orderItems)
+    public void SendMailMessage(string email,string restaurantname, string firstname, string lastname,double amount ,List<CreateOrderItemModel> orderItems)
     {
         using (var connection = _connectionFactory.CreateConnection())
         using (var channel = connection.CreateModel())
@@ -31,6 +31,7 @@ public class MessageGateway
             var message = new
             {
                 Email = email,
+                RestaurantName=restaurantname,
                 FirstName = firstname,
                 LastName = lastname,
                 Amount = amount,
