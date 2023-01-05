@@ -215,7 +215,7 @@ public class OrderController : ControllerBase
 
             
             //Message to Customer
-            _messageGateway.SendMailMessage("BenjoCh@proton.me", customer.firstname, customer.lastname,
+            _messageGateway.SendMailMessage("BenjoCh@proton.me",restaurant.name, customer.firstname, customer.lastname,
                 receipt.Amount, model.OrderItems);
             
 
