@@ -393,6 +393,7 @@ public class OrderController : ControllerBase
         string content = await response.Content.ReadAsStringAsync();
         OrderStatusModel item = JsonConvert.DeserializeObject<OrderStatusModel>(content) ??
                                 throw new Exception("There is something wrong with the receiving model");
+        
         return Ok(item);
     }
 
@@ -443,7 +444,7 @@ public class OrderController : ControllerBase
             }
 
             successCount++;
-            string contentEmployee = await response.Content.ReadAsStringAsync();
+            string contentEmployee = await responseEmployee.Content.ReadAsStringAsync();
             EmployeeModel employee = JsonConvert.DeserializeObject<EmployeeModel>(contentEmployee) ??
                                      throw new Exception("There is something wrong with the receiving model");
 
@@ -462,7 +463,7 @@ public class OrderController : ControllerBase
                 money *= 0.005;
             }
 
-            var jsonEm = JsonConvert.SerializeObject(new PaymentTransferModel("acct_1MBLzdCfd0VXBbOf", money));
+            var jsonEm = JsonConvert.SerializeObject(new PaymentTransferModel(employee.accountId, money));
             var dataEm = new StringContent(jsonEm, Encoding.UTF8, "application/json");
             HttpResponseMessage responseEm = await _clientPayment.PostAsync("stripe/transfermoneytoemployee", dataEm);
             if (!responseEm.IsSuccessStatusCode)
@@ -485,6 +486,11 @@ public class OrderController : ControllerBase
             }
 
             successCount++;
+            
+            //Send Mail to the company about the delivered order
+            _messageGateway.SendMailMessage("BenjoCh@proton.me", employee.firstname, employee.lastname,
+                receipt.Amount);
+            
         }
         catch (Exception ex)
         {
