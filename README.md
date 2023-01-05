@@ -22,28 +22,29 @@ Upon completion of the process, the API Gateway can be executed with all functio
 ## ER Diagram
 ![](https://raw.githubusercontent.com/Abed01-lab/prisma-erd/b9fb5f2de610b67b6c673ad1b352c69996e4f22b/prisma/ERD.svg)
 
+## Containers
+![](https://i.imgur.com/HVHJu8W.png)
+The software system is initially characterized by displaying the APIs, applications, databases, and microservices it will utilize. Each of these applications' components is represented by a container, along with their corresponding interactions.
 
-## SOA
-Our system is based on Service-Oriented Architecture (SOA), which requires us to adhere to certain principles. These principles are shared information and semantics, application integration, service reuse and governance, and management.
+After thorough discussions, we arrived at the construction of this level as the most suitable approach to addressing the pre-established scenario. Our conclusions are as follows: all user types will interact with the single-page application through Typescript and next.js, and two entities will communicate with the application. 
+One of these entities is the API Gateway, serving as an entry point for accessing data, business logic, and functionality from the backend microservices. The other entity is the message broker, responsible for sending emails to customers and restaurants concerning the order.
 
-**Shared Information and Semantics:**
+A message broker is a software that enables asynchronous communication between two or more systems. It facilitates asynchronous communications among services, enabling the sending application to continue without waiting for a response from the receiving application. This enhances fault tolerance and resilience in the infrastructure, making it ideal for our email service, which operates independently of other operations within the application.
 
-CPHMTOGO can document processing capabilities due to its capacity to convert both typed and handwritten data into structured, machine-readable data. This capability is further enhanced through integration with existing enterprise information models, such as microservices, which are frequently utilized in our project. We have carefully outlined the information model in an entity-relationship diagram.
+Returning to the API Gateway, it will communicate with two external legacy systems, such as DAWA, to validate the addresses and provide GeoLocation for these addresses. The second external legacy system is Stripe, which is a payment processor.
 
-**Application Integration:**
+The API Gateway communicates with a group of microservices, each with its own database and serving a specific purpose. This design was chosen with scalability in mind, and we will provide further details on this topic in the section on scalability. The microservices are primarily implemented in C#, though we also experiment with other languages to take advantage of the diverse skill sets of our team members.
 
-CPHMTOGO offers functions and data as services, utilizing stripe as a legacy model to facilitate the transformation between the enterprise model and the legacy model. These services are not directly accessible to the user, but rather are made available through the API Gateway. Both of our business processes are designed to operate through an integrated system rather than being directly connected to a database or legacy system. This approach enables us to ensure the seamless integration and management of these processes.
+## Inside of the containers (C#)
+![](https://i.imgur.com/BIjUiK7.png)
+The Order Service, which is the most complex of all the services, will be the primary focus of this level of the C4 diagram. The Order Service interfaces with the database (the responder) and the API Gateway (the requester). 
 
-**Service Reuse and Governance:**
+When the API Gateway calls the Order Service, the process begins. The request is routed to the appropriate controller based on its type, and the controller makes calls to the services to request the data. Communication between the controller and the repository layer is mediated by the service layer, which also contains business logic, including validation logic. The service layer allows for multiple calls to various repositories to provide the most dynamic response. 
 
-CPHMTOGO maintains a centralized repository of services that can be accessed and utilized by various departments within the organization. To ensure the efficient and effective utilization of these services, the company has implemented a system for monitoring their usage through logging and tracking the frequency of their utilization. This enables the company to optimize the usage of these resources and identify any potential areas for improvement.
-
-**Management:**
-
-CPHMTOGO utilizes a centralized system for managing the various services that are employed throughout the organization, specifically the API Gateway, which serves as the primary point of access and management for these resources. This enables the organization to effectively oversee and optimize the usage of these services, ensuring that they are utilized in a manner that is consistent with the needs and goals of the organization.
+The repository layer is established between the domain and service levels to separate domain objects from the specifics of the database access code and reduce the dispersion and duplication of query code. 
+The repository response passes through the same layer before reaching the API Gateway. The overall design adheres to the SOLID design principles.
 
 
-(Versioning and lifecycle aren't used in this project)
 ## API's
 | Service                 | Technologies        | Local Development | From other docker containers        |
 |-------------------------|---------------------|-------------------|-------------------------------------|
