@@ -17,7 +17,7 @@ You must have Docker to run the program
 
 To initiate the project, the start-bash.bat file located within the Exam-CPHMTOGO Folder must be run within the command prompt.
 
-Upon completion of the process, the API Gateway can be executed with all functionalities.
+Upon completion of the process, the API Gateway in docker can execute all functionalities.
 
 ## ER Diagram
 ![](https://raw.githubusercontent.com/Abed01-lab/prisma-erd/b9fb5f2de610b67b6c673ad1b352c69996e4f22b/prisma/ERD.svg)
