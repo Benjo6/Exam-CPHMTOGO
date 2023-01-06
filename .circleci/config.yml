@@ -101,5 +101,5 @@ workflows:
       - user-service
       - authentication-service
       - order-service
-      - payment-logging
+      - payment-logging-service
       - email-service
