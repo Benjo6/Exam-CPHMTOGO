@@ -8,7 +8,7 @@ async function connectQueue() {
 	await channel.assertQueue("orders");
 
 	await channel.consume(
-		"orders",
+		"OrderProcess",
 		(msg: ConsumeMessage | null) => {
 			if (msg !== null) {
 				console.log(JSON.parse(msg.content.toString()));
