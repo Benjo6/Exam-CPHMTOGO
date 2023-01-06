@@ -1,4 +1,4 @@
-version: 2.1
+version: "2.1"
 orbs:
   node: circleci/node@5.0.2
   win: circleci/windows@5.0
@@ -14,14 +14,14 @@ jobs:
             yarn 
             yarn test
           name: Running Test
-  email-service:
+  restaurant-service:
     executor:
       name: node/default
     steps:
       - checkout
       - run:
           command: |
-            cd CPHMTOGO/emailService
+            cd CPHMTOGO/RestaurantService
             yarn 
             yarn test
           name: Running Test
@@ -101,5 +101,7 @@ workflows:
       - user-service
       - authentication-service
       - order-service
+      - restaurant-service
+      - payment-service
       - payment-logging-service
-      - email-service
+      - address-service
