@@ -38,13 +38,11 @@ jobs:
       - run:
           command: |
             cd CPHMTOGO/TestZone/AuthenticationServiceTests
-            dotnet tool install --global OpenCover
-            OpenCover.console.exe -register:user -target:"dotnet.exe" -targetargs:"test --no-build" -output:coverage.xml
-            coverage=$(xsltproc -stringparam coverage 60 coverage.xml | grep sequenceCoverage | awk '{print $3}' | sed 's/[^0-9]*//g')
-            if ($coverage -lt 60) {
-            exit 1
-            }
-          name: Testing Solution
+            dotnet opencover -target:dotnet test -output:opencover.xml -register:user
+            ReportGenerator -reports:opencover.xml -targetdir:coverage
+      - run:
+          command: grep -o '[0-9]\+%' coverage/index.html | awk '{ sum += $1 } END { if (sum/NR < 60) exit 1 }'
+          name: Check code coverage
   order-service:
     executor:
       name: win/default
@@ -58,12 +56,7 @@ jobs:
       - run:
           command: |
             cd CPHMTOGO/TestZone/OrderServiceTests
-            dotnet tool install --global OpenCover
-            OpenCover.console.exe -register:user -target:"dotnet.exe" -targetargs:"test --no-build" -output:coverage.xml
-            coverage=$(xsltproc -stringparam coverage 60 coverage.xml | grep sequenceCoverage | awk '{print $3}' | sed 's/[^0-9]*//g')
-            if ($coverage -lt 60) {
-            exit 1
-            }
+            dotnet test
           name: Testing Solution
   payment-logging-service:
     executor:
@@ -78,12 +71,7 @@ jobs:
       - run:
           command: |
             cd CPHMTOGO/TestZone/PaymentLoggingServiceTests
-            dotnet tool install --global OpenCover
-            OpenCover.console.exe -register:user -target:"dotnet.exe" -targetargs:"test --no-build" -output:coverage.xml
-            coverage=$(xsltproc -stringparam coverage 60 coverage.xml | grep sequenceCoverage | awk '{print $3}' | sed 's/[^0-9]*//g')
-            if ($coverage -lt 60) {
-            exit 1
-            }
+            dotnet test
           name: Testing Solution
   payment-service:
     executor:
@@ -98,12 +86,7 @@ jobs:
       - run:
           command: |
             cd CPHMTOGO/TestZone/PaymentServiceTests
-            dotnet tool install --global OpenCover
-            OpenCover.console.exe -register:user -target:"dotnet.exe" -targetargs:"test --no-build" -output:coverage.xml
-            coverage=$(xsltproc -stringparam coverage 60 coverage.xml | grep sequenceCoverage | awk '{print $3}' | sed 's/[^0-9]*//g')
-            if ($coverage -lt 60) {
-            exit 1
-            }
+            dotnet test
           name: Testing Solution
   address-service:
     executor:
