@@ -37,27 +37,27 @@ jobs:
           name: Building Solution
       - run:
           command: |
-            cd CPHMTOGO/AuthenticationServiceTests
+            cd CPHMTOGO/TestZone/AuthenticationServiceTests
             dotnet test --collect:"Code Coverage"
           name: Testing Solution with Code Coverage
       - run:
           command: |
-            cd CPHMTOGO/AuthenticationServiceTests
+            cd CPHMTOGO/TestZone/AuthenticationServiceTests
             dotnet add package ReportGenerator --version 4.4.4
           name: Installing ReportGenerator
       - run:
          command: |
-           cd CPHMTOGO/AuthenticationServiceTests
+           cd CPHMTOGO/TestZone/AuthenticationServiceTests
            dotnet tool restore
          name: Restoring ReportGenerator Tool
       - run:
          command: |
-           cd CPHMTOGO/AuthenticationServiceTests
+           cd CPHMTOGO/TestZone/AuthenticationServiceTests
            reportgenerator "-reports:TestResults/coverage.cobertura.xml" "-targetdir:TestResults/coverage"
          name: Generating Code Coverage Report
       - run:
          command: |
-           cd CPHMTOGO/AuthenticationServiceTests
+           cd CPHMTOGO/TestZone/AuthenticationServiceTests
            if [ $(grep -c "60.00%" TestResults/coverage/index.htm) -eq 0 ]; then exit 1; fi
          name: Checking Code Coverage
   order-service:
