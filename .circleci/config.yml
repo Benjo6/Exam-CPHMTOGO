@@ -2,7 +2,6 @@ version: "2.1"
 orbs:
   node: circleci/node@5.0.2
   win: circleci/windows@5.0
-  add-path: circleci/add-path@0.0.3
 jobs:
   user-service:
     executor:
@@ -31,10 +30,6 @@ jobs:
       name: win/default
     steps:
       - checkout
-      - add-path/to-path:
-         paths:
-          - C:/Program Files/OpenCover/OpenCover.Console.exe
-          - C:/Program Files/ReportGenerator/ReportGenerator.exe
       - run:
           command: |
             cd CPHMTOGO/AuthenticationService
@@ -42,12 +37,29 @@ jobs:
           name: Building Solution
       - run:
           command: |
-            cd CPHMTOGO/TestZone/AuthenticationServiceTests
-            dotnet opencover -target:dotnet test -output:opencover.xml -register:user
-            ReportGenerator -reports:opencover.xml -targetdir:coverage
+            cd CPHMTOGO/AuthenticationServiceTests
+            dotnet test --collect:"Code Coverage"
+          name: Testing Solution with Code Coverage
       - run:
-          command: grep -o '[0-9]\+%' coverage/index.html | awk '{ sum += $1 } END { if (sum/NR < 60) exit 1 }'
-          name: Check code coverage
+          command: |
+            cd CPHMTOGO/AuthenticationServiceTests
+            dotnet add package ReportGenerator --version 4.4.4
+          name: Installing ReportGenerator
+      - run:
+         command: |
+           cd CPHMTOGO/AuthenticationServiceTests
+           dotnet tool restore
+         name: Restoring ReportGenerator Tool
+      - run:
+         command: |
+           cd CPHMTOGO/AuthenticationServiceTests
+           reportgenerator "-reports:TestResults/coverage.cobertura.xml" "-targetdir:TestResults/coverage"
+         name: Generating Code Coverage Report
+      - run:
+         command: |
+           cd CPHMTOGO/AuthenticationServiceTests
+           if [ $(grep -c "60.00%" TestResults/coverage/index.htm) -eq 0 ]; then exit 1; fi
+         name: Checking Code Coverage
   order-service:
     executor:
       name: win/default
