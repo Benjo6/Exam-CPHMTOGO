@@ -42,14 +42,8 @@ jobs:
           name: Testing Solution with Code Coverage
       - run:
           command: |
-            cd CPHMTOGO/TestZone/AuthenticationServiceTests
-            dotnet add package ReportGenerator --version 4.4.4
-          name: Installing ReportGenerator
-      - run:
-         command: |
-           cd CPHMTOGO/TestZone/AuthenticationServiceTests
-           dotnet tool restore
-         name: Restoring ReportGenerator Tool
+            dotnet tool install -g reportgenerator
+          name: Installing ReportGenerator Tool Globally
       - run:
          command: |
            cd CPHMTOGO/TestZone/AuthenticationServiceTests
