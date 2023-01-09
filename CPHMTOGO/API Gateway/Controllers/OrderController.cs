@@ -158,6 +158,7 @@ public class OrderController : ControllerBase
                 Query = @"query($getRestaurantId: String)  {
   getRestaurant(id: $getRestaurantId) {
     accountId
+    name
   }
 }",
                 Variables = new
@@ -213,14 +214,12 @@ public class OrderController : ControllerBase
             string contentCustomer = await responseCustomer.Content.ReadAsStringAsync();
             CustomerModel customer = JsonConvert.DeserializeObject<CustomerModel>(contentCustomer)?? throw new Exception("There is something wrong with the receiving model");
 
-            
+            //Message to Restaurant
+            //_messageGateway.SendMailMessage("BenjoCh@proton.me", restaurant.name, receipt.Amount, model.OrderItems);
             //Message to Customer
             _messageGateway.SendMailMessage("BenjoCh@proton.me",restaurant.name, customer.firstname, customer.lastname,
                 receipt.Amount, model.OrderItems);
             
-
-            //Message to Restaurant
-            _messageGateway.SendMailMessage("BenjoCh@proton.me", restaurant.name, receipt.Amount, model.OrderItems);
         }
         catch (Exception ex)
         {

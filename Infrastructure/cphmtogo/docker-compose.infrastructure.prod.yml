@@ -153,7 +153,7 @@ services:
         limits:
           memory: 2048M
      ports:
-       - 8080:80
+       - 5000:80
 
   ##Order Service##
   order-service:

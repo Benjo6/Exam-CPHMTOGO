@@ -30,12 +30,12 @@ public class MessageGateway
             //Create Message
             var message = new
             {
-                Email = email,
-                RestaurantName=restaurantname,
-                FirstName = firstname,
-                LastName = lastname,
-                Amount = amount,
-                Items = orderItems
+                email,
+                restaurantname, 
+                firstname,
+                lastname, 
+                amount,
+                orderItems
             };
             
             var body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(message));
@@ -61,10 +61,10 @@ public class MessageGateway
             //Create Message
             var message = new
             {
-                Email = email,
-                Name = name,
-                Amount = amount,
-                Items = orderItems
+                email,
+                name,
+                amount,
+                orderItems
             };
             var body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(message));
 
