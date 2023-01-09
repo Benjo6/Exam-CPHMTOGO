@@ -2,6 +2,7 @@ version: "2.1"
 orbs:
   node: circleci/node@5.0.2
   win: circleci/windows@5.0
+  add-path: circleci/add-path@0.0.3
 jobs:
   user-service:
     executor:
@@ -30,6 +31,10 @@ jobs:
       name: win/default
     steps:
       - checkout
+      - add-path/to-path:
+         paths:
+          - C:/Program Files/OpenCover/OpenCover.Console.exe
+          - C:/Program Files/ReportGenerator/ReportGenerator.exe
       - run:
           command: |
             cd CPHMTOGO/AuthenticationService
