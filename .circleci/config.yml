@@ -42,7 +42,7 @@ jobs:
           name: Testing Solution with Code Coverage
       - run:
           command: |
-            dotnet tool install -g dotnet-reportgenerator-globally
+           dotnet tool install -g ReportGenerator.Tool
           name: Installing ReportGenerator Tool Globally
       - run:
          command: |
