@@ -39,11 +39,11 @@ jobs:
           command: |
             cd CPHMTOGO/TestZone/AuthenticationServiceTests
             dotnet tool install --global OpenCover
-            OpenCover.Console.exe -register:user -target:"dotnet.exe" -targetargs:"test --no-build" -output:coverage.xml
+            OpenCover.console.exe -register:user -target:"dotnet.exe" -targetargs:"test --no-build" -output:coverage.xml
             coverage=$(xsltproc -stringparam coverage 60 coverage.xml | grep sequenceCoverage | awk '{print $3}' | sed 's/[^0-9]*//g')
-            if [ $coverage -lt 60 ]; then
-              exit 1
-            fi
+            if ($coverage -lt 60) {
+            exit 1
+            }
           name: Testing Solution
   order-service:
     executor:
@@ -61,9 +61,9 @@ jobs:
             dotnet tool install --global OpenCover
             OpenCover.console.exe -register:user -target:"dotnet.exe" -targetargs:"test --no-build" -output:coverage.xml
             coverage=$(xsltproc -stringparam coverage 60 coverage.xml | grep sequenceCoverage | awk '{print $3}' | sed 's/[^0-9]*//g')
-            if [ $coverage -lt 60 ]; then
-              exit 1
-            fi
+            if ($coverage -lt 60) {
+            exit 1
+            }
           name: Testing Solution
   payment-logging-service:
     executor:
@@ -78,12 +78,12 @@ jobs:
       - run:
           command: |
             cd CPHMTOGO/TestZone/PaymentLoggingServiceTests
-            dotnet tool install --global OpenCover 
+            dotnet tool install --global OpenCover
             OpenCover.console.exe -register:user -target:"dotnet.exe" -targetargs:"test --no-build" -output:coverage.xml
             coverage=$(xsltproc -stringparam coverage 60 coverage.xml | grep sequenceCoverage | awk '{print $3}' | sed 's/[^0-9]*//g')
-            if [ $coverage -lt 60 ]; then
+            if ($coverage -lt 60) {
             exit 1
-            fi
+            }
           name: Testing Solution
   payment-service:
     executor:
@@ -101,9 +101,9 @@ jobs:
             dotnet tool install --global OpenCover
             OpenCover.console.exe -register:user -target:"dotnet.exe" -targetargs:"test --no-build" -output:coverage.xml
             coverage=$(xsltproc -stringparam coverage 60 coverage.xml | grep sequenceCoverage | awk '{print $3}' | sed 's/[^0-9]*//g')
-            if [ $coverage -lt 60 ]; then
-              exit 1
-            fi
+            if ($coverage -lt 60) {
+            exit 1
+            }
           name: Testing Solution
   address-service:
     executor:
