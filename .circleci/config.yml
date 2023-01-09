@@ -38,6 +38,7 @@ jobs:
       - run:
           command: |
             cd CPHMTOGO/TestZone/AuthenticationServiceTests
+            dotnet tool install --global OpenCover
             OpenCover.console.exe -register:user -target:"dotnet.exe" -targetargs:"test --no-build" -output:coverage.xml
             coverage=$(xsltproc -stringparam coverage 60 coverage.xml | grep sequenceCoverage | awk '{print $3}' | sed 's/[^0-9]*//g')
             if ($coverage -lt 60) {
