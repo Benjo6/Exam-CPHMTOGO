@@ -38,8 +38,11 @@ jobs:
       - run:
           command: |
             cd CPHMTOGO/TestZone/AuthenticationServiceTests
-            dotnet test
-          name: Testing Solution
+            dotnet opencover -target:dotnet test -output:opencover.xml -register:user
+            ReportGenerator -reports:opencover.xml -targetdir:coverage
+      - run:
+          command: grep -o '[0-9]\+%' coverage/index.html | awk '{ sum += $1 } END { if (sum/NR < 60) exit 1 }'
+          name: Check code coverage
   order-service:
     executor:
       name: win/default
