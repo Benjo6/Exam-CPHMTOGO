@@ -26,6 +26,7 @@ jobs:
             yarn test
           name: Running Test
   authentication-service:
+    build:
     executor:
       name: win/default
     steps:
@@ -50,25 +51,28 @@ jobs:
       - store_artifacts:
           path: coverage/
       - run:
-         command: |
-          echo "Current working directory: $(pwd)"
-          echo "Checking coverage directory: `ls -al coverage/`"
-          if test -f "coverage/coverage.cobertura.xml"; then
-            echo "Coverage file found: coverage/coverage.cobertura.xml"
-            $coverage = (Get-Content -Raw -Path coverage/coverage.cobertura.xml) -replace '.*tests="1" covered="([^"]+)".*', '$1'
-            $threshold = 60
-            if ($coverage -lt $threshold) {
-              Write-Host "Coverage is below threshold: $coverage%"
+          command: |
+            #!powershell.exe -ExecutionPolicy Bypass
+            # Check if coverage file exists
+            echo "Current working directory: $(pwd)"
+            echo "Checking coverage directory: `ls -al coverage/`"
+            if test -f "coverage/coverage.cobertura.xml"; then
+              echo "Coverage file found: coverage/coverage.cobertura.xml"
+              $coverage = (Get-Content -Raw -Path coverage/coverage.cobertura.xml) -replace '.*tests="1" covered="([^"]+)".*', '$1'
+              $threshold = 60
+              if ($coverage -lt $threshold) {
+                  Write-Host "Coverage is below threshold: $coverage%"
+                  exit 1
+              } 
+              else {
+                  Write-Host "Coverage is above threshold: $coverage%"
+              }
+            else
+              echo "Coverage file not found"
               exit 1
-            } 
-            else {
-              Write-Host "Coverage is above threshold: $coverage%"
-            }
-          else
-            echo "Coverage file not found"
-            exit 1
-          fi
-         name: Check coverage
+            fi
+          name: Check coverage
+
   order-service:
     executor:
       name: win/default
