@@ -43,7 +43,7 @@ jobs:
       - run:
           command: |
             cd CPHMTOGO/TestZone/AuthenticationServiceTests
-            dotnet tool restore
+            dotnet tool restore --configfile .\dotnet-tools.json
           name: Restoring OpenCover Tool
       - run:
           command: >
