@@ -50,17 +50,17 @@ jobs:
       - store_artifacts:
           path: coverage/coverage.cobertura.xml
       - run:
-         command: |
-          $coverage = (Get-Content -Raw -Path coverage/coverage.cobertura.xml) -replace '.*tests="1" covered="([^"]+)".*', '$1'
-          $threshold = 60
-          if ($coverage -lt $threshold) {
-            Write-Host "Coverage is below threshold: $coverage%"
-            exit 1
-          } 
-          else {
-            Write-Host "Coverage is above threshold: $coverage%"
-          }
-         name: Check coverage
+          command: |
+              $coverage = (Get-Content -Raw -Path coverage/coverage.cobertura.xml) -replace '.*tests="1" covered="([^"]+)".*', '$1'
+              $threshold = 60
+              if ($coverage -lt $threshold) {
+                Write-Host "Coverage is below threshold: $coverage%"
+                exit 1
+              } 
+              else {
+                Write-Host "Coverage is above threshold: $coverage%"
+              }
+          name: Check coverage
   order-service:
     executor:
       name: win/default
