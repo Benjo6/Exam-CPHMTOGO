@@ -65,10 +65,10 @@ jobs:
             else {
                 Write-Host "Coverage is above threshold: $coverage%"
             }
-            else
-              echo "Coverage file not found"
-              exit 1
-            fi
+          else
+             echo "Coverage file not found"
+            exit 1
+          fi
          name: Check coverage
   order-service:
     executor:
