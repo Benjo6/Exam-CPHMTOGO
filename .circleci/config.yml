@@ -48,7 +48,7 @@ jobs:
       - store_test_results:
           path: TestResults/TestResults.xml
       - store_artifacts:
-          path: coverage/
+          path: coverage/coverage.cobertura.xml
       - run:
          command: |
           $coverage = (Get-Content -Raw -Path coverage/coverage.cobertura.xml) -replace '.*tests="1" covered="([^"]+)".*', '$1'
