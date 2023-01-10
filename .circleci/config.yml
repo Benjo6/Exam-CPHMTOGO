@@ -48,9 +48,11 @@ jobs:
       - store_test_results:
           path: TestResults/TestResults.xml
       - store_artifacts:
-          path: coverage/coverage.cobertura.xml
+          path: coverage/
       - run:
           command: |
+            echo "Checking if coverage file exists: `ls -al coverage/coverage.cobertura.xml`"
+            if test -f "coverage/coverage.cobertura.xml"; then
               $coverage = (Get-Content -Raw -Path coverage/coverage.cobertura.xml) -replace '.*tests="1" covered="([^"]+)".*', '$1'
               $threshold = 60
               if ($coverage -lt $threshold) {
@@ -60,6 +62,10 @@ jobs:
               else {
                 Write-Host "Coverage is above threshold: $coverage%"
               }
+            else
+              echo "coverage file not found"
+              exit 1
+            fi
           name: Check coverage
   order-service:
     executor:
