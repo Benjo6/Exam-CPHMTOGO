@@ -2,6 +2,7 @@ version: "2.1"
 orbs:
   node: circleci/node@5.0.2
   win: circleci/windows@5.0
+  codecov: codecov/codecov@3.0.0
 jobs:
   user-service:
     executor:
@@ -26,16 +27,9 @@ jobs:
             yarn test
           name: Running Test
   authentication-service:
-    build:
-    executor:
-      name: win/default
+    executor: win/default
     steps:
       - checkout
-      - run:
-          command: |
-            cd CPHMTOGO/AuthenticationService
-            dotnet format
-          name: Linting
       - run:
           command: |
             cd CPHMTOGO/AuthenticationService
@@ -43,36 +37,16 @@ jobs:
           name: Building Solution
       - run:
           command: |
-            cd CPHMTOGO/AuthenticationService
-            dotnet test --collect:"XPlat Code Coverage" /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=./coverage/
+            cd CPHMTOGO/TestZone/AuthenticationServiceTests
+            dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=../../TestResults/
           name: Testing Solution
-      - store_test_results:
-          path: TestResults/TestResults.xml
-      - store_artifacts:
-          path: coverage/
       - run:
-          command: |
-            #!powershell.exe -ExecutionPolicy Bypass
-            # Check if coverage file exists
-            echo "Current working directory: $(pwd)"
-            echo "Checking coverage directory: `ls -al coverage/`"
-            if test -f "coverage/coverage.cobertura.xml"; then
-              echo "Coverage file found: coverage/coverage.cobertura.xml"
-              $coverage = (Get-Content -Raw -Path coverage/coverage.cobertura.xml) -replace '.*tests="1" covered="([^"]+)".*', '$1'
-              $threshold = 60
-              if ($coverage -lt $threshold) {
-                  Write-Host "Coverage is below threshold: $coverage%"
-                  exit 1
-              } 
-              else {
-                  Write-Host "Coverage is above threshold: $coverage%"
-              }
-            else
-              echo "Coverage file not found"
-              exit 1
-            fi
-          name: Check coverage
-
+            command: |
+              coverage="$(grep '<coverage' TestResults/coverage.cobertura.xml | awk '{print $2}' | tr -d '[:punct:]')"
+              if (( coverage < 60 )); then echo "Coverage is less than 60%, it is $coverage %" && exit 1; fi
+              echo "Coverage is at least 60%!"
+      - codecov/upload:
+          file: TestResults/coverage.cobertura.xml
   order-service:
     executor:
       name: win/default
