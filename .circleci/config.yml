@@ -39,11 +39,10 @@ jobs:
       - run:
           command: |
             cd CPHMTOGO/TestZone/AuthenticationServiceTests
-            dotnet test --collect:"XPlat Code Coverage" --logger:"console;verbosity=normal"
-      - store_test_results:
-          path: TestResults
+            dotnet test
+          name: Testing Solution
       - codecov/upload:
-          file: TestResults/coverage.cobertura.xml  
+          file: CPHMTOGO/TestZone/AuthenticationServiceTests/coverage.cobertura.xml
   order-service:
     executor:
       name: win/default
