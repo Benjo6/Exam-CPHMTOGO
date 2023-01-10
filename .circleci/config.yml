@@ -34,17 +34,12 @@ jobs:
       - run:
           command: |
             cd CPHMTOGO/AuthenticationService
-            dotnet lint 
-          name: Linting Solution
-      - run:
-          command: |
-            cd CPHMTOGO/AuthenticationService
             dotnet stryker 
           name: Mutation Testing 
       - run:
           command: |
             cd CPHMTOGO/AuthenticationService
-            dotnet build
+            dotnet build --fatal-analyzer-issues
           name: Building Solution
       - run:
           command: |
