@@ -34,18 +34,23 @@ jobs:
       - run:
           command: |
             cd CPHMTOGO/AuthenticationService
-            dotnet stryker 
-          name: Mutation Testing 
+            dotnet build --fatal-analyzer-issues
+          name: Building Solution
       - run:
           command: |
             cd CPHMTOGO/AuthenticationService
-            dotnet build --fatal-analyzer-issues
-          name: Building Solution
+            dotnet format
+          name: Linting Solution
       - run:
           command: |
             cd CPHMTOGO/TestZone/AuthenticationServiceTests
             dotnet test --collect:"XPlat Code Coverage"
           name: Testing Solution
+      - run:
+          command: |
+            cd CPHMTOGO/TestZone/AuthenticationServiceTests
+            dotnet stryker 
+          name: Mutation Testing 
       - run: 
           command: |
             cd CPHMTOGO/TestZone/AuthenticationServiceTests
