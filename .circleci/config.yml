@@ -50,11 +50,11 @@ jobs:
             cd CPHMTOGO/TestZone/AuthenticationServiceTests
             .\OpenCover.console.exe -target:"C:\Program Files\dotnet\dotnet.exe" -targetargs:"test --collect:"Code Coverage"" -register:user -output:coverage.xml
           name: Generating Code Coverage Report
-      - run: null
-        command: |
-          cd CPHMTOGO/TestZone/AuthenticationServiceTests
-          if [ $(grep -c "60.00%" coverage.xml) -eq 0 ]; then exit 1; fi
-        name: Checking Code Coverage
+      - run:
+          command: |
+            cd CPHMTOGO/TestZone/AuthenticationServiceTests
+            if [ $(grep -c "60.00%" coverage.xml) -eq 0 ]; then exit 1; fi
+          name: Checking Code Coverage
   order-service:
     executor:
       name: win/default
