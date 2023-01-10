@@ -43,11 +43,19 @@ jobs:
           name: Building Solution
       - run:
           command: |
+            curl -s https://codecov.io/bash > codecov.sh
+            chmod +x codecov.sh
+          name: Downloading codecov script
+      - run:
+          command: |
             cd CPHMTOGO/TestZone/AuthenticationServiceTests
             dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput=../coverage/coverage.opencover.xml
           name: Testing Solution
-      - codecov/upload:
-          file: CPHMTOGO/TestZone/coverage/coverage.opencover.xml
+      - run:
+          command: |
+            echo "Uploading Coverage"
+            ./codecov.sh
+          name: Uploading Coverage
   order-service:
     executor:
       name: win/default
