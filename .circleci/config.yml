@@ -39,13 +39,12 @@ jobs:
       - run:
          command: |
            cd CPHMTOGO/AuthenticationService
-           dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=coverage.cobertura.xml --logger:"console;verbosity=normal"
+           dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=TestResults/coverage.cobertura.xml --logger:"console;verbosity=normal"
          name: Testing Solution
       - store_test_results:
-         path: coverage
+         path: TestResults
       - codecov/upload:
-         file: coverage/coverage.cobertura.xml
-
+         file: TestResults/coverage.cobertura.xml
   order-service:
     executor:
       name: win/default
