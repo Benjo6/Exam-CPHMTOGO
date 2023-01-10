@@ -48,7 +48,6 @@ jobs:
       - run:
           command: >
             cd CPHMTOGO/TestZone/AuthenticationServiceTests
-
             .\OpenCover.console.exe -target:"C:\Program Files\dotnet\dotnet.exe" -targetargs:"test --collect:"Code Coverage"" -register:user -output:coverage.xml
           name: Generating Code Coverage Report
       - run: null
