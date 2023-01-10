@@ -51,14 +51,15 @@ jobs:
           path: coverage/
       - run:
          command: |
-            coverage=$(cat coverage/coverage.cobertura.xml | grep -oP "(?<=tests=\"1\" covered=\").*(?=\")" | awk '{s+=$1} END {print s}')
-            threshold=60
-            if [[ $coverage -lt $threshold ]]; then
-             echo "Coverage is below threshold: $coverage%"
-             exit 1
-            else
-             echo "Coverage is above threshold: $coverage%"
-            fi
+            $coverage = (Get-Content -Raw -Path coverage/coverage.cobertura.xml) -match "(?<=tests=\\"1\\" covered=\\")[^\\"]+"
+            $threshold = 60
+            if ($coverage -lt $threshold) {
+              Write-Host "Coverage is below threshold: $coverage%"
+              exit 1
+            } 
+            else {
+              Write-Host "Coverage is above threshold: $coverage%"
+            }
          name: Check coverage
   order-service:
     executor:
