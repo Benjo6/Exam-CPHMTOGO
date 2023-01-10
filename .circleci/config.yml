@@ -56,6 +56,19 @@ jobs:
             echo "Uploading Coverage"
             ./codecov.sh
           name: Uploading Coverage
+      - run:
+          command: |
+            # Code to get coverage percentage 
+            coverage=$(cat CPHMTOGO/TestZone/coverage/coverage.opencover.xml | grep -oP '<LineCoverage>\K\d+(?=%)')
+            echo "Coverage percentage: $coverage"
+          name: Displaying coverage percentage
+      - run:
+          command: |
+            if [ $coverage -lt 60 ]; then
+              echo "Coverage is less than 60%, failing pipeline"
+              exit 1
+            fi
+          name: Asserting coverage
   order-service:
     executor:
       name: win/default
