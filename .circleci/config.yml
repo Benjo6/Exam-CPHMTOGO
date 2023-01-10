@@ -43,23 +43,13 @@ jobs:
           name: Building Solution
       - run:
           command: |
-            curl -s https://codecov.io/bash > codecov.sh
-            chmod +x codecov.sh
-          name: Downloading codecov script
-      - run:
-          command: |
             cd CPHMTOGO/TestZone/AuthenticationServiceTests
-            dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput=../coverage/coverage.opencover.xml
+            dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput=coverage.opencover.xml
           name: Testing Solution
       - run:
           command: |
-            echo "Uploading Coverage"
-            ./codecov.sh
-          name: Uploading Coverage
-      - run:
-          command: |
             # Code to get coverage percentage 
-            $coverage = (cat CPHMTOGO/TestZone/coverage/coverage.opencover.xml | Select-String -Pattern "LineCoverage").Matches.Value
+            $coverage = (Get-Content coverage.opencover.xml | Select-String -Pattern "LineCoverage").Matches.Value
             $coverage = [double]$coverage.TrimEnd("%")
             Write-Host "Coverage percentage: $coverage"
           name: Displaying coverage percentage
@@ -73,7 +63,9 @@ jobs:
       - run:
           command: |
             echo "Uploading Coverage"
-            ./codecov.sh
+            curl -s https://codecov.io/bash > codecov.sh
+            chmod +x codecov.sh
+            ./codecov.sh -f "coverage.opencover.xml" -t $CODECOV_TOKEN
           name: Uploading Coverage
   order-service:
     executor:
