@@ -52,21 +52,24 @@ jobs:
       - run:
          command: |
           # Check if coverage file exists
-          if (Test-Path -PathType Leaf coverage/coverage.cobertura.xml) {
-            echo "Checking coverage file: $(Invoke-Command -Command {ls -al coverage/coverage.cobertura.xml})"
+          echo "Current working directory: $(pwd)"
+          echo "Checking coverage directory: `ls -al coverage/`"
+          if test -f "coverage/coverage.cobertura.xml"; then
+            echo "Coverage file found: coverage/coverage.cobertura.xml"
             $coverage = (Get-Content -Raw -Path coverage/coverage.cobertura.xml) -replace '.*tests="1" covered="([^"]+)".*', '$1'
             $threshold = 60
             if ($coverage -lt $threshold) {
-              Write-Host "Coverage is below threshold: $coverage%"
-              exit 1
+                Write-Host "Coverage is below threshold: $coverage%"
+                exit 1
             } 
             else {
-              Write-Host "Coverage is above threshold: $coverage%"
+                Write-Host "Coverage is above threshold: $coverage%"
             }
-          } else {
-            echo "Coverage file not found, skipping coverage check"
-          }
-         name: Check Coverage
+            else
+              echo "Coverage file not found"
+              exit 1
+            fi
+         name: Check coverage
   order-service:
     executor:
       name: win/default
