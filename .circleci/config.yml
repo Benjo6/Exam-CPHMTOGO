@@ -2,7 +2,6 @@ version: "2.1"
 orbs:
   node: circleci/node@5.0.2
   win: circleci/windows@5.0
-  codecov: codecov/codecov@3.2.4
 jobs:
   user-service:
     executor:
@@ -34,29 +33,33 @@ jobs:
       - run:
           command: |
             cd CPHMTOGO/AuthenticationService
+            dotnet format
+          name: Linting
+      - run:
+          command: |
+            cd CPHMTOGO/AuthenticationService
             dotnet build
           name: Building Solution
       - run:
           command: |
-            cd CPHMTOGO/TestZone/AuthenticationServiceTests
-            dotnet test --collect:"XPlat Code Coverage"
+            cd CPHMTOGO/AuthenticationService
+            dotnet test --collect:"XPlat Code Coverage" /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=./coverage/
           name: Testing Solution
       - store_test_results:
-          path: ./TestResults/TestResults.xml
+          path: TestResults/TestResults.xml
       - store_artifacts:
-          path: ./coverage/coverage.cobertura.xml
-      - codecov/upload:
-          require_ci_token: true
-          file: ./coverage/coverage.cobertura.xml
-      - assert:
-          command: >
-            coverage=$(cat ./coverage/coverage.cobertura.xml | grep -oP
-            "(?<=tests=\"1\" covered=\").*(?=\")" | awk '{s+=$1} END {print s}')
-
-            if [[ $coverage -lt 60 ]]; then
-              echo "Coverage is below threshold: $coverage%"
-              exit 1
+          path: coverage/
+      - run:
+         command: |
+            coverage=$(cat coverage/coverage.cobertura.xml | grep -oP "(?<=tests=\"1\" covered=\").*(?=\")" | awk '{s+=$1} END {print s}')
+            threshold=60
+            if [[ $coverage -lt $threshold ]]; then
+             echo "Coverage is below threshold: $coverage%"
+             exit 1
+            else
+             echo "Coverage is above threshold: $coverage%"
             fi
+         name: Check coverage
   order-service:
     executor:
       name: win/default
