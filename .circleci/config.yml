@@ -1,4 +1,3 @@
----
 version: "2.1"
 orbs:
   node: circleci/node@5.0.2
@@ -50,27 +49,28 @@ jobs:
           command: >
             cd CPHMTOGO/TestZone/AuthenticationServiceTests
 
-            opencover -target:"C:\Program Files\dotnet\dotnet.exe" -targetargs:"test --collect:"Code Coverage"" -register:user -output:coverage.xml
-          name: Generating Code Coverage Report with OpenCover
+            .\OpenCover.Console.exe -target:"C:\Program Files\dotnet\dotnet.exe" -targetargs:"test --collect:"Code Coverage"" -register:user -output:coverage.xml
+          name: Running OpenCover for Code Coverage
       - run:
           command: |
             cd CPHMTOGO/TestZone/AuthenticationServiceTests
-            dotnet add package CoberturaConverter --version 2.1.0
-          name: Installing CoberturaConverter
+            dotnet add package Coverlet.Collector --version 2.5.0
+          name: Installing Coverlet Collector
       - run:
           command: |
             cd CPHMTOGO/TestZone/AuthenticationServiceTests
             dotnet tool restore
-          name: Restoring CoberturaConverter Tool
+          name: Restoring Coverlet Collector Tool
       - run:
           command: |
             cd CPHMTOGO/TestZone/AuthenticationServiceTests
-            coberturaconverter coverage.xml coverage.cobertura.xml
-          name: Converting Code Coverage Report to Cobertura Format
+            .\coverlet coverage.xml --format opencover
+          name: Generating OpenCover Report
       - run:
-          command: |
+          command: >
             cd CPHMTOGO/TestZone/AuthenticationServiceTests
-            if [ $(grep -c "60.00%" coverage/index.htm) -eq 0 ]; then exit 1; fi
+
+            if [ $(grep -c "60.00%" coverage.opencover.xml) -eq 0 ]; then exit 1; fi
           name: Checking Code Coverage
   order-service:
     executor:
