@@ -49,7 +49,9 @@ jobs:
       - run:
           command: |
             # Code to get coverage percentage 
-            $coverage = (Get-Content coverage.opencover.xml | Select-String -Pattern "LineCoverage").Matches.Value
+            Write-Host "coverage file location: $(Get-Location)"
+            Get-ChildItem coverage.opencover.xml
+            $coverage = (Get-Content coverage.opencover.xml -Encoding UTF8 | Select-String -Pattern "LineCoverage").Matches.Value
             $coverage = [double]$coverage.TrimEnd("%")
             Write-Host "Coverage percentage: $coverage"
           name: Displaying coverage percentage
