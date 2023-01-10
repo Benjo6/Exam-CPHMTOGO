@@ -40,10 +40,12 @@ jobs:
           command: |
             cd CPHMTOGO/TestZone/AuthenticationServiceTests
             dotnet test --collect:"XPlat Code Coverage" --logger:"console;verbosity=normal"
+      - run: 
+         command: mkdir -p C:\Users\circleci.PACKER-633B1A5A\project\TestResults
       - store_test_results:
           path: TestResults
       - codecov/upload:
-          file: TestResults/coverage.cobertura.xml  
+          file: TestResults/coverage.cobertura.xml
   order-service:
     executor:
       name: win/default
