@@ -37,15 +37,15 @@ jobs:
             dotnet build
           name: Building Solution
       - run:
-          command: |
-            cd CPHMTOGO/TestZone/AuthenticationServiceTests
-            dotnet test --collect:"XPlat Code Coverage" --logger:"console;verbosity=normal"
-      - run: 
-         command: mkdir -p C:\Users\circleci.PACKER-633B1A5A\project\TestResults
+         command: |
+           cd CPHMTOGO/AuthenticationService
+           dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=coverage.cobertura.xml --logger:"console;verbosity=normal"
+         name: Testing Solution
       - store_test_results:
-          path: TestResults
+         path: coverage
       - codecov/upload:
-          file: TestResults/coverage.cobertura.xml
+         file: coverage/coverage.cobertura.xml
+
   order-service:
     executor:
       name: win/default
