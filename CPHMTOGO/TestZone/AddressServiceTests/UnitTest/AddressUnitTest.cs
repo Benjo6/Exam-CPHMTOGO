@@ -1,33 +1,66 @@
 using AddressService.Domain;
-using AddressService.Repositories.Interfaces;
-using Moq;
 
 namespace AddressServiceTests.UnitTest;
 
-public class AddressUnitTest
-{ 
-    private Mock<IAddressRepository> _dot;
+[TestFixture]
+public class AddressUnitTests
+{
+    private Address _address;
 
     [SetUp]
-    public void Setup()
+    public void SetUp()
     {
-        _dot = new Mock<IAddressRepository>();
+        _address = new Address
+        {
+            Street = "Test Street",
+            StreetNr = "123",
+            Zipcode = "12345",
+            Longitude = 0,
+            Latitude = 0,
+            Etage = "3",
+            Door = "A"
+        };
     }
 
     [Test]
-    public void MustCallRepositoryInAllMethods()
+    public void Address_Street_ShouldBeSet()
     {
-        //Arrange
-        var guid = Guid.NewGuid();
-        //Act
-        _dot.Object.Create(new(){Street = "random"});
-        _dot.Object.GetById(guid);
-        _dot.Object.Update(new () {Street = "random"});
-        _dot.Object.SaveChanges();
-        _dot.Object.GetAll();
-        _dot.Object.GetByCondition(t=>t.Street=="random");
-        _dot.Object.Delete(guid);
-        //Assert
-        _dot.VerifyAll();
+        Assert.That(_address.Street, Is.EqualTo("Test Street"));
+    }
+
+    [Test]
+    public void Address_StreetNr_ShouldBeSet()
+    {
+        Assert.That(_address.StreetNr, Is.EqualTo("123"));
+    }
+
+    [Test]
+    public void Address_Zipcode_ShouldBeSet()
+    {
+        Assert.That(_address.Zipcode, Is.EqualTo("12345"));
+    }
+
+    [Test]
+    public void Address_Longitude_ShouldBeSet()
+    {
+        Assert.That(_address.Longitude, Is.EqualTo(0));
+    }
+
+    [Test]
+    public void Address_Latitude_ShouldBeSet()
+    {
+        Assert.That(_address.Latitude, Is.EqualTo(0));
+    }
+        
+    [Test]
+    public void Address_Etage_ShouldBeSet()
+    {
+        Assert.That(_address.Etage, Is.EqualTo("3"));
+    }
+        
+    [Test]
+    public void Address_Door_ShouldBeSet()
+    {
+        Assert.That(_address.Door, Is.EqualTo("A"));
     }
 }
