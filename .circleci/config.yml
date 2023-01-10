@@ -34,13 +34,32 @@ jobs:
       - run:
           command: |
             cd CPHMTOGO/AuthenticationService
+            dotnet lint 
+          name: Linting Solution
+      - run:
+          command: |
+            cd CPHMTOGO/AuthenticationService
+            dotnet stryker 
+          name: Mutation Testing 
+      - run:
+          command: |
+            cd CPHMTOGO/AuthenticationService
             dotnet build
           name: Building Solution
       - run:
           command: |
             cd CPHMTOGO/TestZone/AuthenticationServiceTests
-            dotnet test
+            dotnet test --collect:"XPlat Code Coverage"
           name: Testing Solution
+      - run: 
+          command: |
+            cd CPHMTOGO/TestZone/AuthenticationServiceTests
+            coverage=$(find . -name 'coverage.cobertura.xml' | xargs grep -oP '(?<=line-rate=")[^"]+(?=")')
+            if [ "$coverage" -lt "0.6" ]; then
+              echo "Code coverage is below 60%, actual coverage is $coverage"
+              exit 1
+            fi
+          name: Check code coverage 
       - codecov/upload:
           file: CPHMTOGO/TestZone/AuthenticationServiceTests/coverage.cobertura.xml
   order-service:
