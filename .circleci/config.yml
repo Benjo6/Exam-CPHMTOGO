@@ -45,6 +45,10 @@ jobs:
           command: |
             cd CPHMTOGO/TestZone/AuthenticationServiceTests
             dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput=coverage.opencover.xml
+            if (!(Test-Path .\coverage.opencover.xml)) {
+                Write-Error "coverage.opencover.xml not generated. Make sure that you are using the correct version of coverlet. refer https://github.com/tonerdo/coverlet for more information"
+                exit 1
+            }
           name: Testing Solution
       - run:
           command: |
