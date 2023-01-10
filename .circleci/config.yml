@@ -57,7 +57,7 @@ jobs:
           name: Displaying coverage percentage
       - run:
           command: |
-            if ($coverage -lt 40) {
+            if ($coverage -lt 60) {
                 Write-Error "Coverage is less than 60%, failing pipeline"
                 exit 1
             }
