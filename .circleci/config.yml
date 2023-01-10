@@ -1,3 +1,4 @@
+---
 version: "2.1"
 orbs:
   node: circleci/node@5.0.2
@@ -38,40 +39,24 @@ jobs:
       - run:
           command: |
             cd CPHMTOGO/TestZone/AuthenticationServiceTests
-            dotnet add package OpenCover --version 4.7.929
-          name: Installing OpenCover
+            dotnet test --collect:"Code Coverage"
+          name: Testing Solution with Code Coverage
       - run:
           command: |
             cd CPHMTOGO/TestZone/AuthenticationServiceTests
-            dotnet tool restore --configfile .\dotnet-tools.json
-          name: Restoring OpenCover Tool
+            chmod +x OpenCover.console.exe
+          name: Giving Permissions to OpenCover Console
       - run:
           command: >
             cd CPHMTOGO/TestZone/AuthenticationServiceTests
 
-            .\OpenCover.Console.exe -target:"C:\Program Files\dotnet\dotnet.exe" -targetargs:"test --collect:"Code Coverage"" -register:user -output:coverage.xml
-          name: Running OpenCover for Code Coverage
-      - run:
-          command: |
-            cd CPHMTOGO/TestZone/AuthenticationServiceTests
-            dotnet add package Coverlet.Collector --version 2.5.0
-          name: Installing Coverlet Collector
-      - run:
-          command: |
-            cd CPHMTOGO/TestZone/AuthenticationServiceTests
-            dotnet tool restore
-          name: Restoring Coverlet Collector Tool
-      - run:
-          command: |
-            cd CPHMTOGO/TestZone/AuthenticationServiceTests
-            .\coverlet coverage.xml --format opencover
-          name: Generating OpenCover Report
-      - run:
-          command: >
-            cd CPHMTOGO/TestZone/AuthenticationServiceTests
-
-            if [ $(grep -c "60.00%" coverage.opencover.xml) -eq 0 ]; then exit 1; fi
-          name: Checking Code Coverage
+            .\OpenCover.console.exe -target:"C:\Program Files\dotnet\dotnet.exe" -targetargs:"test --collect:"Code Coverage"" -register:user -output:coverage.xml
+          name: Generating Code Coverage Report
+      - run: null
+        command: |
+          cd CPHMTOGO/TestZone/AuthenticationServiceTests
+          if [ $(grep -c "60.00%" coverage.xml) -eq 0 ]; then exit 1; fi
+        name: Checking Code Coverage
   order-service:
     executor:
       name: win/default
