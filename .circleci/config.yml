@@ -2,6 +2,7 @@ version: "2.1"
 orbs:
   node: circleci/node@5.0.2
   win: circleci/windows@5.0
+  codecov: codecov/codecov@3.2.4
 jobs:
   user-service:
     executor:
@@ -38,23 +39,24 @@ jobs:
       - run:
           command: |
             cd CPHMTOGO/TestZone/AuthenticationServiceTests
-            dotnet test --collect:"Code Coverage"
-          name: Testing Solution with Code Coverage
-      - run:
-          command: |
-            cd CPHMTOGO/TestZone/AuthenticationServiceTests
-            chmod +x OpenCover.console.exe
-          name: Giving Permissions to OpenCover Console
-      - run:
+            dotnet test --collect:"XPlat Code Coverage"
+          name: Testing Solution
+      - store_test_results:
+          path: ./TestResults/TestResults.xml
+      - store_artifacts:
+          path: ./coverage/coverage.cobertura.xml
+      - codecov/upload:
+          require_ci_token: true
+          file: ./coverage/coverage.cobertura.xml
+      - assert:
           command: >
-            cd CPHMTOGO/TestZone/AuthenticationServiceTests
-            .\OpenCover.console.exe -target:"C:\Program Files\dotnet\dotnet.exe" -targetargs:"test --collect:"Code Coverage"" -register:user -output:coverage.xml
-          name: Generating Code Coverage Report
-      - run:
-          command: |
-            cd CPHMTOGO/TestZone/AuthenticationServiceTests
-            if [ $(grep -c "60.00%" coverage.xml) -eq 0 ]; then exit 1; fi
-          name: Checking Code Coverage
+            coverage=$(cat ./coverage/coverage.cobertura.xml | grep -oP
+            "(?<=tests=\"1\" covered=\").*(?=\")" | awk '{s+=$1} END {print s}')
+
+            if [[ $coverage -lt 60 ]]; then
+              echo "Coverage is below threshold: $coverage%"
+              exit 1
+            fi
   order-service:
     executor:
       name: win/default
