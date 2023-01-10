@@ -59,16 +59,22 @@ jobs:
       - run:
           command: |
             # Code to get coverage percentage 
-            coverage=$(cat CPHMTOGO/TestZone/coverage/coverage.opencover.xml | grep -oP '<LineCoverage>\K\d+(?=%)')
-            echo "Coverage percentage: $coverage"
+            $coverage = (cat CPHMTOGO/TestZone/coverage/coverage.opencover.xml | Select-String -Pattern "LineCoverage").Matches.Value
+            $coverage = [double]$coverage.TrimEnd("%")
+            Write-Host "Coverage percentage: $coverage"
           name: Displaying coverage percentage
       - run:
           command: |
-            if [ $coverage -lt 60 ]; then
-              echo "Coverage is less than 60%, failing pipeline"
-              exit 1
-            fi
+            if ($coverage -lt 60) {
+                Write-Error "Coverage is less than 60%, failing pipeline"
+                exit 1
+            }
           name: Asserting coverage
+      - run:
+          command: |
+            echo "Uploading Coverage"
+            ./codecov.sh
+          name: Uploading Coverage
   order-service:
     executor:
       name: win/default
