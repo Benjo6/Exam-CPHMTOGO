@@ -34,10 +34,6 @@ jobs:
       - run:
           command: |
             cd CPHMTOGO/AuthenticationService
-            dotnet restore --no-cache
-      - run:
-          command: |
-            cd CPHMTOGO/AuthenticationService
             dotnet format
           name: Linting Solution
       - run:
