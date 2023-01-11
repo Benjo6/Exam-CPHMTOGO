@@ -13,7 +13,7 @@ using PaymentLoggingService.Domain;
 public class PaymentLoggingServiceLoadTest
 { 
     // HttpClient object to send requests to the Payment Logging Service
-    private HttpClient _client;
+    private HttpClient _client = new();
 
     // Connection string for the PaymentLoggingService
     private string _connectionString = "http://host.docker.internal:5004/";
@@ -32,23 +32,17 @@ public class PaymentLoggingServiceLoadTest
 
     // Number of requests to send to the service
     private int numOfRequests = 1000;
-
-
+    
 
     // Count of the requests that returned an error
-    private int _errorCount;
+    private int _errorCount =0;
 
     // Stopwatch to measure the test duration
     private Stopwatch _stopwatch = new();
 
     // List to store the response times of requests
     private List<double> _responseTimes =new();
-
-    [OneTimeSetUp]
-    public void Setup()
-    {
-        this._client = new HttpClient();
-    }
+    
 
     [Test]
     public async Task PaymentLoggingService_LoadTest_Post()
