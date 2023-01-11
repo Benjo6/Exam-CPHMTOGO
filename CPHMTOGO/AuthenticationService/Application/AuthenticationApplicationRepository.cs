@@ -1,11 +1,11 @@
+namespace AuthenticationService.Application;
+
 using System.Security.Cryptography;
 using System.Text;
-using AuthenticationService.Application.Contracts.Commands;
-using AuthenticationService.Domain;
-using AuthenticationService.Infrastructure;
+using Contracts.Commands;
+using Domain;
+using Infrastructure;
 using Microsoft.EntityFrameworkCore;
-
-namespace AuthenticationService.Application;
 
 public class AuthenticationApplicationRepository : IAuthenticationApplicationRepository
 {

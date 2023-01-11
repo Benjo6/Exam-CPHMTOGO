@@ -1,11 +1,15 @@
+namespace AuthenticationService.Domain;
+
 using System.ComponentModel.DataAnnotations.Schema;
 using MessagePack;
 
-namespace AuthenticationService.Domain;
-[Table("LoginInfo"),MessagePackObject(keyAsPropertyName:true)]
+[Table("LoginInfo")]
+[MessagePackObject(keyAsPropertyName:true)]
 public class LoginInfo
 {
-    [Column("id"),System.ComponentModel.DataAnnotations.Key,DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    [Column("id")]
+    [System.ComponentModel.DataAnnotations.Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public Guid Id { get; set; }
     [Column("username")]
     public string Username { get; set; }
