@@ -34,6 +34,10 @@ jobs:
       - run:
           command: |
             cd CPHMTOGO/AuthenticationService
+            dotnet restore --no-cache
+      - run:
+          command: |
+            cd CPHMTOGO/AuthenticationService
             dotnet format
           name: Linting Solution
       - run:
@@ -43,19 +47,27 @@ jobs:
           name: Building Solution
       - run:
           command: |
-            curl -s https://codecov.io/bash > codecov.sh
-            chmod +x codecov.sh
-          name: Downloading codecov script
-      - run:
-          command: |
             cd CPHMTOGO/TestZone/AuthenticationServiceTests
             dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput=../coverage/coverage.opencover.xml
           name: Testing Solution
       - run:
           command: |
             echo "Uploading Coverage"
-            ./codecov.sh
-          name: Uploading Coverage
+            dotnet OpenCover.Console.exe -output:coverage.xml -report:Html coverage.opencover.xml
+            dotnet ReportGenerator.dll -reports:coverage.xml -targetdir:coverage-html
+          name: Generating report
+      - run:
+          command: |
+            cd coverage-html
+            METHOD_COVERAGE=$(grep -oP "(?<=MethodName=\")[^\"]+(?=\")" index.htm | grep 'YOUR_METHOD_NAME' | awk '{print $5}')
+            if [ "$METHOD_COVERAGE" -lt "60" ]; then
+                echo "Method coverage is less than 60% threshold"
+                exit 1
+            else
+                echo "Method coverage is above 60% threshold"
+                exit 0
+            fi
+          name: Asserting method coverage and Uploading Coverage
   order-service:
     executor:
       name: win/default
