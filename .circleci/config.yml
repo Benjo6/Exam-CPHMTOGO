@@ -48,18 +48,9 @@ jobs:
           name: Testing Solution
       - run:
           command: |
-            echo "##vso[task.setvariable variable=DOTNET_TOOL_PATH;]$env:TOOL_CACHE"
-            echo "Dotnet tool path: $env:DOTNET_TOOL_PATH"
-          name: Setting DOTNET_TOOL_PATH
-      - run:
-          command: |
-            cd CPHMTOGO/TestZone/AuthenticationServiceTests
+            cd CPHMTOGO/AuthenticationService
             dotnet tool install -g dotnet-stryker
-          name: Installing Stryker
-      - run:
-          command: |
-            cd CPHMTOGO/TestZone/AuthenticationServiceTests
-            dotnet stryker --solution AuthenticationService.csproj --reporters "html"
+            dotnet stryker --solution AuthenticationService.csproj --testRunner "vstest" --reporters "html"
           name: Mutation Testing 
       - store_artifacts:
           path: CPHMTOGO/TestZone/AuthenticationServiceTests/mutation-report/html
