@@ -1,0 +1,1275 @@
+{
+  "AddressService.dll": {
+    "C:\\Users\\Benjamin Curovic\\Documents\\GitHub\\Exam-CPHMTOGO\\CPHMTOGO\\AddressService\\Program.cs": {
+      "Program": {
+        "System.Void Program::<Main>$(System.String[])": {
+          "Lines": {
+            "8": 0,
+            "13": 0,
+            "14": 0,
+            "15": 0,
+            "17": 0,
+            "19": 0,
+            "20": 0,
+            "21": 0,
+            "22": 0,
+            "23": 0,
+            "24": 0,
+            "25": 0,
+            "27": 0,
+            "29": 0,
+            "32": 0,
+            "33": 0,
+            "34": 0,
+            "35": 0,
+            "36": 0,
+            "37": 0,
+            "40": 0,
+            "42": 0,
+            "44": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\Benjamin Curovic\\Documents\\GitHub\\Exam-CPHMTOGO\\CPHMTOGO\\AddressService\\Services\\AddressService.cs": {
+      "AddressService.Services.AddressService": {
+        "System.String AddressService.Services.AddressService::FormatAdresseAutocomplete(System.Object)": {
+          "Lines": {
+            "117": 0,
+            "118": 0,
+            "119": 0
+          },
+          "Branches": [
+            {
+              "Line": 118,
+              "Offset": 6,
+              "EndOffset": 10,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 118,
+              "Offset": 6,
+              "EndOffset": 46,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 118,
+              "Offset": 66,
+              "EndOffset": 70,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 118,
+              "Offset": 66,
+              "EndOffset": 139,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 118,
+              "Offset": 174,
+              "EndOffset": 178,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            },
+            {
+              "Line": 118,
+              "Offset": 174,
+              "EndOffset": 225,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            }
+          ]
+        },
+        "System.Void AddressService.Services.AddressService::.ctor(AddressService.Repositories.Interfaces.IAddressRepository,AutoMapper.IMapper,System.Net.Http.IHttpClientFactory)": {
+          "Lines": {
+            "23": 0,
+            "24": 0,
+            "26": 0,
+            "27": 0,
+            "28": 0,
+            "29": 0,
+            "30": 0
+          },
+          "Branches": []
+        }
+      },
+      "AddressService.Services.AddressService/<AutoCompleteAdresser>d__5": {
+        "System.Void AddressService.Services.AddressService/<AutoCompleteAdresser>d__5::MoveNext()": {
+          "Lines": {
+            "67": 0,
+            "68": 0,
+            "71": 0,
+            "72": 0,
+            "73": 0,
+            "74": 0,
+            "75": 0,
+            "76": 0,
+            "77": 0,
+            "78": 0,
+            "79": 0,
+            "80": 0,
+            "82": 0,
+            "83": 0,
+            "84": 0,
+            "85": 0,
+            "86": 0,
+            "89": 0,
+            "90": 0
+          },
+          "Branches": [
+            {
+              "Line": 72,
+              "Offset": 67,
+              "EndOffset": 69,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 72,
+              "Offset": 67,
+              "EndOffset": 76,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 77,
+              "Offset": 402,
+              "EndOffset": 406,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 77,
+              "Offset": 402,
+              "EndOffset": 442,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 77,
+              "Offset": 717,
+              "EndOffset": 483,
+              "Path": 1,
+              "Ordinal": 9,
+              "Hits": 0
+            },
+            {
+              "Line": 79,
+              "Offset": 506,
+              "EndOffset": 510,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            },
+            {
+              "Line": 79,
+              "Offset": 506,
+              "EndOffset": 572,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 79,
+              "Offset": 598,
+              "EndOffset": 602,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 0
+            },
+            {
+              "Line": 79,
+              "Offset": 598,
+              "EndOffset": 660,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 0
+            },
+            {
+              "Line": 77,
+              "Offset": 717,
+              "EndOffset": 722,
+              "Path": 0,
+              "Ordinal": 8,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "AddressService.Services.AddressService/<CreateAsync>d__4": {
+        "System.Void AddressService.Services.AddressService/<CreateAsync>d__4::MoveNext()": {
+          "Lines": {
+            "33": 0,
+            "35": 0,
+            "36": 0,
+            "37": 0,
+            "38": 0,
+            "39": 0,
+            "40": 0,
+            "41": 0,
+            "45": 0,
+            "46": 0,
+            "47": 0,
+            "48": 0,
+            "49": 0,
+            "50": 0,
+            "51": 0,
+            "52": 0,
+            "53": 0,
+            "55": 0,
+            "56": 0,
+            "57": 0,
+            "58": 0,
+            "59": 0,
+            "60": 0,
+            "63": 0,
+            "64": 0
+          },
+          "Branches": [
+            {
+              "Line": 46,
+              "Offset": 288,
+              "EndOffset": 292,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 46,
+              "Offset": 288,
+              "EndOffset": 336,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 46,
+              "Offset": 356,
+              "EndOffset": 360,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 46,
+              "Offset": 356,
+              "EndOffset": 414,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 46,
+              "Offset": 450,
+              "EndOffset": 455,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 48,
+              "Offset": 467,
+              "EndOffset": 471,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 0
+            },
+            {
+              "Line": 48,
+              "Offset": 467,
+              "EndOffset": 507,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 0
+            },
+            {
+              "Line": 48,
+              "Offset": 527,
+              "EndOffset": 531,
+              "Path": 1,
+              "Ordinal": 9,
+              "Hits": 0
+            },
+            {
+              "Line": 48,
+              "Offset": 527,
+              "EndOffset": 583,
+              "Path": 0,
+              "Ordinal": 8,
+              "Hits": 0
+            },
+            {
+              "Line": 48,
+              "Offset": 603,
+              "EndOffset": 607,
+              "Path": 1,
+              "Ordinal": 11,
+              "Hits": 0
+            },
+            {
+              "Line": 48,
+              "Offset": 603,
+              "EndOffset": 655,
+              "Path": 0,
+              "Ordinal": 10,
+              "Hits": 0
+            },
+            {
+              "Line": 48,
+              "Offset": 675,
+              "EndOffset": 679,
+              "Path": 1,
+              "Ordinal": 13,
+              "Hits": 0
+            },
+            {
+              "Line": 48,
+              "Offset": 675,
+              "EndOffset": 726,
+              "Path": 0,
+              "Ordinal": 12,
+              "Hits": 0
+            },
+            {
+              "Line": 48,
+              "Offset": 746,
+              "EndOffset": 750,
+              "Path": 1,
+              "Ordinal": 15,
+              "Hits": 0
+            },
+            {
+              "Line": 48,
+              "Offset": 746,
+              "EndOffset": 797,
+              "Path": 0,
+              "Ordinal": 14,
+              "Hits": 0
+            },
+            {
+              "Line": 49,
+              "Offset": 861,
+              "EndOffset": 865,
+              "Path": 1,
+              "Ordinal": 17,
+              "Hits": 0
+            },
+            {
+              "Line": 49,
+              "Offset": 861,
+              "EndOffset": 901,
+              "Path": 0,
+              "Ordinal": 16,
+              "Hits": 0
+            },
+            {
+              "Line": 49,
+              "Offset": 921,
+              "EndOffset": 925,
+              "Path": 1,
+              "Ordinal": 19,
+              "Hits": 0
+            },
+            {
+              "Line": 49,
+              "Offset": 921,
+              "EndOffset": 977,
+              "Path": 0,
+              "Ordinal": 18,
+              "Hits": 0
+            },
+            {
+              "Line": 49,
+              "Offset": 997,
+              "EndOffset": 1001,
+              "Path": 1,
+              "Ordinal": 21,
+              "Hits": 0
+            },
+            {
+              "Line": 49,
+              "Offset": 997,
+              "EndOffset": 1049,
+              "Path": 0,
+              "Ordinal": 20,
+              "Hits": 0
+            },
+            {
+              "Line": 49,
+              "Offset": 1069,
+              "EndOffset": 1073,
+              "Path": 1,
+              "Ordinal": 23,
+              "Hits": 0
+            },
+            {
+              "Line": 49,
+              "Offset": 1069,
+              "EndOffset": 1120,
+              "Path": 0,
+              "Ordinal": 22,
+              "Hits": 0
+            },
+            {
+              "Line": 49,
+              "Offset": 1140,
+              "EndOffset": 1144,
+              "Path": 1,
+              "Ordinal": 25,
+              "Hits": 0
+            },
+            {
+              "Line": 49,
+              "Offset": 1140,
+              "EndOffset": 1191,
+              "Path": 0,
+              "Ordinal": 24,
+              "Hits": 0
+            },
+            {
+              "Line": 50,
+              "Offset": 1273,
+              "EndOffset": 1275,
+              "Path": 0,
+              "Ordinal": 26,
+              "Hits": 0
+            },
+            {
+              "Line": 50,
+              "Offset": 1273,
+              "EndOffset": 1324,
+              "Path": 1,
+              "Ordinal": 27,
+              "Hits": 0
+            },
+            {
+              "Line": 46,
+              "Offset": 450,
+              "EndOffset": 1325,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "AddressService.Services.AddressService/<ValidateAddress>d__6": {
+        "System.Void AddressService.Services.AddressService/<ValidateAddress>d__6::MoveNext()": {
+          "Lines": {
+            "93": 0,
+            "95": 0,
+            "96": 0,
+            "97": 0,
+            "98": 0,
+            "99": 0,
+            "100": 0,
+            "101": 0,
+            "103": 0,
+            "104": 0,
+            "105": 0,
+            "107": 0,
+            "108": 0,
+            "109": 0,
+            "110": 0,
+            "111": 0,
+            "113": 0,
+            "114": 0
+          },
+          "Branches": [
+            {
+              "Line": 96,
+              "Offset": 144,
+              "EndOffset": 146,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 96,
+              "Offset": 144,
+              "EndOffset": 150,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 96,
+              "Offset": 158,
+              "EndOffset": 160,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 96,
+              "Offset": 158,
+              "EndOffset": 189,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 103,
+              "Offset": 533,
+              "EndOffset": 537,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            },
+            {
+              "Line": 103,
+              "Offset": 533,
+              "EndOffset": 573,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 103,
+              "Offset": 652,
+              "EndOffset": 611,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 0
+            },
+            {
+              "Line": 103,
+              "Offset": 652,
+              "EndOffset": 654,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    },
+    "C:\\Users\\Benjamin Curovic\\Documents\\GitHub\\Exam-CPHMTOGO\\CPHMTOGO\\AddressService\\Repositories\\AddressRepository.cs": {
+      "AddressService.Repositories.AddressRepository": {
+        "System.Void AddressService.Repositories.AddressRepository::.ctor(AddressService.Infrastructure.AddressDbContext,Microsoft.Extensions.Logging.ILogger`1<AddressService.Repositories.AddressRepository>)": {
+          "Lines": {
+            "11": 0,
+            "12": 0,
+            "16": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\Benjamin Curovic\\Documents\\GitHub\\Exam-CPHMTOGO\\CPHMTOGO\\AddressService\\Profile\\AddressProfile.cs": {
+      "AddressService.Profile.AddressProfile": {
+        "System.Void AddressService.Profile.AddressProfile::.ctor()": {
+          "Lines": {
+            "9": 0,
+            "10": 0,
+            "11": 0,
+            "12": 0,
+            "13": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\Benjamin Curovic\\Documents\\GitHub\\Exam-CPHMTOGO\\CPHMTOGO\\AddressService\\IoC\\ServiceRegistry.cs": {
+      "AddressService.IoC.ServiceRegistry": {
+        "System.Void AddressService.IoC.ServiceRegistry::AddServiceRegistry(Microsoft.Extensions.DependencyInjection.IServiceCollection)": {
+          "Lines": {
+            "12": 0,
+            "13": 0,
+            "14": 0,
+            "16": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\Benjamin Curovic\\Documents\\GitHub\\Exam-CPHMTOGO\\CPHMTOGO\\AddressService\\Infrastructure\\AddressDbContext.cs": {
+      "AddressService.Infrastructure.AddressDbContext": {
+        "System.Void AddressService.Infrastructure.AddressDbContext::OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)": {
+          "Lines": {
+            "13": 0,
+            "14": 0,
+            "15": 0
+          },
+          "Branches": []
+        },
+        "Microsoft.EntityFrameworkCore.DbSet`1<AddressService.Domain.Address> AddressService.Infrastructure.AddressDbContext::get_Addresses()": {
+          "Lines": {
+            "17": 0
+          },
+          "Branches": []
+        },
+        "System.Void AddressService.Infrastructure.AddressDbContext::.ctor(Microsoft.EntityFrameworkCore.DbContextOptions`1<AddressService.Infrastructure.AddressDbContext>)": {
+          "Lines": {
+            "8": 0,
+            "9": 0,
+            "10": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\Benjamin Curovic\\Documents\\GitHub\\Exam-CPHMTOGO\\CPHMTOGO\\AddressService\\Domain\\Address.cs": {
+      "AddressService.Domain.Address": {
+        "System.String AddressService.Domain.Address::get_Street()": {
+          "Lines": {
+            "11": 8
+          },
+          "Branches": []
+        },
+        "System.String AddressService.Domain.Address::get_StreetNr()": {
+          "Lines": {
+            "13": 8
+          },
+          "Branches": []
+        },
+        "System.String AddressService.Domain.Address::get_Zipcode()": {
+          "Lines": {
+            "15": 8
+          },
+          "Branches": []
+        },
+        "System.Double AddressService.Domain.Address::get_Longitude()": {
+          "Lines": {
+            "17": 8
+          },
+          "Branches": []
+        },
+        "System.Double AddressService.Domain.Address::get_Latitude()": {
+          "Lines": {
+            "19": 8
+          },
+          "Branches": []
+        },
+        "System.String AddressService.Domain.Address::get_Etage()": {
+          "Lines": {
+            "21": 8
+          },
+          "Branches": []
+        },
+        "System.String AddressService.Domain.Address::get_Door()": {
+          "Lines": {
+            "22": 8
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\Benjamin Curovic\\Documents\\GitHub\\Exam-CPHMTOGO\\CPHMTOGO\\AddressService\\Domain\\Dto\\AddressDto.cs": {
+      "AddressService.Domain.Dto.AddressDto": {
+        "System.String AddressService.Domain.Dto.AddressDto::get_Street()": {
+          "Lines": {
+            "12": 0
+          },
+          "Branches": []
+        },
+        "System.String AddressService.Domain.Dto.AddressDto::get_StreetNr()": {
+          "Lines": {
+            "14": 0
+          },
+          "Branches": []
+        },
+        "System.String AddressService.Domain.Dto.AddressDto::get_ZipCode()": {
+          "Lines": {
+            "16": 0
+          },
+          "Branches": []
+        },
+        "System.Double AddressService.Domain.Dto.AddressDto::get_Longitude()": {
+          "Lines": {
+            "18": 0
+          },
+          "Branches": []
+        },
+        "System.Double AddressService.Domain.Dto.AddressDto::get_Latitude()": {
+          "Lines": {
+            "20": 0
+          },
+          "Branches": []
+        },
+        "System.String AddressService.Domain.Dto.AddressDto::get_Etage()": {
+          "Lines": {
+            "21": 0
+          },
+          "Branches": []
+        },
+        "System.String AddressService.Domain.Dto.AddressDto::get_Door()": {
+          "Lines": {
+            "22": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\Benjamin Curovic\\Documents\\GitHub\\Exam-CPHMTOGO\\CPHMTOGO\\AddressService\\Controllers\\AddressController.cs": {
+      "AddressService.Controllers.AddressController": {
+        "System.Threading.Tasks.Task`1<Microsoft.AspNetCore.Mvc.IActionResult> AddressService.Controllers.AddressController::Delete(System.Guid)": {
+          "Lines": {
+            "53": 0,
+            "54": 0,
+            "55": 0
+          },
+          "Branches": []
+        },
+        "System.Void AddressService.Controllers.AddressController::.ctor(AddressService.Services.Interfaces.IAddressService,Microsoft.Extensions.Logging.ILogger`1<AddressService.Controllers.AddressController>)": {
+          "Lines": {
+            "20": 4,
+            "21": 4,
+            "22": 4,
+            "23": 4
+          },
+          "Branches": []
+        }
+      },
+      "AddressService.Controllers.AddressController/<CreateAddress>d__5": {
+        "System.Void AddressService.Controllers.AddressController/<CreateAddress>d__5::MoveNext()": {
+          "Lines": {
+            "47": 1,
+            "48": 1,
+            "49": 1
+          },
+          "Branches": []
+        }
+      },
+      "AddressService.Controllers.AddressController/<Get>d__2": {
+        "System.Void AddressService.Controllers.AddressController/<Get>d__2::MoveNext()": {
+          "Lines": {
+            "27": 1,
+            "28": 1,
+            "29": 1
+          },
+          "Branches": []
+        }
+      },
+      "AddressService.Controllers.AddressController/<Get>d__3": {
+        "System.Void AddressService.Controllers.AddressController/<Get>d__3::MoveNext()": {
+          "Lines": {
+            "34": 1,
+            "35": 1,
+            "36": 1
+          },
+          "Branches": []
+        }
+      },
+      "AddressService.Controllers.AddressController/<GetAutoComplete>d__4": {
+        "System.Void AddressService.Controllers.AddressController/<GetAutoComplete>d__4::MoveNext()": {
+          "Lines": {
+            "40": 1,
+            "41": 1,
+            "42": 1
+          },
+          "Branches": []
+        }
+      }
+    }
+  },
+  "Core.dll": {
+    "C:\\Users\\Benjamin Curovic\\Documents\\GitHub\\Exam-CPHMTOGO\\CPHMTOGO\\Core\\Service\\BaseService.cs": {
+      "Core.Service.BaseService`2": {
+        "System.Void Core.Service.BaseService`2::.ctor(Core.Repository.IRepositoryBase`1<TEntity>,AutoMapper.IMapper)": {
+          "Lines": {
+            "15": 0,
+            "16": 0,
+            "17": 0,
+            "18": 0,
+            "19": 0
+          },
+          "Branches": []
+        }
+      },
+      "Core.Service.BaseService`2/<Create>d__5": {
+        "System.Void Core.Service.BaseService`2/<Create>d__5::MoveNext()": {
+          "Lines": {
+            "41": 0,
+            "42": 0,
+            "44": 0,
+            "46": 0,
+            "47": 0
+          },
+          "Branches": []
+        }
+      },
+      "Core.Service.BaseService`2/<Delete>d__7": {
+        "System.Void Core.Service.BaseService`2/<Delete>d__7::MoveNext()": {
+          "Lines": {
+            "57": 0,
+            "58": 0,
+            "59": 0,
+            "60": 0
+          },
+          "Branches": []
+        }
+      },
+      "Core.Service.BaseService`2/<GetAll>d__4": {
+        "System.Void Core.Service.BaseService`2/<GetAll>d__4::MoveNext()": {
+          "Lines": {
+            "35": 0,
+            "36": 0,
+            "38": 0
+          },
+          "Branches": []
+        }
+      },
+      "Core.Service.BaseService`2/<GetById>d__3": {
+        "System.Void Core.Service.BaseService`2/<GetById>d__3::MoveNext()": {
+          "Lines": {
+            "22": 0,
+            "23": 0,
+            "25": 0,
+            "26": 0,
+            "28": 0,
+            "30": 0,
+            "32": 0
+          },
+          "Branches": [
+            {
+              "Line": 25,
+              "Offset": 174,
+              "EndOffset": 176,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 25,
+              "Offset": 174,
+              "EndOffset": 186,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "Core.Service.BaseService`2/<Update>d__6": {
+        "System.Void Core.Service.BaseService`2/<Update>d__6::MoveNext()": {
+          "Lines": {
+            "50": 0,
+            "51": 0,
+            "53": 0,
+            "54": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\Benjamin Curovic\\Documents\\GitHub\\Exam-CPHMTOGO\\CPHMTOGO\\Core\\Repository\\RepositoryBase.cs": {
+      "Core.Repository.RepositoryBase`1": {
+        "System.Linq.IQueryable`1<T> Core.Repository.RepositoryBase`1::GetAll()": {
+          "Lines": {
+            "24": 0,
+            "26": 0,
+            "27": 0,
+            "29": 0,
+            "32": 0,
+            "33": 0,
+            "34": 0,
+            "35": 0,
+            "37": 0
+          },
+          "Branches": []
+        },
+        "System.Linq.IQueryable`1<T> Core.Repository.RepositoryBase`1::GetByCondition(System.Linq.Expressions.Expression`1<System.Func`2<T,System.Boolean>>)": {
+          "Lines": {
+            "40": 0,
+            "42": 0,
+            "43": 0,
+            "45": 0,
+            "47": 0,
+            "48": 0,
+            "49": 0,
+            "50": 0,
+            "53": 0
+          },
+          "Branches": []
+        },
+        "T Core.Repository.RepositoryBase`1::Create(T)": {
+          "Lines": {
+            "74": 0,
+            "76": 0,
+            "77": 0,
+            "78": 0,
+            "79": 0,
+            "80": 0,
+            "81": 0,
+            "85": 0,
+            "86": 0,
+            "87": 0,
+            "88": 0,
+            "90": 0
+          },
+          "Branches": [
+            {
+              "Line": 77,
+              "Offset": 16,
+              "EndOffset": 18,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 77,
+              "Offset": 16,
+              "EndOffset": 109,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        },
+        "System.Void Core.Repository.RepositoryBase`1::Update(T)": {
+          "Lines": {
+            "93": 0,
+            "95": 0,
+            "96": 0,
+            "97": 0,
+            "98": 0,
+            "99": 0,
+            "100": 0,
+            "101": 0,
+            "102": 0,
+            "103": 0,
+            "104": 0,
+            "107": 0
+          },
+          "Branches": [
+            {
+              "Line": 96,
+              "Offset": 16,
+              "EndOffset": 18,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 96,
+              "Offset": 16,
+              "EndOffset": 80,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        },
+        "System.Void Core.Repository.RepositoryBase`1::Delete(System.Guid)": {
+          "Lines": {
+            "110": 0,
+            "112": 0,
+            "113": 0,
+            "114": 0,
+            "116": 0,
+            "117": 0,
+            "118": 0,
+            "119": 0,
+            "120": 0,
+            "121": 0,
+            "122": 0,
+            "123": 0,
+            "126": 0
+          },
+          "Branches": [
+            {
+              "Line": 113,
+              "Offset": 16,
+              "EndOffset": 18,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 113,
+              "Offset": 16,
+              "EndOffset": 70,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 116,
+              "Offset": 102,
+              "EndOffset": 104,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 116,
+              "Offset": 102,
+              "EndOffset": 116,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            }
+          ]
+        },
+        "System.Void Core.Repository.RepositoryBase`1::SaveChanges()": {
+          "Lines": {
+            "129": 0,
+            "130": 0,
+            "132": 0
+          },
+          "Branches": []
+        },
+        "System.Void Core.Repository.RepositoryBase`1::.ctor(Microsoft.EntityFrameworkCore.DbContext,Microsoft.Extensions.Logging.ILogger)": {
+          "Lines": {
+            "15": 0,
+            "16": 0,
+            "17": 0,
+            "18": 0,
+            "19": 0,
+            "20": 0
+          },
+          "Branches": []
+        }
+      },
+      "Core.Repository.RepositoryBase`1/<GetById>d__6": {
+        "System.Void Core.Repository.RepositoryBase`1/<GetById>d__6::MoveNext()": {
+          "Lines": {
+            "56": 0,
+            "58": 0,
+            "59": 0,
+            "61": 0,
+            "62": 0,
+            "65": 0,
+            "66": 0,
+            "67": 0,
+            "68": 0,
+            "71": 0
+          },
+          "Branches": [
+            {
+              "Line": 62,
+              "Offset": 409,
+              "EndOffset": 411,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 62,
+              "Offset": 409,
+              "EndOffset": 423,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    },
+    "C:\\Users\\Benjamin Curovic\\Documents\\GitHub\\Exam-CPHMTOGO\\CPHMTOGO\\Core\\Entity\\BaseEntity.cs": {
+      "Core.Entity.BaseEntity": {
+        "System.Guid Core.Entity.BaseEntity::get_Id()": {
+          "Lines": {
+            "8": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\Benjamin Curovic\\Documents\\GitHub\\Exam-CPHMTOGO\\CPHMTOGO\\Core\\Entity\\Dtos\\BaseEntityDto.cs": {
+      "Core.Entity.Dtos.BaseEntityDto": {
+        "System.Guid Core.Entity.Dtos.BaseEntityDto::get_Id()": {
+          "Lines": {
+            "5": 5
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\Benjamin Curovic\\Documents\\GitHub\\Exam-CPHMTOGO\\CPHMTOGO\\Core\\Controller\\BaseController.cs": {
+      "Core.Controller.BaseController`2": {
+        "System.Void Core.Controller.BaseController`2::.ctor(Core.Service.IBaseService`2<TEntity,TEntityDto>,Microsoft.Extensions.Logging.ILogger)": {
+          "Lines": {
+            "19": 4,
+            "20": 4,
+            "21": 4,
+            "22": 4,
+            "23": 4
+          },
+          "Branches": []
+        }
+      },
+      "Core.Controller.BaseController`2/<AddAsync>d__5": {
+        "System.Void Core.Controller.BaseController`2/<AddAsync>d__5::MoveNext()": {
+          "Lines": {
+            "41": 0,
+            "43": 0,
+            "44": 0,
+            "45": 0,
+            "46": 0,
+            "47": 0,
+            "49": 0,
+            "50": 0,
+            "51": 0,
+            "52": 0,
+            "55": 0
+          },
+          "Branches": [
+            {
+              "Line": 44,
+              "Offset": 43,
+              "EndOffset": 45,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 44,
+              "Offset": 43,
+              "EndOffset": 72,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "Core.Controller.BaseController`2/<DeleteAsync>d__7": {
+        "System.Void Core.Controller.BaseController`2/<DeleteAsync>d__7::MoveNext()": {
+          "Lines": {
+            "88": 0,
+            "90": 0,
+            "91": 0,
+            "92": 0,
+            "93": 0,
+            "94": 0,
+            "96": 0,
+            "97": 0,
+            "98": 0,
+            "99": 0,
+            "102": 0
+          },
+          "Branches": [
+            {
+              "Line": 91,
+              "Offset": 43,
+              "EndOffset": 45,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 91,
+              "Offset": 43,
+              "EndOffset": 72,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "Core.Controller.BaseController`2/<GetByIdAsync>d__4": {
+        "System.Void Core.Controller.BaseController`2/<GetByIdAsync>d__4::MoveNext()": {
+          "Lines": {
+            "34": 1,
+            "35": 1,
+            "36": 1,
+            "37": 1
+          },
+          "Branches": []
+        }
+      },
+      "Core.Controller.BaseController`2/<GetListAsync>d__3": {
+        "System.Void Core.Controller.BaseController`2/<GetListAsync>d__3::MoveNext()": {
+          "Lines": {
+            "27": 1,
+            "28": 1,
+            "29": 1,
+            "30": 1
+          },
+          "Branches": []
+        }
+      },
+      "Core.Controller.BaseController`2/<UpdateAsync>d__6": {
+        "System.Void Core.Controller.BaseController`2/<UpdateAsync>d__6::MoveNext()": {
+          "Lines": {
+            "59": 0,
+            "61": 0,
+            "62": 0,
+            "63": 0,
+            "64": 0,
+            "65": 0,
+            "66": 0,
+            "67": 0,
+            "70": 0,
+            "71": 0,
+            "72": 0,
+            "75": 0,
+            "78": 0,
+            "79": 0,
+            "80": 0,
+            "81": 0,
+            "84": 0
+          },
+          "Branches": [
+            {
+              "Line": 62,
+              "Offset": 28,
+              "EndOffset": 30,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 62,
+              "Offset": 28,
+              "EndOffset": 57,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 65,
+              "Offset": 101,
+              "EndOffset": 103,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 65,
+              "Offset": 101,
+              "EndOffset": 127,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 70,
+              "Offset": 150,
+              "EndOffset": 152,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 70,
+              "Offset": 150,
+              "EndOffset": 167,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    }
+  }
+}
