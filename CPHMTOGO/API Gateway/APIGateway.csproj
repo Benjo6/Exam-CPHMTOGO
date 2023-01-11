@@ -17,6 +17,7 @@
         <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.10" />
         <PackageReference Include="OpenCover" Version="4.7.1221" />
         <PackageReference Include="RabbitMQ.Client" Version="6.4.0" />
+        <PackageReference Include="ReportGenerator" Version="5.1.13" />
         <PackageReference Include="StyleCop.Analyzers.Unstable" Version="1.2.0.435">
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
