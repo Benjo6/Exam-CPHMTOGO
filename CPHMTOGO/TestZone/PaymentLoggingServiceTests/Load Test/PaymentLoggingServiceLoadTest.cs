@@ -25,36 +25,29 @@ public class PaymentLoggingServiceLoadTest
     private Random _random = new Random(42);
 
     // Delay between requests
-    private int delay;
-
+    private int delay = 10;
+    
     // Semaphore to limit the number of concurrent requests
-    private SemaphoreSlim _semaphore;
+    private SemaphoreSlim _semaphore = new(50, 50);
 
     // Number of requests to send to the service
-    private int numOfRequests;
+    private int numOfRequests = 1000;
 
-    // Number of concurrent requests to send to the service
-    private int numOfConcurrentRequests;
+
 
     // Count of the requests that returned an error
     private int _errorCount;
 
     // Stopwatch to measure the test duration
-    private Stopwatch _stopwatch;
+    private Stopwatch _stopwatch = new();
 
     // List to store the response times of requests
-    private List<double> _responseTimes;
+    private List<double> _responseTimes =new();
 
-    [SetUp]
+    [OneTimeSetUp]
     public void Setup()
     {
         this._client = new HttpClient();
-        this.numOfRequests = 1000;
-        this.numOfConcurrentRequests = 50;
-        this.delay = 10;
-        this._semaphore = new SemaphoreSlim(this.numOfConcurrentRequests, this.numOfConcurrentRequests);
-        this._stopwatch = new Stopwatch();
-        this._responseTimes = new List<double>();
     }
 
     [Test]
