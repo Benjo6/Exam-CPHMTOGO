@@ -42,15 +42,15 @@ jobs:
             dotnet build
           name: Building Solution
       - run:
-          command: |
-            cd CPHMTOGO/TestZone/AuthenticationServiceTests
-            dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput=../coverage/coverage.opencover.xml
-          name: Testing Solution
+         command: |
+           cd CPHMTOGO/TestZone/AuthenticationServiceTests
+           dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput=../coverage/coverage.opencover.xml
+         name: Testing Solution
       - run:
           command: |
-            echo "Uploading Coverage"
-            dotnet OpenCover.Console.exe -output:coverage.xml -report:Html coverage.opencover.xml
-            dotnet ReportGenerator.dll -reports:coverage.xml -targetdir:coverage-html
+            echo "Generating Coverage Report"
+            dotnet tool install -g dotnet-reportgenerator-globaltool
+            reportgenerator -reports:../coverage/coverage.opencover.xml -targetdir:coverage-html
           name: Generating report
       - run:
           command: |
