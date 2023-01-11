@@ -45,7 +45,7 @@ public class PaymentLoggingServiceLoadTest
     // List to store the response times of requests
     private List<double> _responseTimes;
 
-    [OneTimeSetUp]
+    [SetUp]
     public void Setup()
     {
         this._client = new HttpClient();
