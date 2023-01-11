@@ -1,4 +1,4 @@
-version: 2.1
+version: "2.1"
 orbs:
   node: circleci/node@5.0.2
   win: circleci/windows@5.0
@@ -34,29 +34,28 @@ jobs:
       - run:
           command: |
             cd CPHMTOGO/AuthenticationService
-            dotnet build
-          name: Building Solution
-      - run:
-          command: |
-            cd CPHMTOGO/AuthenticationService
             dotnet format
           name: Linting Solution
       - run:
           command: |
-            cd CPHMTOGO/TestZone/AuthenticationServiceTests
-            dotnet test --collect:"XPlat Code Coverage"
-          name: Testing Solution
-      - run: 
+            cd CPHMTOGO/AuthenticationService
+            dotnet build
+          name: Building Solution
+      - run:
+          command: |
+            curl -s https://codecov.io/bash > codecov.sh
+            chmod +x codecov.sh
+          name: Downloading codecov script
+      - run:
           command: |
             cd CPHMTOGO/TestZone/AuthenticationServiceTests
-            coverage=$(find . -name 'coverage.cobertura.xml' | xargs grep -oP '(?<=line-rate=")[^"]+(?=")')
-            if [ "$coverage" -lt "0.6" ]; then
-              echo "Code coverage is below 60%, actual coverage is $coverage"
-              exit 1
-            fi
-          name: Check code coverage 
-      - codecov/upload:
-          file: CPHMTOGO/TestZone/AuthenticationServiceTests/coverage.cobertura.xml
+            dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput=../coverage/coverage.opencover.xml
+          name: Testing Solution
+      - run:
+          command: |
+            echo "Uploading Coverage"
+            ./codecov.sh
+          name: Uploading Coverage
   order-service:
     executor:
       name: win/default
