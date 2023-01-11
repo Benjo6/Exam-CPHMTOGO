@@ -34,7 +34,7 @@ jobs:
       - run:
           command: |
             cd CPHMTOGO/AuthenticationService
-            dotnet build --fatal-analyzer-issues
+            dotnet build
           name: Building Solution
       - run:
           command: |
