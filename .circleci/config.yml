@@ -31,6 +31,7 @@ jobs:
       name: win/default
     steps:
       - checkout
+      - run: dotnet restore --no-cache
       - run:
           command: |
             cd CPHMTOGO/AuthenticationService
