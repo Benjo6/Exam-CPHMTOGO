@@ -49,6 +49,11 @@ jobs:
       - run:
           command: |
             cd CPHMTOGO/TestZone/AuthenticationServiceTests
+            dotnet tool install -g dotnet-stryker
+          name: Installing Stryker
+      - run:
+          command: |
+            cd CPHMTOGO/TestZone/AuthenticationServiceTests
             dotnet stryker --solution AuthenticationService.csproj --reporters "html"
           name: Mutation Testing 
       - store_artifacts:
