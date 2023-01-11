@@ -50,7 +50,7 @@ jobs:
           command: |
             cd CPHMTOGO/AuthenticationService
             dotnet tool install -g dotnet-stryker
-            SET PATH=%PATH%;%USERPROFILE%\.dotnet\tools
+            setx PATH "%PATH%;%USERPROFILE%\.dotnet\tools" /M
             dotnet-stryker --solution AuthenticationService.csproj --testRunner "vstest" --reporters "html"
           name: Mutation Testing 
       - store_artifacts:
