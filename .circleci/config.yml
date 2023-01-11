@@ -38,6 +38,11 @@ jobs:
           name: Linting Solution
       - run:
           command: |
+            echo "Clearing Cache"
+            rm -rf CPHMTOGO/AuthenticationService/cache
+          name: Clearing Cache
+      - run:
+          command: |
             cd CPHMTOGO/AuthenticationService
             dotnet build
           name: Building Solution
