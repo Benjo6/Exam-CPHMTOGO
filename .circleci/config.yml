@@ -49,8 +49,10 @@ jobs:
       - run:
           command: |
             cd CPHMTOGO/TestZone/AuthenticationServiceTests
-            dotnet stryker --solution AuthenticationService.csproj
+            dotnet stryker --solution AuthenticationService.csproj --reporters "html"
           name: Mutation Testing 
+      - store_artifacts:
+          path: CPHMTOGO/TestZone/AuthenticationServiceTests/mutation-report/html
       - run: 
           command: |
             cd CPHMTOGO/TestZone/AuthenticationServiceTests
