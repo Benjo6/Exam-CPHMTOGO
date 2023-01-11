@@ -49,11 +49,8 @@ jobs:
       - run:
           command: |
             cd CPHMTOGO/AuthenticationService
-            dotnet tool install dotnet-stryker
-            dotnet-stryker --solution AuthenticationService.csproj --testRunner "vstest" --reporters "html"
+            dotnet-stryker
           name: Mutation Testing 
-      - store_artifacts:
-          path: CPHMTOGO/AuthenticationService/mutation-report/html
       - run: 
           command: |
             cd CPHMTOGO/TestZone/AuthenticationServiceTests
