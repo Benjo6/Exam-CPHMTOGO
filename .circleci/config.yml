@@ -49,7 +49,7 @@ jobs:
       - run:
           command: |
             cd CPHMTOGO/TestZone/AuthenticationServiceTests
-            dotnet stryker 
+            dotnet stryker --solution AuthenticationService.csproj
           name: Mutation Testing 
       - run: 
           command: |
