@@ -53,6 +53,11 @@ jobs:
       - run:
           command: |
             cd CPHMTOGO/OrderService
+            dotnet format
+          name: Linting Solution
+      - run:
+          command: |
+            cd CPHMTOGO/OrderService
             dotnet build
           name: Building Solution
       - run:
@@ -65,6 +70,11 @@ jobs:
       name: win/default
     steps:
       - checkout
+      - run:
+          command: |
+            cd CPHMTOGO/PaymentLoggingService
+            dotnet format
+          name: Linting Solution
       - run:
           command: |
             cd CPHMTOGO/PaymentLoggingService
@@ -83,6 +93,11 @@ jobs:
       - run:
           command: |
             cd CPHMTOGO/PaymentService
+            dotnet format
+          name: Linting Solution
+      - run:
+          command: |
+            cd CPHMTOGO/PaymentService
             dotnet build
           name: Building Solution
       - run:
@@ -95,6 +110,11 @@ jobs:
       name: win/default
     steps:
       - checkout
+      - run:
+          command: |
+            cd CPHMTOGO/AddressService
+            dotnet format
+          name: Linting Solution
       - run:
           command: |
             cd CPHMTOGO/AddressService
