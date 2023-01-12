@@ -102,7 +102,7 @@ jobs:
           name: Building Solution
       - run:
           command: |
-            cd CPHMTOGO/TestZone/PaymentServiceTests
+            cd CPHMTOGO/TestZone/AddressServiceTests
             dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput=../coverage/coverage.opencover.xml
           name: Testing Solution
 workflows:
