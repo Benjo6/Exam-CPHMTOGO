@@ -73,11 +73,6 @@ jobs:
       - run:
           command: |
             cd CPHMTOGO/PaymentLoggingService
-            dotnet format
-          name: Linting Solution
-      - run:
-          command: |
-            cd CPHMTOGO/PaymentLoggingService
             dotnet build
           name: Building Solution
       - run:
