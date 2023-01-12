@@ -11,6 +11,7 @@
   <ItemGroup>
     <PackageReference Include="MessagePack.Annotations" Version="2.1.152" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.0" />
+    <PackageReference Include="Moq" Version="4.18.2" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.7" />
     <PackageReference Include="OpenCover" Version="4.7.1221" />
     <PackageReference Include="ReportGenerator" Version="5.1.13" />

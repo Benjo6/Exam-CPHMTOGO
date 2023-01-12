@@ -4,12 +4,7 @@ using AddressService.Domain;
 using AddressService.Domain.Dto;
 using AddressService.Repositories.Interfaces;
 using AddressService.Services.Interfaces;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System;
-using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using System.Reflection.Emit;
+using AddressService.Stub;
 using Newtonsoft.Json.Linq;
 
 namespace AddressService.Services;
@@ -22,12 +17,21 @@ public class AddressService : BaseService<Address, AddressDto>, IAddressService
 
     public AddressService(IAddressRepository repository, IMapper mapper, IHttpClientFactory factory) : base(repository,
         mapper)
-
     {
         _repository = repository;
         _factory = factory;
         _client = _factory.CreateClient("Address");
     }
+    public AddressService(IAddressRepository repository, IMapper mapper, MyHttpClientFactoryStub httpClientFactoryStub) : base(repository,
+        mapper)
+    {
+        _repository = repository;
+        _factory = httpClientFactoryStub;
+        _client = httpClientFactoryStub.CreateClient("Address");
+    }
+
+
+
 
     public async Task<AddressDto> CreateAsync(string street, string streetNr, string zipCode,string? etage,string? door)
     {
@@ -69,8 +73,7 @@ public class AddressService : BaseService<Address, AddressDto>, IAddressService
 
         try
         {
-            string url = "adresser/autocomplete" + (query.Length == 0 ? "" : "?") + query;
-            HttpResponseMessage response = await _client.GetAsync(url);
+            string url = "adresser/autocomplete" + (query.Length == 0 ? "" : "?query=") + query;            HttpResponseMessage response = await _client.GetAsync(url);
             response.EnsureSuccessStatusCode();
             string content = await response.Content.ReadAsStringAsync();
             dynamic adresser = JArray.Parse(content);
